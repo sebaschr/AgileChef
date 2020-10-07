@@ -1,0 +1,40 @@
+<div class="outer-container">
+    <div class="container-top">
+        <div class="child">
+            <h1>Edit Teams</h1>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <mat-form-field>
+                    <mat-label>Team Quantity</mat-label>
+                    <input matInput formControlName="teamQuantity" placeholder="Number of team ">
+                </mat-form-field>
+                <h3>Player Quantity</h3>
+                <mat-form-field>
+                    <mat-label>Min</mat-label>
+                    <input matInput formControlName="playerQuantityMin" placeholder="">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Max</mat-label>
+                    <input matInput formControlName="playerQuantityMax" placeholder="">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <mat-label>Sprint Quantity</mat-label>
+                    <input type="number" matInput formControlName="sprintQuantity">
+                </mat-form-field>
+                <br>
+                <button mat-raised-button color="primary">Save</button>
+                <br>
+                <br>
+                <button mat-raised-button color="primary">Start</button>
+            </form>
+        </div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+    <!-- <div class="container-bottom">
+        BOTTOM
+        <div></div>
+        <div></div>
+    </div> -->
+</div>
