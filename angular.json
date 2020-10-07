@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "AgileChef"
+    }
+  },
+  "defaultProject": "AgileChef",
+  "cli": {
+    "analytics": false
+  }
 }
