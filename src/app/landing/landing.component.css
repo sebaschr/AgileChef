@@ -1,21 +1,25 @@
+body{
+    background: #B39267;
+}
+
 .navButton{
      margin-top: 5%;
      margin-right: 5%;
      position:absolute;
      top:0;
      right:0;
-}
-
-mat-grid-tile {
-    background: #B39267;
+     color:white;
+     font-size: 4vh;
+     cursor: pointer;
 }
 
 mat-card {
     margin-left: 5%;
     margin-right: 5%;
+    padding: 5% 10% 5% 10%;
     border: 5px solid white;
     border-radius: 25px;
     border-color: #ffff;
-    background: #3F251E;
+    background: #2c1b16;
     color: #ffff;
 }

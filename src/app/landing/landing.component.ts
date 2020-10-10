@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'landing',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  faCog = faCog;
+  faSignInAlt = faSignInAlt;
+
+
+  constructor() {
+
+  }
 
   ngOnInit(): void {
   }

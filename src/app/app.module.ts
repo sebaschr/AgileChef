@@ -17,7 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule}  from '@angular/material/grid-list'; 
 import { MatCardModule } from '@angular/material/card'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material/toolbar'; 
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatCardModule,
     ReactiveFormsModule,
     FormsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    FontAwesomeModule
   ],
   exports: [
     MatFormFieldModule,
