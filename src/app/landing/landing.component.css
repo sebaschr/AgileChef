@@ -1,0 +1,21 @@
+.navButton{
+     margin-top: 5%;
+     margin-right: 5%;
+     position:absolute;
+     top:0;
+     right:0;
+}
+
+mat-grid-tile {
+    background: #B39267;
+}
+
+mat-card {
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 5px solid white;
+    border-radius: 25px;
+    border-color: #ffff;
+    background: #3F251E;
+    color: #ffff;
+}
