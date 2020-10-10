@@ -1,0 +1,23 @@
+body{
+    height:100%;
+    background: url('../../assets/Orange BG.jpg');
+    background-size: contain;
+    background-repeat: round;
+    display: flex;
+}
+
+mat-card{
+    background-color: white;
+    margin:auto;
+    padding: 5% 7% 5% 7%;
+    border-radius: 50%;
+
+}
+
+.header{
+    text-align: center;
+}
+
+mat-form-field {
+    width: 100%;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'player-login',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerLoginComponent implements OnInit {
 
-  constructor() { }
+  IsProductOwner:boolean;
+
+  PlayerForm = this.fb.group({
+    Name: ['', Validators.required],
+    IsProductOwner: ['', Validators.required]
+  });
+
+  constructor(private fb: FormBuilder) { 
+ 
+  }
 
   ngOnInit(): void {
+
+  }
+
+  submit() {
+    console.log(this.PlayerForm.value);
   }
 
 }

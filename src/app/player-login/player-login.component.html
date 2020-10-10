@@ -1,1 +1,31 @@
-<p>player-login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agile Chef</title>
+</head>
+<body>
+    <mat-card>
+        <h1 class="header">Sign In!</h1>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="PlayerForm" (ngSubmit)="submit()">
+                <mat-form-field appearance="fill">
+                    <mat-label>Name:</mat-label>
+                    <input matInput formControlName="name" placeholder="">
+                </mat-form-field>
+
+                <br>
+
+                <mat-checkbox formControlName="IsProductOwner" [(checked)]="IsProductOwner">Product Owner</mat-checkbox>
+                
+                <br>
+                <br>
+                
+                <button mat-raised-button color="primary" style="float: right;">Enter</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</body>
+</html>

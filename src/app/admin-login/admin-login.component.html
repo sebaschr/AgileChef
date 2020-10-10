@@ -1,1 +1,37 @@
-<p>admin-login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <mat-card>
+        <h1 class="header">Sign In!</h1>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="AdminForm" (ngSubmit)="submit()" style="width: 240px;">
+                <mat-form-field appearance="fill">
+                    <mat-label>User ID:</mat-label>
+                    <input matInput formControlName="UserID" placeholder="">
+                </mat-form-field>
+
+                <br>
+
+                <mat-form-field appearance="fill" style="width: 240px;">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput formControlName="Password" [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+                
+                <br>
+                <br>
+                
+                <button mat-raised-button color="primary" style="float: right;">Sign In</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</body>
+</html>
