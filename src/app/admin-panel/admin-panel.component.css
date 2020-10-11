@@ -1,21 +1,14 @@
-.outer-container {
-    display: flex;
-    flex-direction: column;
+.title{
+    color:#7c9201;
+}
+.container-bg{
+    background-image: url('https://i.imgur.com/EtKUG4P.png');
+    padding:0;
+    margin:0;
 }
 
-.container-top {
-    display: flex;
-    width: 100%;
-    height: 50vh;
-}
-
-.child {
-
-}
-
-.container-bottom {
-    display: flex;
-    background-color: blanchedalmond;
-    width: 100%;
-    height: 50vh;
+.outer-container{
+    margin:50px;
+    padding:10px;
+    background:white;
 }

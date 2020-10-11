@@ -21,6 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
 import { MatCheckboxModule } from '@angular/material/checkbox'; 
 import { MatIconModule } from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     FontAwesomeModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   exports: [
     MatFormFieldModule,
@@ -58,7 +60,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatGridListModule,
     MatToolbarModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
