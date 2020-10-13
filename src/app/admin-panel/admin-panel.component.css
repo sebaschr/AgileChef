@@ -5,12 +5,10 @@
 .title{
     color:#7c9201;
     font-size:50px;
-    padding:25px 0 10px 0;
+    padding:25px;
 }
 
 /* Top-panel */
-
-
 .container-bg{
     background-image: url('https://i.imgur.com/EtKUG4P.png');
     padding:0;
@@ -19,19 +17,24 @@
 
 .container-top{
     display:flex;
-    text-align: center;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items:center
+
 }
 .child{
     display:flex;
-    flex-wrap: wrap;
+    flex-wrap:nowrap;
     flex-direction: column;
+    margin:0 20px;
+    text-align: center;
 }
 .child p{
     padding:20px 0;
 }
 
 .outer-container{
-    margin:50px;
+    margin:auto;
     padding:10px;
     background:white;
     width:90%;
@@ -39,4 +42,8 @@
 
 .edit-panel{
     height:300px;
+}
+
+.objetivos{
+    width:50%;
 }

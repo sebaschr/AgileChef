@@ -76,9 +76,12 @@
         </div>
         <h2 class="title">Objetivos</h2>
         <div class="container-obj">
-            <mat-form-field appearance="fill">
-                <mat-label>Textarea</mat-label>
-                <textarea matInput></textarea>
+            <mat-form-field appearance="fill" class="objetivos">
+                <mat-label>Objetivos</mat-label>
+                <textarea matInput cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="10"
+                cdkAutosizeMaxRows="12"></textarea>
             </mat-form-field>
         </div>
 
