@@ -6,8 +6,14 @@
     color:#7c9201;
     font-size:50px;
     padding:25px;
+    margin:25px 0 15px 0;
+    font-weight: lighter;
 }
-
+button{
+    padding:5px 55px;
+    background-color:black;
+    color:#fff;
+}
 /* Top-panel */
 .container-bg{
     padding:0;
