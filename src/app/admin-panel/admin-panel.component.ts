@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Sprint } from '../models/sprint';
@@ -14,7 +15,13 @@ export class AdminPanelComponent implements OnInit {
     teamQuantity: ['', Validators.required],
     playerQuantityMin: ['', Validators.required],
     playerQuantityMax: ['', Validators.required],
-    sprintQuantity: ['', Validators.required]
+    sprintQuantity: ['', Validators.required],
+    selectSprint: ['', Validators.required],
+    planningTime: ['', Validators.required],
+    executionTime: ['', Validators.required],
+    reviewingTime: ['', Validators.required],
+    retrospectiveTime: ['', Validators.required],
+    objectives:['',Validators.required]
   });
 
   constructor(private fb: FormBuilder) { }

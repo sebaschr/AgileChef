@@ -1,91 +1,84 @@
 <div class="container-bg">
     <div class="outer-container">
         <h1 class="title">Admin Panel</h1>
-        <div class="container-top">
-            <div class="container-game">
-                <div class="child">
-                    <p>Edit Game</p>
-                    <mat-card class="edit-panel">
-                        <form [formGroup]="form" (ngSubmit)="submit()">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="container-top">
+                <div class="container-game">
+                    <div class="child">
+                        <p>Edit Game</p>
+                        <mat-card class="edit-panel">
                             <mat-form-field>
                                 <mat-label>Number of Teams</mat-label>
-                                <input matInput formControlName="teamQuantity" placeholder="Number of teams">
+                                <input type="number" matInput formControlName="teamQuantity" placeholder="Number of teams">
                             </mat-form-field>
                             <h3>Player Quantity</h3>
                             <mat-form-field>
                                 <mat-label>Min</mat-label>
-                                <input matInput formControlName="playerQuantityMin" placeholder="">
+                                <input type="number" matInput formControlName="playerQuantityMin" placeholder="">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Max</mat-label>
-                                <input matInput formControlName="playerQuantityMax" placeholder="">
+                                <input type="number" matInput formControlName="playerQuantityMax" placeholder="">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Sprint Quantity</mat-label>
                                 <input type="number" matInput formControlName="sprintQuantity">
                             </mat-form-field>
-                        </form>
-                    </mat-card>
+                        </mat-card>
+                    </div>
                 </div>
-                <div class="child"></div>
-                <div class="child"></div>
-            </div>
-            <div class="container-sprint">
-                <div class="child">
-                    <p>Edit Sprint</p>
-                    <mat-card class="edit-panel">
-                    <form [formGroup]="form" (ngSubmit)="submit()">
-    
-                        <mat-form-field appearance="fill">
-                            <mat-label>Sprint</mat-label>
-                            <select matNativeControl>
-                                <option value="sprint1">Sprint 1</option>
-                                <option value="sprint2">Sprint 2</option>
-                                <option value="sprint3">Sprint 3</option>
-                                <option value="sprint4">Sprint 4</option>
-                            </select>
-    
-                        </mat-form-field>
-                        <br>
-                        <mat-form-field>
-                            <mat-label>Planeamiento</mat-label>
-                            <input matInput formControlName="playerQuantityMin" placeholder="">
-                        </mat-form-field>
-                        <br>
-                        <mat-form-field>
-                            <mat-label>Ejecucion</mat-label>
-                            <input matInput formControlName="playerQuantityMax" placeholder="">
-                        </mat-form-field>
-                        <br>
-                        <mat-form-field>
-                            <mat-label>Revision</mat-label>
-                            <input type="number" matInput formControlName="sprintQuantity">
-                        </mat-form-field>
-                        <br>
-                        <mat-form-field>
-                            <mat-label>Retrospectiva</mat-label>
-                            <input type="number" matInput formControlName="sprintQuantity">
-                        </mat-form-field>
-                    </form>
-                </mat-card>
+
+                <div class="container-sprint">
+                    <div class="child">
+                        <p>Edit Sprint</p>
+                        <mat-card class="edit-panel">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Sprint</mat-label>
+                                <select matNativeControl formControlName="selectSprint">
+                                    <option value="sprint1">Sprint 1</option>
+                                    <option value="sprint2">Sprint 2</option>
+                                    <option value="sprint3">Sprint 3</option>
+                                    <option value="sprint4">Sprint 4</option>
+                                </select>
+
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>Planeamiento</mat-label>
+                                <input type="number" matInput formControlName="planningTime" placeholder="">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>Ejecucion</mat-label>
+                                <input type="number" matInput formControlName="executionTime" placeholder="">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>Revision</mat-label>
+                                <input type="number" matInput formControlName="reviewingTime">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>Retrospectiva</mat-label>
+                                <input type="number" matInput formControlName="retrospectiveTime">
+                            </mat-form-field>
+                        </mat-card>
+                    </div>
                 </div>
-                
             </div>
-        </div>
-        <h2 class="title">Objetivos</h2>
-        <div class="container-obj">
-            <mat-form-field appearance="fill" class="objetivos">
-                <mat-label>Objetivos</mat-label>
-                <textarea matInput cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="10"
-                cdkAutosizeMaxRows="12"></textarea>
-            </mat-form-field>
-        </div>
 
+            <h2 class="title">Objetivos</h2>
+            <div class="container-obj">
+                <mat-form-field appearance="fill" class="objetivos" >
+                    <mat-label>Objetivos</mat-label>
+                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10"
+                        cdkAutosizeMaxRows="12"  formControlName="objectives"></textarea>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary">Start</button>
 
-        <button mat-raised-button color="primary" id="form">Start</button>
+        </form>
     </div>
 </div>
