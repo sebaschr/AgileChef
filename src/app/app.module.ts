@@ -16,6 +16,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { PlayerLoginComponent } from './player-login/player-login.component';
 import { ResultsComponent } from './results/results.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
