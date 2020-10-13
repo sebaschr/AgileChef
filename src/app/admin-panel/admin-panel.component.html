@@ -8,8 +8,8 @@
                     <mat-card class="edit-panel">
                         <form [formGroup]="form" (ngSubmit)="submit()">
                             <mat-form-field>
-                                <mat-label>Team Quantity</mat-label>
-                                <input matInput formControlName="teamQuantity" placeholder="Number of team ">
+                                <mat-label>Number of Teams</mat-label>
+                                <input matInput formControlName="teamQuantity" placeholder="Number of teams">
                             </mat-form-field>
                             <h3>Player Quantity</h3>
                             <mat-form-field>
@@ -86,6 +86,6 @@
         </div>
 
 
-        <button mat-raised-button color="primary">Start</button>
+        <button mat-raised-button color="primary" id="form">Start</button>
     </div>
 </div>
