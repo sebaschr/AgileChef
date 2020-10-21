@@ -22,10 +22,11 @@
                                 <input type="number" matInput formControlName="playerQuantityMax" placeholder="">
                             </mat-form-field>
                             <br>
-                            <mat-form-field>
+                            <!-- <mat-form-field>
                                 <mat-label>Sprint Quantity</mat-label>
                                 <input type="number" matInput formControlName="sprintQuantity">
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <button (click)="addSprint()">Add Sprint</button>
                         </mat-card>
                     </div>
                 </div>
@@ -37,10 +38,14 @@
                             <mat-form-field appearance="fill">
                                 <mat-label>Sprint</mat-label>
                                 <select matNativeControl formControlName="selectSprint">
-                                    <option value="sprint1">Sprint 1</option>
-                                    <option value="sprint2">Sprint 2</option>
+                                    <option *ngFor="let sprint of dataService.sprints" value={{sprint}}> {{ sprint }}
+                                    
+                                    </option>
+                                    
+                                    <!-- <option value="sprint1">Sprint 1</option> -->
+                                    <!-- <option value="sprint2">Sprint 2</option>
                                     <option value="sprint3">Sprint 3</option>
-                                    <option value="sprint4">Sprint 4</option>
+                                    <option value="sprint4">Sprint 4</option> -->
                                 </select>
 
                             </mat-form-field>

@@ -22,7 +22,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatCheckboxModule } from '@angular/material/checkbox'; 
 import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
+import { Routes, RouterModule } from '@angular/router';
+import { DataService } from './data.service';
 
+const appRoutes: Routes = [
+  { path: '', component: LandingComponent },
+  { path: 'landing', component: LandingComponent },
+  { path: 'adminLogin', component: AdminLoginComponent },
+  { path: 'adminPanel', component: AdminPanelComponent }
+];
 
 @NgModule({
   declarations: [
@@ -51,7 +59,8 @@ import {MatSelectModule} from '@angular/material/select';
     FontAwesomeModule,
     MatCheckboxModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    RouterModule.forRoot(appRoutes)
   ],
   exports: [
     MatFormFieldModule,
@@ -64,7 +73,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatIconModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
