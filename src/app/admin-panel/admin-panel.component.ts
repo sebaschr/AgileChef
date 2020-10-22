@@ -50,15 +50,13 @@ export class AdminPanelComponent implements OnInit {
     this.minReached=false;
     this.sprintCounter += 1;
     this.sprintName = 'Sprint ' + this.sprintCounter;
-    this.dataService.sprints.push(this.sprintName);//Add a new sprint to the dataService sprint list.
-    console.log(this.dataService)
+    this.dataService.sprints.push(this.sprintName);//Adds a new sprint to the dataService sprint list.
     // this.updateSprintFormControl();
   }
 
   removeSprint() {
     if (this.sprintCounter == 1) {
       this.minReached=true;
-      console.log('uwu'+this.minReached);
     } else {
       this.sprintCounter -= 1;
       this.sprintName = 'Sprint ' + this.sprintCounter;
