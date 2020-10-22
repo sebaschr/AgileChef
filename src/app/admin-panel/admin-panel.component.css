@@ -14,6 +14,10 @@ button{
     background-color:black;
     color:#fff;
 }
+
+button:disabled {
+    background-color:grey;
+ }
 /* Top-panel */
 .container-bg{
     padding:0;

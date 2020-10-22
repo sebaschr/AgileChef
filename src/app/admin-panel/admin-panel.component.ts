@@ -13,8 +13,10 @@ import { Sprint } from '../models/sprint';
 export class AdminPanelComponent implements OnInit {
 
   sprintCounter = 3;
-  sprintName = 'sprint' + this.sprintCounter;
-
+  sprintName = 'Sprint ' + this.sprintCounter;
+  minReached = false;
+  span = <HTMLInputElement>document.getElementById('sprintQuantity');
+  
   form = this.fb.group({
     teamQuantity: ['', Validators.required],
     playerQuantityMin: ['', Validators.required],
@@ -28,7 +30,7 @@ export class AdminPanelComponent implements OnInit {
     executionTime: ['', Validators.required],
     reviewingTime: ['', Validators.required],
     retrospectiveTime: ['', Validators.required],
-    objectives:['',Validators.required]
+    objectives: ['', Validators.required]
   });
 
   constructor(private fb: FormBuilder, public dataService: DataService) { }
@@ -44,35 +46,42 @@ export class AdminPanelComponent implements OnInit {
   // get sprints() {
   //   // return this.form.get('sprints') as FormArray;
   // }
-
   addSprint() {
+    this.minReached=false;
     this.sprintCounter += 1;
-    this.sprintName = 'sprint' + this.sprintCounter;
-    //TODO: Add a new sprint to the dataService sprint list.
-    this.dataService.sprints.push(this.sprintName);
-
-    this.updateSprintFormControl();
+    this.sprintName = 'Sprint ' + this.sprintCounter;
+    this.dataService.sprints.push(this.sprintName);//Add a new sprint to the dataService sprint list.
+    console.log(this.dataService)
+    // this.updateSprintFormControl();
   }
 
   removeSprint() {
-    this.sprintCounter -= 1;
-    this.sprintName = 'sprint' + this.sprintCounter;
-    //TODO: Remove the last sprint on the dataService sprints list.
-    this.updateSprintFormControl();
+    if (this.sprintCounter == 1) {
+      this.minReached=true;
+      console.log('uwu'+this.minReached);
+    } else {
+      this.sprintCounter -= 1;
+      this.sprintName = 'Sprint ' + this.sprintCounter;
+      this.dataService.sprints.splice(-1, 1);    //Removes the last sprint on the dataService sprints list.
+      // this.updateSprintFormControl();
+    }
   }
 
 
-  updateSprintFormControl() {
-    //TODO: clean all controls from the sprints FormArray.
+  // updateSprintFormControl() {
+  //   //TODO: clean all controls from the sprints FormArray.
 
-    //TODO: Loop thru all sprints in dataService and create new form controls.
+  //   //TODO: Loop thru all sprints in dataService and create new form controls.
 
-    // this.sprints.push(this.fb.control(this.sprintName));
+  //   // this.sprints.push(this.fb.control(this.sprintName));
+  // }
+
+  validateFields() {
+
   }
 
   //TODO: Update the data structure on the dataService
-  //TODO: 1. Implement remove sprint on array
-  //TODO: 2. Use the add and remove buttons, 
+
   //TODO: 3. Change the Sprint Quantity input fot a just text
   //TODO: 4: Update the select with the sprints created.
 

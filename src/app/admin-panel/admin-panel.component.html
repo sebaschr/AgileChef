@@ -9,24 +9,28 @@
                         <mat-card class="edit-panel">
                             <mat-form-field>
                                 <mat-label>Number of Teams</mat-label>
-                                <input type="number" matInput formControlName="teamQuantity" placeholder="Number of teams">
+                                <input type="number" min="1" max="10" oninput="this.value = Math.abs(this.value)" matInput formControlName="teamQuantity" placeholder="Number of teams">
                             </mat-form-field>
                             <h3>Player Quantity</h3>
                             <mat-form-field>
                                 <mat-label>Min</mat-label>
-                                <input type="number" matInput formControlName="playerQuantityMin" placeholder="">
+                                <input type="number" min="1" max="10" oninput="this.value = Math.abs(this.value)"  matInput formControlName="playerQuantityMin" placeholder="">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Max</mat-label>
-                                <input type="number" matInput formControlName="playerQuantityMax" placeholder="">
+                                <input type="number" min="1" max="10" oninput="this.value = Math.abs(this.value)"  matInput formControlName="playerQuantityMax" placeholder="">
                             </mat-form-field>
                             <br>
                             <!-- <mat-form-field>
                                 <mat-label>Sprint Quantity</mat-label>
                                 <input type="number" matInput formControlName="sprintQuantity">
                             </mat-form-field> -->
+                            
                             <button (click)="addSprint()">Add Sprint</button>
+                            <br>
+                            <button [disabled]="minReached" (click)="removeSprint()">Remove Sprint</button>
+                            <p>Sprint Quantity: <span id="sprintQuantity">{{sprintCounter}}</span></p>
                         </mat-card>
                     </div>
                 </div>
@@ -41,33 +45,28 @@
                                     <option *ngFor="let sprint of dataService.sprints" value={{sprint}}> {{ sprint }}
                                     
                                     </option>
-                                    
-                                    <!-- <option value="sprint1">Sprint 1</option> -->
-                                    <!-- <option value="sprint2">Sprint 2</option>
-                                    <option value="sprint3">Sprint 3</option>
-                                    <option value="sprint4">Sprint 4</option> -->
                                 </select>
 
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Planeamiento</mat-label>
-                                <input type="number" matInput formControlName="planningTime" placeholder="">
+                                <input type="number" min="1" oninput="this.value = Math.abs(this.value)"  matInput formControlName="planningTime" placeholder="">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Ejecucion</mat-label>
-                                <input type="number" matInput formControlName="executionTime" placeholder="">
+                                <input type="number" min="1" oninput="this.value = Math.abs(this.value)"  matInput formControlName="executionTime" placeholder="">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Revision</mat-label>
-                                <input type="number" matInput formControlName="reviewingTime">
+                                <input type="number" min="1" oninput="this.value = Math.abs(this.value)"  matInput formControlName="reviewingTime">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Retrospectiva</mat-label>
-                                <input type="number" matInput formControlName="retrospectiveTime">
+                                <input type="number" min="1" oninput="this.value = Math.abs(this.value)"  matInput formControlName="retrospectiveTime">
                             </mat-form-field>
                         </mat-card>
                     </div>
