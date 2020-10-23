@@ -29,7 +29,9 @@ const appRoutes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'adminLogin', component: AdminLoginComponent },
-  { path: 'adminPanel', component: AdminPanelComponent }
+  { path: 'playerLogin', component: PlayerLoginComponent},
+  { path: 'adminPanel', component: AdminPanelComponent },
+  { path: 'lobby', component: LobbyComponent}
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 
 @Component({
@@ -12,11 +13,11 @@ export class AdminLoginComponent implements OnInit {
 hide=true;
 
 AdminForm = this.fb.group({
-  UserID: ['', Validators.required],
-  Password: ['', Validators.required]
+  userID: ['', Validators.required],
+  password: ['', Validators.required]
 });
 
-  constructor(private fb: FormBuilder, private dataService: DataService) {
+  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     console.log('AdminLoginComponent', dataService);
 }
 
@@ -25,8 +26,19 @@ ngOnInit(): void {
 }
 
 submit() {
-  console.log(this.AdminForm.value);
-  //TODO: Validate adming user and move to next route, investigate how to change route using code.
+  let userInfo = this.AdminForm.value;
+  let data = this.dataService;
+  if(userInfo.userID == data.admin.username && userInfo.password == data.admin.password){
+    console.log('Match');
+    this.router.navigate(['/adminPanel']);
+  }else{
+    if(userInfo.userID == data.admin.username && userInfo.password != data.admin.password){
+      alert("Wrong Password.");
+    } else{
+      alert("User Not Found.");
+    }
+  }
 }
+  //TODO: Validate adming user and move to next route, investigate how to change route using code.
 
 }

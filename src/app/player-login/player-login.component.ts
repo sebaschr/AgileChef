@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'player-login',
@@ -11,11 +12,11 @@ export class PlayerLoginComponent implements OnInit {
   IsProductOwner:boolean;
 
   PlayerForm = this.fb.group({
-    Name: ['', Validators.required],
-    IsProductOwner: ['', Validators.required]
+    name: ['', Validators.required],
+    isProductOwner: [false, Validators.required]
   });
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private router: Router) { 
  
   }
 
@@ -24,7 +25,10 @@ export class PlayerLoginComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.PlayerForm.value);
+    console.log('PlayerLogin', this.PlayerForm.value);
+    let playerInfo = this.PlayerForm.value;
+    let currentUser = {'Name: ' : playerInfo.name, 'Product Owner: ' : playerInfo.isProductOwner};
+    localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+    this.router.navigate(['/lobby']);
   }
-
 }
