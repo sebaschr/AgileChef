@@ -2,25 +2,21 @@ body {
     display: flex;
     justify-content: space-around;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #F3F3F3;
-}
-
-button {
-    font-size: 18px;
 }
 
 .start-button {
     display: flex;
     justify-self: end;
     padding: 15px 50px;
+    margin: 0px 2px;
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    background: #000000;
 }
 
 .left-section {
-    height: 300px;
+    height: 100%;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -28,24 +24,28 @@ button {
 }
 
 .right-section {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
     padding: 60px 0px;
-    background-color: #EA6803;
+    background: url('../../assets/Orange BG.jpg');
+    background-size: contain;
+    background-repeat: round;
+
 }
 
 .team-top-row {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0px;
+    margin: 40px 0px 30px;
 }
 
 .team-bottom-row {
     display: flex;
     justify-content: space-evenly;
     margin: 20px 0px;
+    padding-bottom: 50px;
 }
 
 
@@ -54,16 +54,29 @@ button {
     flex-direction: column;
     align-items: center;
     margin: 0px 15px;
-    padding: 110px 15px;
-    border-radius: 50px;
+    padding: 50px 7px;
     box-shadow: 0px 13px 36px -8px #2A2A2A;
     color: #FFFFFF;
+}
+
+.team-card div {
+    position: relative;
+    bottom: 75px;
 }
 
 .team-card h2 {
     padding: 15px 20px;;
     border-radius: 50px;
-    box-shadow: 0px 6px 27px -10px #2A2A2A;
+}
+
+.team-card p {
+    margin-bottom: 20px;
+}
+
+.team-card button {
+    margin: 50px 0px 0px;
+    font-size: 40px;
+    background: #000000;
 }
 
 .team-card-one {
@@ -119,14 +132,12 @@ button {
     margin: 20px 15px;
     padding: 15px;
     background-color: #FFFFFF;
-    border-radius: 50px;
     box-shadow: 6px 5px 36px -3px #2A2A2A;
 }
 
 .objectives-card h1 {
     color: #000000;
-    font-family: 'Caveat', cursive;
-    font-weight: bold;
+    font-weight: bolder;
     font-size: 40px;
     text-transform: uppercase;
     letter-spacing: 5px;
@@ -138,4 +149,9 @@ button {
 
 .objectives-card span {
     font-weight: bold;
+}
+
+.buttons-container {
+    display: flex;
+    margin-top: 80px;
 }
