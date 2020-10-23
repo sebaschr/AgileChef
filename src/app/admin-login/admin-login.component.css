@@ -21,3 +21,8 @@ mat-card{
 mat-form-field {
     width: 100%;
 }
+
+button{
+    background-color:black;
+    color:#fff;
+}
