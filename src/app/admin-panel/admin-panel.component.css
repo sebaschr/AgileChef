@@ -13,6 +13,7 @@ button{
     padding:5px 55px;
     background-color:black;
     color:#fff;
+    margin-top:5px;
 }
 
 button:disabled {
@@ -55,9 +56,24 @@ button:disabled {
 }
 
 .edit-panel{
-    height:300px;
+    height:355px;
+}
+
+#edit-sprint input{
+    margin:7px 0;
 }
 
 .objetivos{
     width:50%;
+}
+
+.sprintBtn{
+    padding:5px 10px;
+    width:150px;
+    background-color:black;
+    color:#fff;
+}
+
+button:hover{
+    opacity:0.7;
 }
