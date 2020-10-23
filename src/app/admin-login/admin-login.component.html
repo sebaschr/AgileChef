@@ -13,14 +13,14 @@
             <form [formGroup]="AdminForm" (ngSubmit)="submit()" style="width: 240px;">
                 <mat-form-field appearance="fill">
                     <mat-label>User ID:</mat-label>
-                    <input matInput formControlName="UserID" placeholder="">
+                    <input matInput formControlName="userID" placeholder="">
                 </mat-form-field>
 
                 <br>
 
                 <mat-form-field appearance="fill" style="width: 240px;">
                     <mat-label>Enter your password</mat-label>
-                    <input matInput formControlName="Password" [type]="hide ? 'password' : 'text'">
+                    <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>

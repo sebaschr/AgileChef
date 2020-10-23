@@ -9,9 +9,8 @@ body{
 mat-card{
     background-color: white;
     margin:auto;
-    padding: 5%;
+    padding: 5% 7% 5% 7%;
     border-radius: 50%;
-
 }
 
 .header{
