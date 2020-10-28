@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
+import { ACSession } from '../models/acSession';
 import { Sprint } from '../models/sprint';
 
 @Component({
@@ -12,7 +13,7 @@ import { Sprint } from '../models/sprint';
 
 export class AdminPanelComponent implements OnInit {
 
-  sprintCounter = 3;
+  sprintCounter = 0;
   sprintName = 'Sprint ' + this.sprintCounter;
   minReached = false;
   span = <HTMLInputElement>document.getElementById('sprintQuantity');
@@ -41,6 +42,7 @@ export class AdminPanelComponent implements OnInit {
 
   submit() {
     console.log(this.form);
+    this.dataService.saveSessionToLocalStorage(new ACSession());
   }
 
   // get sprints() {
@@ -50,7 +52,9 @@ export class AdminPanelComponent implements OnInit {
     this.minReached=false;
     this.sprintCounter += 1;
     this.sprintName = 'Sprint ' + this.sprintCounter;
-    this.dataService.sprints.push(this.sprintName);//Adds a new sprint to the dataService sprint list.
+    let sprint = new Sprint();
+    sprint.name = this.sprintName;
+    this.dataService.session.sprints.push(sprint);//Adds a new sprint to the dataService sprint list.
     // this.updateSprintFormControl();
   }
 
@@ -60,7 +64,7 @@ export class AdminPanelComponent implements OnInit {
     } else {
       this.sprintCounter -= 1;
       this.sprintName = 'Sprint ' + this.sprintCounter;
-      this.dataService.sprints.splice(-1, 1);    //Removes the last sprint on the dataService sprints list.
+      this.dataService.session.sprints.splice(-1, 1);    //Removes the last sprint on the dataService sprints list.
       // this.updateSprintFormControl();
     }
   }

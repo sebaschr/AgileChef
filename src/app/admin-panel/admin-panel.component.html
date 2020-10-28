@@ -42,8 +42,7 @@
                             <mat-form-field appearance="fill">
                                 <mat-label>Sprint</mat-label>
                                 <select matNativeControl formControlName="selectSprint">
-                                    <option *ngFor="let sprint of dataService.sprints" value={{sprint}}> {{ sprint }}
-                                    
+                                    <option *ngFor="let sprint of dataService.session.sprints" value={{sprint.name}}> {{ sprint.name }}
                                     </option>
                                 </select>
 

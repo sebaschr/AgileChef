@@ -24,6 +24,8 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatIconModule,
     MatSelectModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [
     MatFormFieldModule,

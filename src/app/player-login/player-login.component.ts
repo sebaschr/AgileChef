@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'player-login',
@@ -16,7 +17,7 @@ export class PlayerLoginComponent implements OnInit {
     isProductOwner: [false, Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private router: Router) { 
+  constructor(private fb: FormBuilder, private router: Router, private dataService: DataService) { 
  
   }
 
@@ -27,8 +28,7 @@ export class PlayerLoginComponent implements OnInit {
   submit() {
     console.log('PlayerLogin', this.PlayerForm.value);
     let playerInfo = this.PlayerForm.value;
-    let currentUser = {'Name: ' : playerInfo.name, 'Product Owner: ' : playerInfo.isProductOwner};
-    localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+    this.dataService.savePlayerToLocalStorage(playerInfo.name, playerInfo.isProductOwner);
     this.router.navigate(['/lobby']);
   }
 }
