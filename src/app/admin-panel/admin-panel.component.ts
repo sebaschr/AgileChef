@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 import { ACSession } from '../models/acSession';
 import { Sprint } from '../models/sprint';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'admin-panel',
@@ -34,28 +35,23 @@ export class AdminPanelComponent implements OnInit {
     objectives: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, public dataService: DataService) { }
+  constructor(public fb: FormBuilder, public dataService: DataService,private router: Router) { }
 
   ngOnInit(): void {
 
   }
 
   submit() {
-    console.log(this.form);
+    console.log(this.form.value);
     this.dataService.saveSessionToLocalStorage(new ACSession());
+    // this.router.navigate(['/lobby']);
   }
 
   // get sprints() {
   //   // return this.form.get('sprints') as FormArray;
   // }
   addSprint() {
-    this.minReached=false;
-    this.sprintCounter += 1;
-    this.sprintName = 'Sprint ' + this.sprintCounter;
-    let sprint = new Sprint();
-    sprint.name = this.sprintName;
-    this.dataService.session.sprints.push(sprint);//Adds a new sprint to the dataService sprint list.
-    // this.updateSprintFormControl();
+    
   }
 
   removeSprint() {
@@ -69,6 +65,19 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
+  saveSprint(){
+    this.minReached=false;
+    this.sprintCounter += 1;
+    this.sprintName = 'Sprint ' + this.sprintCounter;
+    let sprint = new Sprint();
+    sprint.name = this.sprintName;
+    sprint.ejecucion=this.form.value.executionTime;
+    sprint.planeamiento=this.form.value.planningTime;
+    sprint.revision=this.form.value.reviewingTime;
+    sprint.retrospectiva=this.form.value.retrospectiveTime;
+    this.dataService.session.sprints.push(sprint);//Adds a new sprint to the dataService sprint list.
+    console.log(this.dataService);
+  }
 
   // updateSprintFormControl() {
   //   //TODO: clean all controls from the sprints FormArray.

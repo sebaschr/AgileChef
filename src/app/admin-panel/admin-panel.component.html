@@ -22,14 +22,6 @@
                                 <input type="number" matInput formControlName="playerQuantityMax" placeholder="">
                             </mat-form-field>
                             <br>
-                            <!-- <mat-form-field>
-                                <mat-label>Sprint Quantity</mat-label>
-                                <input type="number" matInput formControlName="sprintQuantity">
-                            </mat-form-field> -->
-                            
-                            <button (click)="addSprint()"  class="sprintBtn" mat-raised-button color="secondary">Add Sprint</button>
-                            <br>
-                            <button [disabled]="minReached"  (click)="removeSprint()"  class="sprintBtn" mat-raised-button color="secondary">Remove Sprint</button>
                             <p>Sprint Quantity: <span id="sprintQuantity">{{sprintCounter}}</span></p>
                         </mat-card>
                     </div>
@@ -38,7 +30,10 @@
                 <div class="container-sprint">
                     <div class="child">
                         <p>Edit Sprint</p>
+                       
                         <mat-card class="edit-panel" id="edit-sprint">
+                            <button (click)="addSprint()"  class="sprintBtn" mat-raised-button color="secondary">Add New Sprint</button>
+                            <br>
                             <mat-form-field appearance="fill">
                                 <mat-label>Sprint</mat-label>
                                 <select matNativeControl formControlName="selectSprint">
@@ -67,6 +62,9 @@
                                 <mat-label>Retrospectiva</mat-label>
                                 <input type="number" matInput formControlName="retrospectiveTime">
                             </mat-form-field>
+                            <br>
+                            <button (click)="saveSprint()"  class="sprintBtn2 save" mat-raised-button color="secondary">Save</button>
+                            <button (click)="removeSprint()" class="sprintBtn2 remove" mat-raised-button color="secondary" [disabled]="minReached">Remove</button>
                         </mat-card>
                     </div>
                 </div>

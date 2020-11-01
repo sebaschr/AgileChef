@@ -24,7 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
-import { AngularFireModule } from '@angular/fire';
+// import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
@@ -65,7 +65,7 @@ const appRoutes: Routes = [
     MatIconModule,
     MatSelectModule,
     RouterModule.forRoot(appRoutes),
-    AngularFireModule.initializeApp(environment.firebase)
+    // AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [
     MatFormFieldModule,
