@@ -9,17 +9,17 @@
                         <mat-card class="edit-panel">
                             <mat-form-field>
                                 <mat-label>Number of Teams</mat-label>
-                                <input type="number" min="1" max="10" oninput="this.value = Math.abs(this.value)" matInput formControlName="teamQuantity" placeholder="Number of teams">
+                                <input type="number" min="1"  [(ngModel)]="teamQuantity" oninput="this.value = Math.abs(this.value)" matInput formControlName="teamQuantity" placeholder="Number of teams">
                             </mat-form-field>
                             <h3>Player Quantity</h3>
                             <mat-form-field>
                                 <mat-label>Min</mat-label>
-                                <input type="number" matInput formControlName="playerQuantityMin" placeholder="">
+                                <input type="number" matInput value="minPlayers" formControlName="playerQuantityMin" [(ngModel)]="minPlayers" oninput="this.value = Math.abs(this.value)">
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Max</mat-label>
-                                <input type="number" matInput formControlName="playerQuantityMax" placeholder="">
+                                <input type="number" matInput formControlName="playerQuantityMax" [(ngModel)]="maxPlayers" oninput="this.value = Math.abs(this.value)">
                             </mat-form-field>
                             <br>
                             <p>Sprint Quantity: <span id="sprintQuantity">{{sprintCounter}}</span></p>
@@ -36,33 +36,35 @@
                             <br>
                             <mat-form-field appearance="fill">
                                 <mat-label>Sprint</mat-label>
-                                <select matNativeControl formControlName="selectSprint">
-                                    <option *ngFor="let sprint of dataService.session.sprints" value={{sprint.name}}> {{ sprint.name }}
+                                <select matNativeControl formControlName="selectSprint" (change)="onForm2NameChange($event.target)">
+                                    <!-- <option *ngFor="let sprint of dataService.session.sprints" value={{sprint.name}}> {{ sprint.name }}
+                                    </option> -->
+                                    <option *ngFor="let sprint of sprintList" value={{sprint.name}}> {{ sprint.name }}
                                     </option>
+                                    
                                 </select>
 
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Planeamiento</mat-label>
-                                <input type="number" matInput formControlName="planningTime" placeholder="">
+                                <input type="number" matInput formControlName="planningTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Ejecucion</mat-label>
-                                <input type="number" matInput formControlName="executionTime" placeholder="">
+                                <input type="number" matInput formControlName="executionTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Revision</mat-label>
-                                <input type="number" matInput formControlName="reviewingTime">
+                                <input type="number" matInput formControlName="reviewingTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
                             <br>
                             <mat-form-field>
                                 <mat-label>Retrospectiva</mat-label>
-                                <input type="number" matInput formControlName="retrospectiveTime">
+                                <input type="number" matInput formControlName="retrospectiveTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
-                            <br>
                             <button (click)="saveSprint()"  class="sprintBtn2 save" mat-raised-button color="secondary">Save</button>
                             <button (click)="removeSprint()" class="sprintBtn2 remove" mat-raised-button color="secondary" [disabled]="minReached">Remove</button>
                         </mat-card>
@@ -78,7 +80,7 @@
                         cdkAutosizeMaxRows="12"  formControlName="objectives"></textarea>
                 </mat-form-field>
             </div>
-            <button mat-raised-button color="secondary">Start</button>
+            <button mat-raised-button color="secondary" (click)="submitInfo()">Start</button>
 
         </form>
     </div>
