@@ -3,6 +3,7 @@ import { Session } from 'protractor';
 import { Admin } from './models/admin';
 import { ACSession } from './models/acSession';
 import { Player } from './models/player';
+import { getLocaleTimeFormat } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,12 @@ export class DataService {
   loadSessionFromLocalStorage() {
 
   }
+
+  loadPlayer () {
+    window.localStorage.getItem(name);
+    //console.log(name);
+  }
+
+  savePlayerToTeam ()
 
 }
