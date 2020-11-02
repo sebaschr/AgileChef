@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerLoginComponent } from '../player-login/player-login.component';
+import { DataService } from '../data.service';
+
+
 
 @Component({
   selector: 'lobby',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LobbyComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit(): void {
   }
 
+  public addBtn = document.getElementById("addBtn");
+
+  onclick () {
+    this.dataService.loadPlayer();
+  }
+
+
+
 }
+
