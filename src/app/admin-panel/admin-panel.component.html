@@ -32,7 +32,7 @@
                         <p>Edit Sprint</p>
                        
                         <mat-card class="edit-panel" id="edit-sprint">
-                            <button (click)="addSprint()"  class="sprintBtn" mat-raised-button color="secondary">Add New Sprint</button>
+                            <button (click)="addSprint()"  class="sprintBtn" mat-raised-button color="secondary" [disabled]="!savedLastSprint">Add New Sprint</button>
                             <br>
                             <mat-form-field appearance="fill">
                                 <mat-label>Sprint</mat-label>
