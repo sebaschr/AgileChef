@@ -65,7 +65,7 @@
                                 <mat-label>Retrospectiva</mat-label>
                                 <input type="number" matInput formControlName="retrospectiveTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
-                            <button (click)="saveSprint()"  class="sprintBtn2 save" mat-raised-button color="secondary">Save</button>
+                            <button (click)="saveSprint()"  class="sprintBtn2 save" mat-raised-button color="secondary" [disabled]="firstSprint">Save</button>
                             <button (click)="removeSprint()" class="sprintBtn2 remove" mat-raised-button color="secondary" [disabled]="minReached">Remove</button>
                         </mat-card>
                     </div>
