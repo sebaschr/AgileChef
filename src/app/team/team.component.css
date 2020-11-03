@@ -1,0 +1,157 @@
+body {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.start-button {
+    display: flex;
+    justify-self: end;
+    padding: 15px 50px;
+    margin: 0px 2px;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: #000000;
+}
+
+.left-section {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding: 60px 0px;
+    background: url('../../assets/Orange BG.jpg');
+    background-size: contain;
+    background-repeat: round;
+
+}
+
+.team-top-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0px 30px;
+}
+
+.team-bottom-row {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0px;
+    padding-bottom: 50px;
+}
+
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 15px;
+    padding: 50px 7px;
+    box-shadow: 0px 13px 36px -8px #2A2A2A;
+    color: #FFFFFF;
+}
+
+.team-card div {
+    position: relative;
+    bottom: 75px;
+}
+
+.team-card h2 {
+    padding: 15px 20px;;
+    border-radius: 50px;
+}
+
+.team-card p {
+    margin-bottom: 20px;
+}
+
+.team-card button {
+    margin: 50px 0px 0px;
+    font-size: 40px;
+    background: #000000;
+}
+
+.team-card-one {
+    background-color: #E21818;
+}
+
+.team-card-one h2 {
+    border: 1px solid #B00020;
+    background-color: #B00020;
+}
+
+.team-card-two {
+    background-color: #E96902;
+}
+
+.team-card-two h2 {
+    border: 1px solid #FF892B;
+    background-color: #FF892B;
+}
+
+.team-card-three {
+    background-color: #7C9201;
+}
+
+.team-card-three h2 {
+    border: 1px solid #485309;
+    background-color: #485309;
+}
+
+.team-card-four {
+    background-color: #F3B23D;
+}
+
+.team-card-four h2 {
+    border: 1px solid #FCA100;
+    background-color: #FCA100;
+}
+
+.team-card-five {
+    background-color: #69A0A3;
+}
+
+.team-card-five h2 {
+    border: 1px solid #25A5A4;
+    background-color: #25A5A4;
+}
+
+.objectives-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 20px 15px;
+    padding: 15px;
+    background-color: #FFFFFF;
+    box-shadow: 6px 5px 36px -3px #2A2A2A;
+}
+
+.objectives-card h1 {
+    color: #000000;
+    font-weight: bolder;
+    font-size: 40px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.objectives-card p {
+    line-height: 45px;
+}
+
+.objectives-card span {
+    font-weight: bold;
+}
+
+.buttons-container {
+    display: flex;
+    margin-top: 80px;
+}

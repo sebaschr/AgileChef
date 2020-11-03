@@ -26,6 +26,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
 // import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { TeamComponent } from './team/team.component';
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     LandingComponent,
     AdminLoginComponent,
     PlayerLoginComponent,
-    ResultsComponent
+    ResultsComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,
