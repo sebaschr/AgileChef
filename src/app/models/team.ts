@@ -2,7 +2,7 @@ export class Team {
 
     public players: [] = [];
 
-    constructor() {
-
+    constructor(public name: string, public teamNumber: number) {
+        
     }
 }

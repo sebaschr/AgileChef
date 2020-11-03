@@ -4,6 +4,7 @@ import { Admin } from './models/admin';
 import { ACSession } from './models/acSession';
 import { Player } from './models/player';
 import { getLocaleTimeFormat } from '@angular/common';
+import { Team } from './models/team';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class DataService {
   public currentPlayer: Player;
   admin: Admin = new Admin('admin', '1234');
   public session: ACSession = new ACSession();
+  public team : Team;
 
   constructor() { }
 
@@ -33,7 +35,7 @@ export class DataService {
 
   loadPlayer () {
     window.localStorage.getItem(name);
-    //console.log(name);
+    
   }
 
   /*savePlayerToTeam (){
