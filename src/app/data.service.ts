@@ -36,7 +36,6 @@ export class DataService {
 
   loadPlayer() {
     window.localStorage.getItem(name);
-
   }
 
   addPlayerToTeam(player: Player, team: Team) {
@@ -54,8 +53,7 @@ export class DataService {
     team.addPlayer(player);
   }
 
-  savePlayerToTeam() {
-
   }
 
-}
+
+
