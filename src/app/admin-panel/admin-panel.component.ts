@@ -20,6 +20,15 @@ export class AdminPanelComponent implements OnInit {
   firstSprint = true;
   minReached = true;
   savedLastSprint = true;
+  
+  errorSprints: boolean=false;
+  errorMinSprint: boolean=false;
+  errorMin: boolean=false;
+  errorMax: boolean=false;
+  errorMinMax: boolean=false;
+  errorTeams: boolean=false;
+  errorObjectives: boolean=false;
+
 
   span = <HTMLInputElement>document.getElementById('sprintQuantity');
 
@@ -59,8 +68,12 @@ export class AdminPanelComponent implements OnInit {
     this.dataService.session.teams.length = this.form.value.teamQuantity;
     this.dataService.saveSessionToLocalStorage(new ACSession());
     console.log(this.dataService);
-
-    this.router.navigate(['/lobby']);
+    var errors = this.validateFields();
+    if (errors==true) {
+      
+    } else {
+      this.router.navigate(['/lobby']);
+    }
   }
 
 
@@ -72,8 +85,22 @@ export class AdminPanelComponent implements OnInit {
     sprint.planeamiento = this.form.value.planningTime;
     sprint.revision = this.form.value.reviewingTime;
     sprint.retrospectiva = this.form.value.retrospectiveTime;
-    this.findUpdateSprint(sprint);
-    this.checkLastOneSaved(sprint.name);
+    var validationError=false;
+    if(sprint.ejecucion==0||sprint.planeamiento==0||sprint.revision==0||sprint.retrospectiva==0){
+      validationError=true;
+      this.errorSprints=true;
+    }else{
+      this.errorSprints=false;
+    }
+
+    if (validationError) {
+      
+    } else {
+      this.findUpdateSprint(sprint);
+      this.checkLastOneSaved(sprint.name);
+      this.errorMinSprint=false;
+    }
+    
   }
 
   removeSprint() {
@@ -184,7 +211,58 @@ export class AdminPanelComponent implements OnInit {
   }
 
   validateFields() {
+    var foundErrors=false;
+    var amountTeams=  this.form.value.teamQuantity;
+    var playerQuantityMin=  this.form.value.playerQuantityMin;
+    var playerQuantityMax=  this.form.value.playerQuantityMax;
+    var amountTeams=  this.form.value.teamQuantity;
+    var ejecucion = this.form.value.executionTime;
+    var planeamiento = this.form.value.planningTime;
+    var revision = this.form.value.reviewingTime;
+    var retrospectiva = this.form.value.retrospectiveTime;
 
+    if(amountTeams==0){
+      foundErrors=true;
+      this.errorTeams=true;
+    }else{
+      this.errorTeams=false;
+    }
+
+    if(playerQuantityMin==0){
+      foundErrors=true;
+      this.errorMin=true;
+    }else{
+      this.errorMin=false;
+    }
+
+    if(playerQuantityMax==0){
+      foundErrors=true;
+      this.errorMax=true;
+    }else{
+      this.errorMax=false;
+    }
+
+    if(playerQuantityMax<playerQuantityMin){
+      foundErrors=true;
+      this.errorMinMax=true;
+    }else{
+      this.errorMinMax=false;
+    }
+
+    if(ejecucion==0||planeamiento==0||revision==0||retrospectiva==0){
+      foundErrors=true;
+      this.errorSprints=true;
+    }else{
+      this.errorSprints=false;
+    }
+
+    if(this.dataService.session.sprints.length==0){
+      foundErrors=true;
+      this.errorMinSprint=true;
+    }else{
+      this.errorMinSprint=false;
+    }
+    return foundErrors;
   }
 
   reorderArrays() {
