@@ -66,8 +66,6 @@ export class AdminPanelComponent implements OnInit {
     this.dataService.session.playersMin = this.form.value.playerQuantityMin;
     this.dataService.session.playersMax = this.form.value.playerQuantityMax;
     this.dataService.session.teams.length = this.form.value.teamQuantity;
-    this.dataService.saveSessionToLocalStorage(new ACSession());
-    console.log(this.dataService);
     var errors = this.validateFields();
     if (errors==true) {
       
@@ -104,7 +102,6 @@ export class AdminPanelComponent implements OnInit {
   }
 
   removeSprint() {
-    console.log(this.sprintList )
 
     if (this.sprintCounter==1) {
       
@@ -118,7 +115,6 @@ export class AdminPanelComponent implements OnInit {
       }
     }
 
-    console.log(this.sprintList)
 
   }
 
@@ -145,8 +141,7 @@ export class AdminPanelComponent implements OnInit {
     sprint.revision = 45;
     sprint.retrospectiva = 45;
     this.sprintList.push(sprint);
-    // this.dataService.session.sprints.push(sprint);//Adds a new sprint to the dataService sprint list.
-    // console.log(this.dataService);
+
   }
 
   findUpdateSprint(sprint) {
@@ -164,8 +159,6 @@ export class AdminPanelComponent implements OnInit {
       //if it exists update it
       this.updateDataService(sprint);
     }
-    console.log(this.sprintList)
-    console.log(this.dataService)
 
 
   }
