@@ -31,7 +31,7 @@ export class DataService {
     localStorage.setItem('number of teams',JSON.stringify(this.session.teams.length));
     localStorage.setItem('minPlayers',JSON.stringify(this.session.playersMin));
     localStorage.setItem('maxPlayers',JSON.stringify(this.session.playersMax));
-    localStorage.setItem('maxPlayers',JSON.stringify(this.session.objectives));
+    localStorage.setItem('objectives',JSON.stringify(this.session.objectives));
     this.loadSessionFromLocalStorage();
   }
 

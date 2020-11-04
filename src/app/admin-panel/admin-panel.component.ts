@@ -5,6 +5,7 @@ import { DataService } from '../data.service';
 import { ACSession } from '../models/acSession';
 import { Sprint } from '../models/sprint';
 import { Router } from '@angular/router';
+import { Team } from '../models/team';
 
 @Component({
   selector: 'admin-panel',
@@ -65,11 +66,14 @@ export class AdminPanelComponent implements OnInit {
     this.dataService.session.objectives = this.form.value.objectives;
     this.dataService.session.playersMin = this.form.value.playerQuantityMin;
     this.dataService.session.playersMax = this.form.value.playerQuantityMax;
-    this.dataService.session.teams.length = this.form.value.teamQuantity;
     var errors = this.validateFields();
     if (errors==true) {
       
     } else {
+      for (let index = 0; index < this.form.value.teamQuantity; index++) {
+        let team = new Team('Team '+(index+1),(index+1))
+        this.dataService.session.teams.push(team);
+      }
       this.router.navigate(['/lobby']);
     }
   }
