@@ -26,11 +26,7 @@ export class DataService {
 
   saveSessionToLocalStorage(session: ACSession) {
     this.session = new ACSession();
-    localStorage.setItem('sprints',JSON.stringify(this.session.sprints));
-    localStorage.setItem('number of teams',JSON.stringify(this.session.teams.length));
-    localStorage.setItem('minPlayers',JSON.stringify(this.session.playersMin));
-    localStorage.setItem('maxPlayers',JSON.stringify(this.session.playersMax));
-    localStorage.setItem('objectives',JSON.stringify(this.session.objectives));
+    localStorage.setItem('sprints',JSON.stringify(session));
     this.loadSessionFromLocalStorage();
   }
 
@@ -43,20 +39,20 @@ export class DataService {
     
   }
 
-  addPlayerToTeam(player: Player, team: Team) {
+  // addPlayerToTeam(player: Player, team: Team) {
 
-    for (let i = 0; i < this.session.teams.length; i++) {
-      const teamStored = this.session.teams[i];
-      for (let j = 0; j < teamStored.players.length; j++) {
-        const playerStored = teamStored.players[j];
-        if (player.identifier === playerStored.identifier) {
-          teamStored.players.splice(j, 1);
-        }
-      }
-    }
+  //   for (let i = 0; i < this.session.teams.length; i++) {
+  //     const teamStored = this.session.teams[i];
+  //     for (let j = 0; j < teamStored.players.length; j++) {
+  //       const playerStored = teamStored.players[j];
+  //       if (player.identifier === playerStored.identifier) {
+  //         teamStored.players.splice(j, 1);
+  //       }
+  //     }
+  //   }
 
-    team.addPlayer(player);
-  }
+  //   team.addPlayer(player);
+  // }
 
   /*savePlayerToTeam (){
     
