@@ -33,11 +33,11 @@ export class DataService {
   saveSessionToLocalStorage(session: ACSession) {
     this.session = new ACSession();
     this.post('session', this.session);
-    this.loadSessionFromLocalStorage();
   }
 
   loadSessionFromLocalStorage() {
-
+    this.session = new ACSession();
+    this.get('session');
   }
 
   loadPlayer() {
