@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Team } from '../models/team';
 import { Sprint } from '../models/sprint';
 import { DataService } from '../data.service';
-import { ACSession } from '../models/acSession';
-import { counter } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'team-component',
@@ -15,7 +13,6 @@ export class TeamComponent implements OnInit {
   @Input() team: Team;
 
   public sprint: Sprint;
-  // public teams = this.dataService.session.teams.length;
 
   public container;
   public topContainer = document.getElementsByClassName('team-top-row');

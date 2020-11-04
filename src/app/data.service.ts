@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Session } from 'protractor';
 import { Admin } from './models/admin';
 import { ACSession } from './models/acSession';
 import { Player } from './models/player';
-import { getLocaleTimeFormat } from '@angular/common';
 import { Team } from './models/team';
 
 @Injectable({
@@ -18,15 +16,23 @@ export class DataService {
 
   constructor() { }
 
-  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean) {
-    this.currentPlayer = new Player(playerName, isProductOwner);
-    localStorage.setItem("currentUser", JSON.stringify(this.currentPlayer));
+  post (collection: string, data:object){
+    localStorage.setItem(collection, JSON.stringify(data));
+  }
+
+  get (src: string){
+    return JSON.parse(localStorage.getItem(src));
+  }
+
+  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
+    this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
+    this.post('currentUser', this.currentPlayer);
     this.loadSessionFromLocalStorage();
   }
 
   saveSessionToLocalStorage(session: ACSession) {
     this.session = new ACSession();
-    localStorage.setItem('session', JSON.stringify(this.session));
+    this.post('session', this.session);
     this.loadSessionFromLocalStorage();
   }
 
@@ -51,10 +57,15 @@ export class DataService {
     }
 
     team.addPlayer(player);
-  }
 
-  /*savePlayerToTeam (){
-    
-  }*/
+    let allData = this.get('currentUser');
+
+    if(allData.identifier === player.identifier){
+      this.currentPlayer.teamNumber = team.teamNumber;
+      this.post('currentUser', player);
+    }else{
+      console.log('false');
+    }
+  }
 
 }

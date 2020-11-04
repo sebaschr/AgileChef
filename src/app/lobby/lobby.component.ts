@@ -23,9 +23,7 @@ export class LobbyComponent implements OnInit {
 
   public teamContainer = document.getElementsByClassName("team-container");
 
-  public name = this.dataService.currentPlayer.name;
-
-  printName(name, team) {
+  printName() {
 
   }
 

@@ -7,7 +7,7 @@ export class Team {
     public players = [];
     public identifier: String;
 
-    constructor(public name: string, public teamNumber: number) {
+    constructor(public teamNumber: number) {
         this.identifier = key();
     }
 
