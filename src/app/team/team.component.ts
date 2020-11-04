@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Team } from '../models/team';
 import { Sprint } from '../models/sprint';
 import { DataService } from '../data.service';
@@ -12,8 +12,11 @@ import { counter } from '@fortawesome/fontawesome-svg-core';
 })
 export class TeamComponent implements OnInit {
 
+  @Input() team: Team;
+
   public sprint: Sprint;
-  public teams = this.dataService.session.teams.length;
+  // public teams = this.dataService.session.teams.length;
+
   public container;
   public topContainer = document.getElementsByClassName('team-top-row');
   public bottomContainer = document.getElementsByClassName('team-borrom-row');
@@ -22,23 +25,15 @@ export class TeamComponent implements OnInit {
 
   constructor(public dataService: DataService) {
 
-    this.container = document.createElement('div');
-    this.container.value =+ counter;
-    this.container.classList.add(
-      'team-card'
-    );
-    //this.topContainer.appendChild(this.container);
-
-    console.log(this.dataService.session);
-    console.log(this.dataService.session.teams.length);
-    
   }
 
   ngOnInit(): void {
   }
 
-  createDiv(teamQuantity) {
-
+  addPlayerToTeam() {
+    //TODO: Add current player to this team.
+    this.dataService.addPlayerToTeam(this.dataService.currentPlayer, this.team);
+    console.log(this.dataService);
   }
-  
+
 }

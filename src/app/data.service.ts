@@ -15,7 +15,6 @@ export class DataService {
   public currentPlayer: Player;
   admin: Admin = new Admin('admin', '1234');
   public session: ACSession = new ACSession();
-  public team : Team;
 
   constructor() { }
 
@@ -36,6 +35,21 @@ export class DataService {
   loadPlayer () {
     window.localStorage.getItem(name);
     
+  }
+
+  addPlayerToTeam(player: Player, team: Team) {
+
+    for (let i = 0; i < this.session.teams.length; i++) {
+      const teamStored = this.session.teams[i];
+      for (let j = 0; j < teamStored.players.length; j++) {
+        const playerStored = teamStored.players[j];
+        if (player.identifier === playerStored.identifier) {
+          teamStored.players.splice(j, 1);
+        }
+      }
+    }
+
+    team.addPlayer(player);
   }
 
   /*savePlayerToTeam (){

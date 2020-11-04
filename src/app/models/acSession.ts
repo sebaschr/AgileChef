@@ -7,16 +7,18 @@
 import { Team } from './team';
 import { Sprint } from './sprint'
 
-
 export class ACSession {
 
     public playersMin = 0;
     public playersMax = 0;
     public objectives='';
-    public teams: { players: [] }[] = [];
+    public teams = [];
     public sprints: { name: string, planeamiento: number, ejecucion: number, revision: number, retrospectiva: number }[] = [];
 
     constructor() {
-
+        //HACK:
+        this.teams.push(new Team('1', 1));
+        this.teams.push(new Team('2', 2));
+        this.teams.push(new Team('3', 3));
     }
 }

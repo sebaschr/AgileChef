@@ -26,7 +26,6 @@ export class PlayerLoginComponent implements OnInit {
   }
 
   submit() {
-    console.log('PlayerLogin', this.PlayerForm.value);
     let playerInfo = this.PlayerForm.value;
     this.dataService.savePlayerToLocalStorage(playerInfo.name, playerInfo.isProductOwner);
     this.router.navigate(['/lobby']);
