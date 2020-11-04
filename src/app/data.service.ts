@@ -27,20 +27,11 @@ export class DataService {
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
     this.post('currentUser', this.currentPlayer);
-    this.loadSessionFromLocalStorage();
-  }
-
-  saveSessionToLocalStorage(session: ACSession) {
-    this.post('session', this.session);
-  }
-
-  loadSessionFromLocalStorage() {
-    this.session = new ACSession();
     this.get('session');
   }
 
-  loadPlayer() {
-    window.localStorage.getItem(name);
+  saveSessionToLocalStorage(session: ACSession) {
+    this.post('session', session);
   }
 
   addPlayerToTeam(player: Player, team: Team) {
@@ -58,7 +49,6 @@ export class DataService {
     team.addPlayer(player);
 
     let allData = this.get('currentUser');
-
     if(allData.identifier === player.identifier){
       this.currentPlayer.teamNumber = team.teamNumber;
       this.post('currentUser', player);

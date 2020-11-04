@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerLoginComponent } from '../player-login/player-login.component';
-import { Team } from '../models/team';
 import { DataService } from '../data.service';
-import { Router } from '@angular/router';
-import { Player } from '../models/player';
-import { Sprint } from '../models/sprint';
-
 
 
 @Component({
@@ -18,7 +12,7 @@ import { Sprint } from '../models/sprint';
 export class LobbyComponent implements OnInit {
 
   constructor(public dataService: DataService) { 
-
+    console.log(dataService.session)
   }
 
   public teamContainer = document.getElementsByClassName("team-container");

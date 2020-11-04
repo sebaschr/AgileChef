@@ -28,7 +28,6 @@ export class TeamComponent implements OnInit {
   addPlayerToTeam() {
     //TODO: Add current player to this team.
     this.dataService.addPlayerToTeam(this.dataService.currentPlayer, this.team);
-    console.log(this.dataService);
   }
 
 }
