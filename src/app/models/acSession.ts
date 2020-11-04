@@ -17,8 +17,8 @@ export class ACSession {
 
     constructor() {
         //HACK:
-        this.teams.push(new Team('1', 1));
-        this.teams.push(new Team('2', 2));
-        this.teams.push(new Team('3', 3));
+        this.teams.push(new Team(1));
+        this.teams.push(new Team(2));
+        this.teams.push(new Team(2));
     }
 }
