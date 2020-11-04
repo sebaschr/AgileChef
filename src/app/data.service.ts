@@ -26,11 +26,11 @@ export class DataService {
 
   saveSessionToLocalStorage(session: ACSession) {
     this.session = new ACSession();
-    localStorage.setItem('sprints',JSON.stringify(this.session.sprints));
-    localStorage.setItem('number of teams',JSON.stringify(this.session.teams.length));
-    localStorage.setItem('minPlayers',JSON.stringify(this.session.playersMin));
-    localStorage.setItem('maxPlayers',JSON.stringify(this.session.playersMax));
-    localStorage.setItem('objectives',JSON.stringify(this.session.objectives));
+    localStorage.setItem('session', JSON.stringify(this.session));
+    // localStorage.setItem('number of teams',JSON.stringify(this.session.teams.length));
+    // localStorage.setItem('minPlayers',JSON.stringify(this.session.playersMin));
+    // localStorage.setItem('maxPlayers',JSON.stringify(this.session.playersMax));
+    // localStorage.setItem('objectives',JSON.stringify(this.session.objectives));
     this.loadSessionFromLocalStorage();
   }
 

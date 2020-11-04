@@ -3,6 +3,7 @@ import { key } from 'firebase-key';
 
 export class Team {
 
+    public pizzas = [];
     public players = [];
     public identifier: String;
 
