@@ -11,16 +11,23 @@
                                 <mat-label>Number of Teams</mat-label>
                                 <input type="number" min="1"  [(ngModel)]="teamQuantity" oninput="this.value = Math.abs(this.value)" matInput formControlName="teamQuantity" placeholder="Number of teams">
                             </mat-form-field>
+                            <p class="error" *ngIf="errorTeams" id="errorTeams">Minimum of teams must be at least 1 </p>
                             <h3>Player Quantity</h3>
                             <mat-form-field>
                                 <mat-label>Min</mat-label>
                                 <input type="number" matInput value="minPlayers" formControlName="playerQuantityMin" [(ngModel)]="minPlayers" oninput="this.value = Math.abs(this.value)">
                             </mat-form-field>
+                            <p class="error" *ngIf="errorMin" id="errorMin">Minimum of players must be of at least 1 </p>
+
                             <br>
                             <mat-form-field>
                                 <mat-label>Max</mat-label>
                                 <input type="number" matInput formControlName="playerQuantityMax" [(ngModel)]="maxPlayers" oninput="this.value = Math.abs(this.value)">
                             </mat-form-field>
+
+                            <p class="error" *ngIf="errorMax" id="errorMax">Maximum of players must be of at least 1 </p>
+                            <p class="error" *ngIf="errorMinMax" id="errorMinMax">Maximum of players cannot be lower than the minimum </p>
+
                             <br>
                             <p>Sprint Quantity: <span id="sprintQuantity">{{sprintCounter}}</span></p>
                         </mat-card>
@@ -65,6 +72,9 @@
                                 <mat-label>Retrospectiva</mat-label>
                                 <input type="number" matInput formControlName="retrospectiveTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
+
+                            <p class="error" *ngIf="errorSprints" id="sprintError">Las etapas del sprint tienen un minimo de 1s</p>
+                            <p class="error" *ngIf="errorMinSprint" id="sprintNotSaved">Tiene que haber minimo un sprint guardado</p>
                             <button (click)="saveSprint()"  class="sprintBtn2 save" mat-raised-button color="secondary" [disabled]="firstSprint">Save</button>
                             <button (click)="removeSprint()" class="sprintBtn2 remove" mat-raised-button color="secondary" [disabled]="minReached">Remove</button>
                         </mat-card>
@@ -79,8 +89,11 @@
                     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10"
                         cdkAutosizeMaxRows="12"  formControlName="objectives"></textarea>
                 </mat-form-field>
+                <p class="error" *ngIf="errorObjectives" id="errorObjectives">This space cannot be blank </p>
+
             </div>
             <button mat-raised-button color="secondary" (click)="submitInfo()">Start</button>
+            <p class="error" *ngIf="errorTeams" id="errorTeams">Minimum of teams must be at least 1 </p>
 
         </form>
     </div>
