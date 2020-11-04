@@ -13,8 +13,6 @@ export class TeamComponent implements OnInit {
   @Input() team: Team;
 
   public sprint: Sprint;
-
-  public container;
   public topContainer = document.getElementsByClassName('team-top-row');
   public bottomContainer = document.getElementsByClassName('team-borrom-row');
 

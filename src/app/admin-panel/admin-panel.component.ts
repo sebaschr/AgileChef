@@ -214,7 +214,6 @@ export class AdminPanelComponent implements OnInit {
     var amountTeams=  this.form.value.teamQuantity;
     var playerQuantityMin=  this.form.value.playerQuantityMin;
     var playerQuantityMax=  this.form.value.playerQuantityMax;
-    var amountTeams=  this.form.value.teamQuantity;
     var ejecucion = this.form.value.executionTime;
     var planeamiento = this.form.value.planningTime;
     var revision = this.form.value.reviewingTime;

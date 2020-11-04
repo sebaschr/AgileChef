@@ -16,9 +16,5 @@ export class ACSession {
     public sprints: { name: string, planeamiento: number, ejecucion: number, revision: number, retrospectiva: number }[] = [];
 
     constructor() {
-        //HACK:
-        this.teams.push(new Team(1));
-        this.teams.push(new Team(2));
-        this.teams.push(new Team(2));
     }
 }
