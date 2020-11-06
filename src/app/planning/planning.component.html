@@ -6,7 +6,7 @@
     <title>Planning</title>
 </head>
 <body>
-    <mat-grid-list cols="2" rowheight="fit">
+    <!-- <mat-grid-list cols="2" rowheight="fit">
         <mat-grid-tile>
             <img src="../../assets/Timer.jpg" width="80%">
         </mat-grid-tile>
@@ -16,6 +16,18 @@
                 <countdown [config]="{leftTime: 60}"></countdown>
             </div>
         </mat-grid-tile>
-    </mat-grid-list>
+    </mat-grid-list> -->
+
+    <div class="container" fxLayout="row" fxLayoutAlign="space-evenly stretch">
+        <div fxLayout="column" style="overflow: hidden;">
+            <img src="../../assets/Timer.jpg" width="80%">
+        </div>
+        <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+            <div class="title" fxLayout="row">Planning</div>
+            <div class="timer" fxLayout="row"><countdown [config]="{leftTime: 60}"></countdown></div>
+        </div>
+    </div>
+
+
 </body>
 </html>
