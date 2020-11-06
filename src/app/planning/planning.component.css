@@ -1,0 +1,15 @@
+body{
+    height:100%;
+}
+
+.title{
+    color: black;
+}
+
+.timer{
+    background-color: #468966;
+    padding: 10%;
+    border-radius: 25px;
+    font-size: 10vh;
+    color: white;
+}

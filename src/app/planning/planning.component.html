@@ -1,1 +1,21 @@
-<p>planning works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning</title>
+</head>
+<body>
+    <mat-grid-list cols="2" rowheight="fit">
+        <mat-grid-tile>
+            <img src="../../assets/Timer.jpg" width="80%">
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="timer">
+                <div class="title" style="padding-bottom: 25%;">Planning</div>
+                <countdown [config]="{leftTime: 60}"></countdown>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</body>
+</html>

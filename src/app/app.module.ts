@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,9 +24,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
-// import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
 import { TeamComponent } from './team/team.component';
+import { CountdownModule } from 'ngx-countdown';
+// import { AngularFireModule } from '@angular/fire';
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
@@ -34,7 +34,8 @@ const appRoutes: Routes = [
   { path: 'adminLogin', component: AdminLoginComponent },
   { path: 'playerLogin', component: PlayerLoginComponent},
   { path: 'adminPanel', component: AdminPanelComponent },
-  { path: 'lobby', component: LobbyComponent}
+  { path: 'lobby', component: LobbyComponent},
+  { path: 'planning', component: PlanningComponent}
 ];
 
 @NgModule({
@@ -67,6 +68,7 @@ const appRoutes: Routes = [
     MatIconModule,
     MatSelectModule,
     RouterModule.forRoot(appRoutes),
+    CountdownModule
     // AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [
