@@ -28,6 +28,8 @@ import { TeamComponent } from './team/team.component';
 import { CountdownModule } from 'ngx-countdown';
 import { SummaryComponent } from './summary/summary.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChartsModule } from 'ng2-charts';
+import { ResultsGraphComponent } from './graphs/results-graph.component';
 // import { AngularFireModule } from '@angular/fire';
 
 const appRoutes: Routes = [
@@ -39,7 +41,8 @@ const appRoutes: Routes = [
   { path: 'lobby', component: LobbyComponent},
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
-  { path: 'summary', component: SummaryComponent}
+  { path: 'summary', component: SummaryComponent},
+  { path: 'charts', component: ResultsGraphComponent}
 ];
 
 @NgModule({
@@ -54,7 +57,8 @@ const appRoutes: Routes = [
     PlayerLoginComponent,
     ResultsComponent,
     TeamComponent,
-    SummaryComponent
+    SummaryComponent,
+    ResultsGraphComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,8 @@ const appRoutes: Routes = [
     MatSelectModule,
     RouterModule.forRoot(appRoutes),
     CountdownModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ChartsModule
     // AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [
