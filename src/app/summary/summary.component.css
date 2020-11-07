@@ -6,22 +6,32 @@ body{
     display: flex;
 }
 
+
+
 .container{
     background-color: white;
-    width: 80%;
+    width: 90%;
     margin: auto;
     margin: 10%;
     padding: 2% 5% 2% 5%;
-
 }
-
+.sprintResult{
+    margin:0 20px;
+    width:15%;
+}
+.graph{
+    height:200px;
+    background-color:bisque;
+    margin:20px 0;
+}
 .teamResults mat-card{
-    width:100px;
+    width:80%;
     padding:20px;
     margin:0;
 }
 
 .timer{
+    margin-top:15%;
     background-color: #0C86c2;
     padding: 15px 30px;
     border-radius: 5px;
@@ -31,8 +41,12 @@ body{
     display:block;
 }
 
+table tr td{
+    width:400px;
+}
+
 .timer-container{
     display:inline-flex;
-    margin:0;
+    margin:20px 0;
     padding:0;
 }
