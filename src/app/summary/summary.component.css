@@ -14,3 +14,25 @@ body{
     padding: 2% 5% 2% 5%;
 
 }
+
+.teamResults mat-card{
+    width:100px;
+    padding:20px;
+    margin:0;
+}
+
+.timer{
+    background-color: #0C86c2;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 3vh;
+    color: white;
+    align-self: center;
+    display:block;
+}
+
+.timer-container{
+    display:inline-flex;
+    margin:0;
+    padding:0;
+}

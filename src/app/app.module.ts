@@ -41,8 +41,7 @@ const appRoutes: Routes = [
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
   { path: 'summary', component: SummaryComponent},
-  { path: 'game', component: GameComponent}
-
+  { path: 'game', component: GameComponent},
 ];
 
 @NgModule({
@@ -58,7 +57,7 @@ const appRoutes: Routes = [
     ResultsComponent,
     TeamComponent,
     SummaryComponent,
-    ExecutionComponent
+    ExecutionComponent,
   ],
   imports: [
     BrowserModule,
