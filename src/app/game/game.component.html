@@ -1,1 +1,76 @@
-<p>game works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning</title>
+</head>
+<body>
+    <div class="container-bg">
+        <div class="outer-container">
+            <div class="queue">
+                <h1>Cola</h1>
+
+                <mat-card>
+                    <img src="../../assets/pizza1.png" alt="">
+                </mat-card>
+
+                <mat-card>
+                    <img src="../../assets/pizza1.png" alt="">
+                </mat-card><mat-card>
+                    <img src="../../assets/pizza1.png" alt="">
+                </mat-card><mat-card>
+                    <img src="../../assets/pizza1.png" alt="">
+                </mat-card><mat-card>
+                    <img src="../../assets/pizza1.png" alt="">
+                </mat-card>
+
+            </div>
+
+            <div class="gameScreen">
+                <div class="gameDiv"></div>
+                <div class="menu">
+                    <button class="selected">Jose(PO)</button>
+                    <button>Juan</button>
+                    <button>Maddy</button>
+                    <div class="ingredients">
+                        <div class="ingredient">
+                            <img src="../../assets/pizza1.png" alt="">
+                        </div>
+
+                        <div class="ingredient">
+                            <img src="../../assets/pizza1.png" alt="">
+                        </div>
+
+                        <div class="ingredient">
+                            <img src="../../assets/pizza1.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="finishScreen">
+                <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+                    <div class="timer" fxLayout="row"><countdown [config]="{leftTime: 60}"></countdown></div>
+                </div>
+
+                <div class="oven">
+
+                </div>
+
+                <div class="completed">
+
+                </div>
+
+                <div class="trash">
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+     
+</body>
+</html>

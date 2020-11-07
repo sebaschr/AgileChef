@@ -28,6 +28,7 @@ import { TeamComponent } from './team/team.component';
 import { CountdownModule } from 'ngx-countdown';
 import { SummaryComponent } from './summary/summary.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ExecutionComponent } from './execution/execution.component';
 // import { AngularFireModule } from '@angular/fire';
 
 const appRoutes: Routes = [
@@ -39,7 +40,9 @@ const appRoutes: Routes = [
   { path: 'lobby', component: LobbyComponent},
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
-  { path: 'summary', component: SummaryComponent}
+  { path: 'summary', component: SummaryComponent},
+  { path: 'game', component: GameComponent}
+
 ];
 
 @NgModule({
@@ -54,7 +57,8 @@ const appRoutes: Routes = [
     PlayerLoginComponent,
     ResultsComponent,
     TeamComponent,
-    SummaryComponent
+    SummaryComponent,
+    ExecutionComponent
   ],
   imports: [
     BrowserModule,

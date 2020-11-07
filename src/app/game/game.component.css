@@ -1,0 +1,102 @@
+.container-bg{
+    padding:0;
+    margin:0;
+    height:100%;
+    background: url('../../assets/WhiteOrange BG.jpg');
+    background-size: contain;
+    background-repeat: round;
+    display: flex;
+}
+
+.outer-container{
+    margin:auto;
+    padding:10px;
+    background:white;
+    width:90%;
+    height:90%;
+}
+
+.outer-container >div {
+    float:left;
+    height:100%;
+   
+}
+.queue{
+    width:15%;
+    text-align: center;
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.queue mat-card{
+    width:75%;
+    margin:20px auto;
+    height:180px;
+    object-fit: cover;    
+}
+
+mat-card img{
+    margin-top:0;
+}
+
+.gameScreen{
+    width:65%;
+}
+
+.gameDiv{
+    height:75%;
+    width:100%;
+    background-color:white;
+}
+
+.menu{
+    width:80%;
+    margin:auto;
+    background-color:white;
+
+}
+.ingredients{
+    margin: auto;
+    padding:0 20px;
+    border:solid 1px grey;
+}
+.ingredient{
+    display: inline-block
+}
+.ingredient img{
+    margin:10px 0;
+    width:70%;
+}
+
+.menu button{
+    background-color:#fff;
+    color:#0C86c2;
+    border:solid 1px grey;
+    font-size:20px;
+    padding:5px 10px;
+    width:150px;
+}
+.menu .selected{
+    background-color:#0C86c2;
+    color:#fff;
+}
+.finishScreen{
+    background-color: thistle;
+    width:20%;
+}
+
+.timer{
+    background-color: #0C86c2;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 3vh;
+    color: white;
+    align-self: center;
+}
+
+.container{
+    background-color: white;
+    width: 25px;
+    margin: auto;
+}
+
