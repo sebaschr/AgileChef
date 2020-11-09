@@ -1,76 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planning</title>
 </head>
+
 <body>
+
     <div class="container-bg">
         <div class="outer-container">
-            <div class="queue">
-                <h1>Cola</h1>
+            <h1>Game Screen</h1>
+            <div class="gameScreen" fxLayout="column" style="width: 100%;" fxLayoutAlign="stretch center">
+                <div fxLayout="row" style="width: 100%;" fxLayoutAlign="stretch">
 
-                <mat-card>
-                    <img src="../../assets/pizza1.png" alt="">
-                </mat-card>
+                    <div class="queue">
+                        <h2>Queue</h2>
+                        <mat-card *ngFor="let p of pizzaList; let i = index;" cdkDrag class='pizza'
+                            (click)="moveOutofQueue(p,$event)" [class.active]="p.editing">
+                            <p>{{p.name}}</p>
+                            <img src="{{p.imgSrc}}" alt="">
+                        </mat-card>
 
-                <mat-card>
-                    <img src="../../assets/pizza1.png" alt="">
-                </mat-card><mat-card>
-                    <img src="../../assets/pizza1.png" alt="">
-                </mat-card><mat-card>
-                    <img src="../../assets/pizza1.png" alt="">
-                </mat-card><mat-card>
-                    <img src="../../assets/pizza1.png" alt="">
-                </mat-card>
+                    </div>
+                    <div class="gameScreen">
+                        <div class="gameCanvas">
 
-            </div>
-
-            <div class="gameScreen">
-                <div class="gameDiv"></div>
-                <div class="menu">
-                    <button class="selected">Jose(PO)</button>
-                    <button>Juan</button>
-                    <button>Maddy</button>
-                    <div class="ingredients">
-                        <div class="ingredient">
-                            <img src="../../assets/pizza1.png" alt="">
                         </div>
+                        <div class="menu">
 
-                        <div class="ingredient">
-                            <img src="../../assets/pizza1.png" alt="">
-                        </div>
+                            <button class="player" *ngFor="let n of playerList; let i = index;">{{n.name}}</button>
 
-                        <div class="ingredient">
-                            <img src="../../assets/pizza1.png" alt="">
+
+                            <div class="ingredients-list ">
+                                <div cdkDrag class='ingredient' 
+                            *ngFor="let ing of ingredientList; let i = index;" (click)='prepareIngredient(ing,$event)' style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}}' (mouseup)="ingredientPlacement(ing,$event)">
+                                    <mat-progress-bar mode="determinate" value="{{ing.progress}}" [color]="color">
+
+                                    </mat-progress-bar>
+                                    <img src="{{ing.activeImg}}">
+                                </div>
+
+
+                            </div>
                         </div>
+                    </div>
+                    <div class="readyPanel">
+                        <h2>Oven</h2>
+
                     </div>
                 </div>
             </div>
 
-            <div class="finishScreen">
-                <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
-                    <div class="timer" fxLayout="row"><countdown [config]="{leftTime: 60}"></countdown></div>
-                </div>
-
-                <div class="oven">
-
-                </div>
-
-                <div class="completed">
-
-                </div>
-
-                <div class="trash">
-                    
-                </div>
-
-            </div>
         </div>
     </div>
 
 
-     
 </body>
+
 </html>

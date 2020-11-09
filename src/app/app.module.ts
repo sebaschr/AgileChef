@@ -29,6 +29,9 @@ import { CountdownModule } from 'ngx-countdown';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ExecutionComponent } from './execution/execution.component';
 import { RetrospectiveComponent } from './retrospective/retrospective.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 // import { AngularFireModule } from '@angular/fire';
 
 const appRoutes: Routes = [
@@ -41,7 +44,8 @@ const appRoutes: Routes = [
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
   { path: 'game', component: GameComponent},
-  { path:'retrospective', component:RetrospectiveComponent}
+  { path:'retrospective', component:RetrospectiveComponent},
+  
 ];
 
 @NgModule({
@@ -77,7 +81,10 @@ const appRoutes: Routes = [
     MatSelectModule,
     RouterModule.forRoot(appRoutes),
     CountdownModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    DragDropModule,
+    MatProgressBarModule,
+    
     // AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [
