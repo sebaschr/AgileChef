@@ -32,6 +32,7 @@ import { RetrospectiveComponent } from './retrospective/retrospective.component'
 import { ChartsModule } from 'ng2-charts';
 import { ResultsGraphComponent } from './graphs/results-graph.component';
 // import { AngularFireModule } from '@angular/fire';
+// NEW
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
