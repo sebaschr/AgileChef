@@ -6,6 +6,10 @@ body{
     display: flex;
 }
 
+table{
+    margin: auto;
+}
+
 .container{
     background-color: white;
     width: 80%;
@@ -13,4 +17,13 @@ body{
     margin: 10%;
     padding: 2% 5% 2% 5%;
 
+}
+
+.timer{
+    align-self: center;
+    background-color: #0C86c2;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 3vh;
+    color: white;
 }
