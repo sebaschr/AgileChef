@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule}  from '@angular/material/grid-list'; 
+import { MatListModule } from '@angular/material/list'; 
 import { MatCardModule } from '@angular/material/card'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatListModule,
     MatCardModule,
     ReactiveFormsModule,
     FormsModule,
