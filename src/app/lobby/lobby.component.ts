@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { DataService } from '../data.service';
 
 export class LobbyComponent implements OnInit {
 
-  constructor(public dataService: DataService) { 
+  constructor(public dataService: DataService, private router: Router) { 
     console.log(dataService.session)
   }
 
@@ -23,6 +24,14 @@ export class LobbyComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  startGame() {
+    this.router.navigate(['/planning']);
+  }
+
+  returnToPlayerLogIn() {
+    this.router.navigate(['/playerLogin']);
   }
 
 }
