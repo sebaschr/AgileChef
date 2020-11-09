@@ -10,7 +10,10 @@ import { GameComponent } from './game/game.component';
 import { LandingComponent } from './landing/landing.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { PlayerLoginComponent } from './player-login/player-login.component';
+import { TeamComponent } from './team/team.component';
+import { ResultsGraphComponent } from './graphs/results-graph.component';
 import { ResultsComponent } from './results/results.component';
+import { SummaryComponent } from './summary/summary.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,11 +28,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
-import { TeamComponent } from './team/team.component';
 import { CountdownModule } from 'ngx-countdown';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
-import { ResultsGraphComponent } from './graphs/results-graph.component';
+
 // import { AngularFireModule } from '@angular/fire';
 // NEW APP
 
@@ -42,8 +44,9 @@ const appRoutes: Routes = [
   { path: 'lobby', component: LobbyComponent},
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
-  { path: 'game', component: GameComponent},
-  { path: 'charts', component: ResultsGraphComponent}
+  { path: 'charts', component: ResultsGraphComponent},
+  { path: 'summary', component: SummaryComponent},
+  { path: 'game', component: GameComponent}
 ];
 
 @NgModule({
@@ -52,13 +55,14 @@ const appRoutes: Routes = [
     AdminPanelComponent,
     LobbyComponent,
     PlanningComponent,
-    GameComponent,
     LandingComponent,
     AdminLoginComponent,
     PlayerLoginComponent,
     ResultsComponent,
+    ResultsGraphComponent,
     TeamComponent,
-    ResultsGraphComponent
+    SummaryComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
