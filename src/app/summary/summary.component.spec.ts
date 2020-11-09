@@ -23,3 +23,4 @@ describe('SummaryComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
