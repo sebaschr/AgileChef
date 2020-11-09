@@ -27,8 +27,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
 import { TeamComponent } from './team/team.component';
 import { CountdownModule } from 'ngx-countdown';
-import { SummaryComponent } from './summary/summary.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RetrospectiveComponent } from './retrospective/retrospective.component';
 import { ChartsModule } from 'ng2-charts';
 import { ResultsGraphComponent } from './graphs/results-graph.component';
 // import { AngularFireModule } from '@angular/fire';
@@ -42,7 +42,8 @@ const appRoutes: Routes = [
   { path: 'lobby', component: LobbyComponent},
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
-  { path: 'summary', component: SummaryComponent},
+  { path: 'game', component: GameComponent},
+  { path:'retrospective', component:RetrospectiveComponent},
   { path: 'charts', component: ResultsGraphComponent}
 ];
 
@@ -58,7 +59,7 @@ const appRoutes: Routes = [
     PlayerLoginComponent,
     ResultsComponent,
     TeamComponent,
-    SummaryComponent,
+    RetrospectiveComponent,
     ResultsGraphComponent
   ],
   imports: [
