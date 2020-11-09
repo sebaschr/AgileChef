@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExecutionComponent } from './execution.component';
+import { SummaryComponent } from './summary.component';
 
-describe('ExecutionComponent', () => {
-  let component: ExecutionComponent;
-  let fixture: ComponentFixture<ExecutionComponent>;
+describe('SummaryComponent', () => {
+  let component: SummaryComponent;
+  let fixture: ComponentFixture<SummaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExecutionComponent ]
+      declarations: [ SummaryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExecutionComponent);
+    fixture = TestBed.createComponent(SummaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -23,3 +23,6 @@ describe('ExecutionComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+//NEW TS
+

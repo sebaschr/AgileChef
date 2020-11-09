@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RetrospectiveComponent } from './retrospective.component';
+import { ResultsGraphComponent } from './results-graph.component';
 
-describe('RetrospectiveComponent', () => {
-  let component: RetrospectiveComponent;
-  let fixture: ComponentFixture<RetrospectiveComponent>;
+describe('ResultsGraphComponent', () => {
+  let component: ResultsGraphComponent;
+  let fixture: ComponentFixture<ResultsGraphComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RetrospectiveComponent ]
+      declarations: [ ResultsGraphComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RetrospectiveComponent);
+    fixture = TestBed.createComponent(ResultsGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

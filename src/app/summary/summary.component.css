@@ -1,22 +1,18 @@
 body{
     height:100%;
-    background: url('../../assets/Brown BG.jpg');
+    background: url('../../assets/Green BG.jpg');
     background-size: contain;
     background-repeat: round;
     display: flex;
 }
 
-table{
-    margin: auto;
-}
-
 .container{
-    background-color: white;
-    width: 80%;
-    margin: auto;
     margin: 10%;
     padding: 2% 5% 2% 5%;
+}
 
+.titleBox{
+    text-align: center;
 }
 
 .timer{

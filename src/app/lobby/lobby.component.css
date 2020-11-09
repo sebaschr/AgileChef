@@ -16,10 +16,10 @@ body {
 }
 
 .left-section {
-    height: 100%;
     width: 90%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
 }
 
@@ -77,51 +77,6 @@ body {
     margin: 50px 0px 0px;
     font-size: 40px;
     background: #000000;
-}
-
-.team-card-one {
-    background-color: #E21818;
-}
-
-.team-card-one h2 {
-    border: 1px solid #B00020;
-    background-color: #B00020;
-}
-
-.team-card-two {
-    background-color: #E96902;
-}
-
-.team-card-two h2 {
-    border: 1px solid #FF892B;
-    background-color: #FF892B;
-}
-
-.team-card-three {
-    background-color: #7C9201;
-}
-
-.team-card-three h2 {
-    border: 1px solid #485309;
-    background-color: #485309;
-}
-
-.team-card-four {
-    background-color: #F3B23D;
-}
-
-.team-card-four h2 {
-    border: 1px solid #FCA100;
-    background-color: #FCA100;
-}
-
-.team-card-five {
-    background-color: #69A0A3;
-}
-
-.team-card-five h2 {
-    border: 1px solid #25A5A4;
-    background-color: #25A5A4;
 }
 
 .objectives-card {
