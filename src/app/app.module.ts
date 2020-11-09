@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule}  from '@angular/material/grid-list'; 
+import { MatListModule } from '@angular/material/list'; 
 import { MatCardModule } from '@angular/material/card'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,9 +27,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { DataService } from './data.service';
 import { TeamComponent } from './team/team.component';
 import { CountdownModule } from 'ngx-countdown';
+import { SummaryComponent } from './summary/summary.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ExecutionComponent } from './execution/execution.component';
-import { RetrospectiveComponent } from './retrospective/retrospective.component';
+import { ChartsModule } from 'ng2-charts';
+import { ResultsGraphComponent } from './graphs/results-graph.component';
 // import { AngularFireModule } from '@angular/fire';
 
 const appRoutes: Routes = [
@@ -40,8 +42,8 @@ const appRoutes: Routes = [
   { path: 'lobby', component: LobbyComponent},
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
-  { path: 'game', component: GameComponent},
-  { path:'retrospective', component:RetrospectiveComponent}
+  { path: 'summary', component: SummaryComponent},
+  { path: 'charts', component: ResultsGraphComponent}
 ];
 
 @NgModule({
@@ -56,8 +58,8 @@ const appRoutes: Routes = [
     PlayerLoginComponent,
     ResultsComponent,
     TeamComponent,
-    ExecutionComponent,
-    RetrospectiveComponent
+    SummaryComponent,
+    ResultsGraphComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatListModule,
     MatCardModule,
     ReactiveFormsModule,
     FormsModule,
@@ -77,7 +80,8 @@ const appRoutes: Routes = [
     MatSelectModule,
     RouterModule.forRoot(appRoutes),
     CountdownModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ChartsModule
     // AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [

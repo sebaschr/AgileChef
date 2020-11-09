@@ -8,100 +8,105 @@
 </head>
 
 <body>
-    <div class="container sprints" fxLayout="column" fxLayoutAlign="stretch">
-        <div fxLayout="row" style="width: 100%;" fxLayoutAlign="stretch center">
-            <div class="sprintResult">
-                <div class="graph">
-                    
-                </div>
-                <div class="teamResults">
-                    <mat-card>
-                        <mat-card-title>Team 1</mat-card-title>
-                        <table>
-                            <tr>
-                                <td>Exitosos</td>
-                                <td>3</td>
-
-                            </tr>
-
-                            <tr>
-                                <td>Fallidos</td>
-                                <td>6</td>
-
-                            </tr>
-
-                            <tr>
-                                <td>En Proceso</td>
-                                <td>4</td>
-                            </tr>
-                        </table>
-
-                    </mat-card>
-                </div>
+    <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+        <mat-card>
+            <h1 style="text-align: center;">Results</h1>
+        </mat-card>
+        
+        <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
+            <div fxLayout="column">
+                <results-graph></results-graph>
             </div>
-
-            <div class="sprintResult">
-                <div class="graph"></div>
-                <div class="teamResults">
-                    <mat-card>
-                        <mat-card-title>Team 2</mat-card-title>
-                        <table>
-                            <tr>
-                                <td>Exitosos</td>
-                                <td>3</td>
-
-                            </tr>
-
-                            <tr>
-                                <td>Fallidos</td>
-                                <td>6</td>
-
-                            </tr>
-
-                            <tr>
-                                <td>En Proceso</td>
-                                <td>4</td>
-                            </tr>
-                        </table>
-
-                    </mat-card>
-                </div>
+            <div fxLayout="column">
+                <results-graph></results-graph>
             </div>
-
-            <div class="sprintResult">
-                <div class="graph"></div>
-                <div class="teamResults">
-                    <mat-card>
-                        <mat-card-title>Team 3</mat-card-title>
-                        <table>
-                            <tr>
-                                <td>Exitosos</td>
-                                <td>3</td>
-
-                            </tr>
-
-                            <tr>
-                                <td>Fallidos</td>
-                                <td>6</td>
-
-                            </tr>
-
-                            <tr>
-                                <td>En Proceso</td>
-                                <td>4</td>
-                            </tr>
-                        </table>
-
-                    </mat-card>
-                </div>
+            <div fxLayout="column">
+                <results-graph></results-graph>
+            </div>
+            <div fxLayout="column">
+                <results-graph></results-graph>
             </div>
         </div>
-
-        <div class="timer-container">
-            <div class="timer" fxLayout="row">
-                <countdown [config]="{leftTime: 60}"></countdown>
+        <div fxLayout="row" fxLayoutAlign="space-around stretch">
+            <div fxLayout="column" style="width: 100%; padding-left: 1%; padding-right: 1%;">
+                <mat-card style="text-align: center;">
+                    <mat-card-title>Team 1</mat-card-title>
+                    <table>
+                        <tr>
+                            <td>Exitosos</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Fallidos</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>En Proceso</td>
+                            <td>4</td>
+                        </tr>
+                    </table>
+                </mat-card>
             </div>
-    
+            <div fxLayout="column" style="width: 100%; padding-left: 1%; padding-right: 1%;">
+                <mat-card style="text-align: center;">
+                    <mat-card-title>Team 2</mat-card-title>
+                    <table>
+                        <tr>
+                            <td>Exitosos</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Fallidos</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>En Proceso</td>
+                            <td>4</td>
+                        </tr>
+                    </table>
+                </mat-card>
+            </div>
+            <div fxLayout="column" style="width: 100%; padding-left: 1%; padding-right: 1%;">
+                <mat-card style="text-align: center;">
+                    <mat-card-title>Team 3</mat-card-title>
+                    <table>
+                        <tr>
+                            <td>Exitosos</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Fallidos</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>En Proceso</td>
+                            <td>4</td>
+                        </tr>
+                    </table>
+                </mat-card>
+            </div>
+            <div fxLayout="column" style="width: 100%; padding-left: 1%; padding-right: 1%;">
+                <mat-card style="text-align: center;">
+                    <mat-card-title>Team 4</mat-card-title>
+                    <table>
+                        <tr>
+                            <td>Exitosos</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Fallidos</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>En Proceso</td>
+                            <td>4</td>
+                        </tr>
+                    </table>
+                </mat-card>
+            </div>
+        </div>
+        <div class="timer" fxLayout="row" fxLayoutAlign="center center">
+            <countdown [config]="{leftTime: 60}"></countdown>
         </div>
     </div>
 
