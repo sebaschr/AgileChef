@@ -11,7 +11,7 @@ import { LandingComponent } from './landing/landing.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { PlayerLoginComponent } from './player-login/player-login.component';
 import { TeamComponent } from './team/team.component';
-import { ResultsGraphComponent } from './graphs/results-graph.component';
+import { ResultsGraphComponent } from './results-graph/results-graph.component';
 import { ResultsComponent } from './results/results.component';
 import { SummaryComponent } from './summary/summary.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,8 +31,9 @@ import { DataService } from './data.service';
 import { CountdownModule } from 'ngx-countdown';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChartsModule } from 'ng2-charts';
+import { SummaryGraphComponent } from './summary-graph/summary-graph.component';
 
 // import { AngularFireModule } from '@angular/fire';
 // NEW APP
@@ -46,8 +47,7 @@ const appRoutes: Routes = [
   { path: 'lobby', component: LobbyComponent},
   { path: 'planning', component: PlanningComponent},
   { path: 'results', component: ResultsComponent},
-  { path: 'game', component: GameComponent},
-  { path: 'charts', component: ResultsGraphComponent},
+  { path: 'resultsGraph', component: ResultsGraphComponent},
   { path: 'summary', component: SummaryComponent},
   { path: 'game', component: GameComponent}
 ];
@@ -65,7 +65,8 @@ const appRoutes: Routes = [
     ResultsGraphComponent,
     TeamComponent,
     SummaryComponent,
-    GameComponent
+    GameComponent,
+    SummaryGraphComponent
   ],
   imports: [
     BrowserModule,
