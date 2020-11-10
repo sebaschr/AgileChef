@@ -14,6 +14,7 @@ import { TeamComponent } from './team/team.component';
 import { ResultsGraphComponent } from './results-graph/results-graph.component';
 import { ResultsComponent } from './results/results.component';
 import { SummaryComponent } from './summary/summary.component';
+import { SummaryGraphComponent } from './summary-graph/summary-graph.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +34,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChartsModule } from 'ng2-charts';
-import { SummaryGraphComponent } from './summary-graph/summary-graph.component';
 
 // import { AngularFireModule } from '@angular/fire';
 // NEW APP
@@ -49,6 +49,7 @@ const appRoutes: Routes = [
   { path: 'results', component: ResultsComponent},
   { path: 'resultsGraph', component: ResultsGraphComponent},
   { path: 'summary', component: SummaryComponent},
+  { path: 'summaryGraph', component: SummaryGraphComponent},
   { path: 'game', component: GameComponent}
 ];
 
@@ -65,8 +66,9 @@ const appRoutes: Routes = [
     ResultsGraphComponent,
     TeamComponent,
     SummaryComponent,
-    GameComponent,
-    SummaryGraphComponent
+    SummaryGraphComponent,
+    GameComponent
+
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,6 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     DragDropModule,
     MatProgressBarModule,
-    
     ChartsModule
     // AngularFireModule.initializeApp(environment.firebase)
   ],

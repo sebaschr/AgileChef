@@ -20,7 +20,7 @@ export class ResultsGraphComponent implements OnInit {
       }]
   }
   };
-  public barChartLabels: Label[] = ['Team 1'];
+  public barChartLabels: string[] = ['Succesful', 'Failed', 'In Progress'];
   public barChartType: ChartType = 'bar';
   public barChartLegend = false;
   public barChartPlugins = [];
@@ -29,15 +29,11 @@ export class ResultsGraphComponent implements OnInit {
     {
       barPercentage: 0.5,
       categoryPercentage: 0.5,
-      data: [3], label: 'Succesful' }, 
-    { 
-      barPercentage: 0.5,
-      categoryPercentage: 0.5,
-      data: [6], label: 'Failed' },
-    { 
-      barPercentage: 0.5,
-      categoryPercentage: 0.5,
-      data: [4], label: 'In Progress'}
+      data: [3, 6, 4], 
+      backgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
+      hoverBackgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
+      stack: 'Team 1'
+    }
 ];
 
   constructor() { }
