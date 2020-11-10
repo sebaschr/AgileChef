@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Team } from '../models/team';
 import { Sprint } from '../models/sprint';
 import { DataService } from '../data.service';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 @Component({
   selector: 'team-component',
@@ -13,8 +14,6 @@ export class TeamComponent implements OnInit {
   @Input() team: Team;
 
   public sprint: Sprint;
-  public topContainer = document.getElementsByClassName('team-top-row');
-  public bottomContainer = document.getElementsByClassName('team-borrom-row');
 
   public counter =+ 1;
 
@@ -31,7 +30,13 @@ export class TeamComponent implements OnInit {
 
   addPlayerToTeam() {
     //TODO: Add current player to this team.
+
     this.dataService.addPlayerToTeam(this.dataService.currentPlayer, this.team);
+    
+  }
+
+  removePlayerFromTeam() {
+    this.dataService.removePlayerFromTeam(this.dataService.currentPlayer, this.team);
   }
 
 }

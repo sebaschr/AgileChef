@@ -16,9 +16,11 @@ export class ACSession {
 
     constructor() {
 
-    // //HACK:
-    //     this.teams.push(new Team(1));
-    //     this.teams.push(new Team(2));
+        //this.playersMin = 2;
+        //this.playersMax = 5;
+        //HACK:
+        this.teams.push(new Team(1));
+        this.teams.push(new Team(2));
 
     }
 }

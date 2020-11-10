@@ -3,6 +3,7 @@ import { Admin } from './models/admin';
 import { ACSession } from './models/acSession';
 import { Player } from './models/player';
 import { Team } from './models/team';
+import { templateSourceUrl } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +33,19 @@ export class DataService {
 
   saveSessionToLocalStorage(session: ACSession) {
     this.post('session', session);
+    this.get('teams');
+    this.post('teams', this.session.teams);
+  }
+
+  loadSessionFromLocalStorage(){
+    localStorage.getItem('session');
   }
 
   addPlayerToTeam(player: Player, team: Team) {
 
-    /*for (let i = 0; i < this.session.teams.length; i++) {
+    this.get('teams');
+
+    for (let i = 0; i < this.session.teams.length; i++) {
       const teamStored = this.session.teams[i];
       for (let j = 0; j < teamStored.players.length; j++) {
         const playerStored = teamStored.players[j];
@@ -44,9 +53,9 @@ export class DataService {
           teamStored.players.splice(j, 1);
         }
       }
-    }*/
+    }
 
-    //team.addPlayer(player);
+    team.addPlayer(player);
 
     let allData = this.get('currentUser');
     if(allData.identifier === player.identifier){
@@ -56,4 +65,17 @@ export class DataService {
       console.log('false');
     }
   }
+
+  removePlayerFromTeam(player: Player, team: Team) {
+    for (let i = 0; i < this.session.teams.length; i++) {
+      const teamStored = this.session.teams[i];
+      for (let j = 0; j < teamStored.players.length; j++) {
+        const playerStored = teamStored.players[j];
+        if (player.identifier === playerStored.identifier) {
+          teamStored.players.splice(j, 1);
+        }
+      }
+    }
+  }
+
 }
