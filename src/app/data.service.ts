@@ -34,7 +34,6 @@ export class DataService {
   saveSessionToLocalStorage(session: ACSession) {
     this.post('session', session);
     this.get('teams');
-    this.post('teams', this.session.teams);
   }
 
   loadSessionFromLocalStorage(){
@@ -57,13 +56,13 @@ export class DataService {
 
     team.addPlayer(player);
 
-    let allData = this.get('currentUser');
+    /*let allData = this.get('currentUser');
     if(allData.identifier === player.identifier){
       this.currentPlayer.teamNumber = team.teamNumber;
       this.post('currentUser', player);
     }else{
       console.log('false');
-    }
+    }*/
   }
 
   removePlayerFromTeam(player: Player, team: Team) {
