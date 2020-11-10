@@ -20,18 +20,19 @@
 }
 
 .queue{
-    border:solid black 1px;
     width:192px;
     height:85vh;
+    align-items: center;
+    justify-content: center;
+    background-color: blanchedalmond;;
+
 }
 
 .readyPanel{
-    background-color: blanchedalmond;;
     width:20%;
     height:85vh;
 }
 .gameScreen{
-    background-color: #FFF9E9;
     width:1344px;
     height:85vh;  
 }
@@ -40,7 +41,7 @@
     width:100%;
     background-color:white;
     background: url('https://i.pinimg.com/originals/75/75/54/757554139830b5c5e88cda409a5087ab.jpg');
-    background-size: cover;
+    background-size: contain;
 }
 .menu{
     margin:10px 25px;
@@ -80,8 +81,8 @@
     text-align:center;
     width:120px;
     height:120px;
-    position: absolute;
     overflow-x:30;
+    margin:10px auto;
 }
 
 .pizza img{
@@ -112,7 +113,9 @@
 /*  */
 
 .readyQueue{
-    background-color:red;
+    border: solid black 1px;
+    background-image: url('https://i.pinimg.com/originals/a8/82/40/a88240e79680a7a6b31bdccdfd753c83.gif');
+    background-size: contain;
     width:90%;
     height:420px;
     margin:15px auto;

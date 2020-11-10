@@ -30,19 +30,20 @@
                         </div>
                         <div class="menu">
 
-                            <button class="player" *ngFor="let n of playerList; let i = index;">{{n.name}}</button>
+                            <button class="player" *ngFor="let n of playerList; let i = index;"
+                                (click)='showIngredients(n.name)'>{{n.name}}</button>
 
 
                             <div class="ingredients-list ">
-                                <div cdkDrag class='ingredient' 
-                            *ngFor="let ing of ingredientList; let i = index;" (click)='prepareIngredient(ing,$event)' style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}}' (mouseup)="ingredientPlacement(ing,$event)">
+                                <div cdkDrag class='ingredient' *ngFor="let ing of activePlayer.ing; let i = index;"
+                                    (click)='prepareIngredient(ing,$event)'
+                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'
+                                    (mouseup)="ingredientPlacement(ing,$event)">
                                     <mat-progress-bar mode="determinate" value="{{ing.progress}}" [color]="color">
 
                                     </mat-progress-bar>
                                     <img src="{{ing.activeImg}}">
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

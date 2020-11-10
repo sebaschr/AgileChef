@@ -30,8 +30,10 @@ export class GameComponent implements OnInit {
       width: '100px',
       height: '100px',
       onpizza: 'block',
+      visibility: 'visible',
       position: [{
-      }]
+      }],
+      price: 100
     },
     {
       name: 'Tomato',
@@ -42,9 +44,11 @@ export class GameComponent implements OnInit {
       width: '100px',
       height: '100px',
       onPizza: 'block',
+      visibility: 'visible',
       position: [{
 
-      }]
+      }],
+      price: 100
     },
     {
       name: 'Pepper',
@@ -55,8 +59,10 @@ export class GameComponent implements OnInit {
       width: '100px',
       height: '100px',
       onPizza: 'block',
-      position: [{
-      }]
+      visibility: 'visible',
+            position: [{
+      }],
+      price: 100
     },
     {
       name: 'Mushroom',
@@ -80,9 +86,11 @@ export class GameComponent implements OnInit {
       width: '100px',
       height: '100px',
       onPizza: 'block',
+      visibility: 'visible',
       position: [{
 
-      }]
+      }],
+      price: 100
     },
     {
       name: 'Cheese',
@@ -93,8 +101,11 @@ export class GameComponent implements OnInit {
       width: '100px',
       height: '100px',
       onpizza: 'block',
+      visibility: 'visible',
+
       position: [{
-      }]
+      }],
+      price: 100
     }];
 
   playerList = [
@@ -120,7 +131,8 @@ export class GameComponent implements OnInit {
     imgSrc: '../../assets/ham_pizza.png',
     ingredients: [
       { name: 'Dough', amount: 1 },
-      { name: 'Tomato', amount: 1 }
+      { name: 'Tomato', amount: 1 },
+      { name: 'Cheese', amount: 1 }
     ],
     editing: false
   }, {
@@ -129,42 +141,67 @@ export class GameComponent implements OnInit {
     imgSrc: '../../assets/mushroom_pizza.png',
     ingredients: [
       { name: 'Dough', amount: 1 },
-      { name: 'Tomato', amount: 2 }
+      { name: 'Tomato', amount: 1 },
+      { name: 'Mushroom', amount: 1 },
+      { name: 'Cheese', amount: 1 }
     ],
     editing: false
-    }, {
+  }, {
     pizzaID: 'pizza03',
     name: 'Pepperoni',
     imgSrc: '../../assets/pepperoni_pizza.png',
     ingredients: [
       { name: 'Dough', amount: 1 },
-      { name: 'Tomato', amount: 3 }
+      { name: 'Tomato', amount: 1 },
+      { name: 'Pepperoni', amount: 1 },
+      { name: 'Cheese', amount: 1 }
+
     ],
     editing: false,
   },
   {
-    pizzaID: 'pizza03',
+    pizzaID: 'pizza04',
     name: 'Pepperoni',
     imgSrc: '../../assets/pepperoni_pizza.png',
     ingredients: [
       { name: 'Dough', amount: 1 },
-      { name: 'Tomato', amount: 3 }
+      { name: 'Tomato', amount: 1 },
+      { name: 'Pepperoni', amount: 1 },
+      { name: 'Cheese', amount: 1 }
+
     ],
     editing: false,
   }]
 
   inProduction = [];
+  finished = [];
+  trashcan = [];
 
-  onCanvas = false;
-  canvas = document.querySelector('.gameCanvas');
-  //elements 
+  activePlayer = {
+    name: String,
+    ing: [],
+    inCanvas: []
+  };
+
+
+
+  counterPlayer = this.playerList.length - 1;
+
+  results = [{
+    totalSuccesful:Number,
+    totalFailed:Number,
+    totalInProcess:Number,
+    earned:Number,
+    cost:Number,
+    profit:Number
+  }]
 
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
-
+  /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {
     var element = event.currentTarget;
     if (this.checkifinsideofCanvas(element)) {
@@ -173,7 +210,7 @@ export class GameComponent implements OnInit {
       this.assignIngredientstoPlayers(neededIngredients);
     }
   }
-
+  /* Find a pizza in the queue and change the status to editing */
   findPizza(p) {
     this.pizzaList.forEach(pizza => {
       if (p.pizzaID == pizza.pizzaID) {
@@ -181,7 +218,7 @@ export class GameComponent implements OnInit {
       }
     });
   }
-
+  /* Get the ingredients that makes a pizza */
   getIngredients(p) {
     var pizzaIngredients = [];
     this.pizzaList.forEach(pizza => {
@@ -192,21 +229,32 @@ export class GameComponent implements OnInit {
     return pizzaIngredients;
   }
 
+  getIngredientInfo(name) {
+    for (let index = 0; index < this.ingredientList.length; index++) {
+      if (name == this.ingredientList[index].name) {
+       var ing = this.ingredientList[index];
+      }
+    }
+
+    return ing;
+  }
+  /* Place the ingredients and mix depending on the result */
   ingredientPlacement(ing, event: MouseEvent) {
 
     var ingredientDiv = event.currentTarget;
     ing.position = this.getPosition(ingredientDiv);
-
+    console.log(ing.position);
     for (let index = 0; index < this.ingredientList.length; index++) {
       this.mixIngredient(ing, this.ingredientList[index]);
     }
-  }
 
+  }
+  /* get the position of an element, returns the position */
   getPosition(el) {
     var p = el.getBoundingClientRect();
     return p;
   }
-
+  /* on 3 clicks prepares the ingredient and changes img and progress */
   prepareIngredient(ing, e: MouseEvent) {
     var count = e.detail;
     var ingredientDiv = e.currentTarget;
@@ -237,12 +285,9 @@ export class GameComponent implements OnInit {
 
       }
     }
-
-
-
-
   }
 
+  /* check if an element is inside of canvas*/
   checkifinsideofCanvas(el) {
     var inside = false;
 
@@ -258,23 +303,87 @@ export class GameComponent implements OnInit {
     return inside;
   }
 
+  /* check if an element is inside of the finished panel*/
   checkiffinished() {
 
   }
 
+  /* assigns the ingredients of a pizza to the players in the playerlist */
   assignIngredientstoPlayers(ing) {
 
     var ingredients = [];
 
     for (let i = 0; i < ing.length; i++) {
       for (let index = 0; index < ing[i].amount; index++) {
-        ingredients.push(ing[i]);
+        ingredients.push(this.getIngredientInfo(ing[i].name));
       }
     }
 
-    this.inProduction.push(ingredients);
+    ingredients.forEach(el => {
+      var x = this.getIngredientInfo(el.name);
+      el.visibility = 'visible';
+      this.inProduction.push(x);
+    });
+
+    for (let i = 0; i < ingredients.length; i++) {
+      if (this.counterPlayer == 0) {
+
+        this.counterPlayer = this.playerList.length - 1;
+      } else {
+        this.counterPlayer--;
+      }
+      this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
+
+
+    }
+
+    console.log(this.playerList)
+
   }
 
+  showIngredients(pname) {
+    this.activePlayer.name = pname;
+    var fullArray  = [{}];
+    for (let index = 0; index < this.playerList.length; index++) {
+      for (let i = 0; i < this.playerList[index].ingredientsAssigned.length; i++) {
+        if(pname == this.playerList[index].name){
+          this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
+          fullArray.push(this.playerList[index].ingredientsAssigned[i]);
+        }else{
+          var inCanvas = this.checkifInsideofCanvasPos(this.playerList[index].ingredientsAssigned[i].position);
+          if(!inCanvas){
+            this.playerList[index].ingredientsAssigned[i].visibility = 'hidden';
+            fullArray.push(this.playerList[index].ingredientsAssigned[i]);
+          }else{
+            fullArray.push(this.playerList[index].ingredientsAssigned[i]);
+            this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
+          }
+        }
+      }
+    }
+
+    this.activePlayer.ing = fullArray;
+
+    console.log(this.activePlayer)
+
+  }
+
+  checkifInsideofCanvasPos(el){
+
+    var inside = false;
+    var p = el;
+    var canvasDiv = document.querySelector('.gameCanvas');
+
+    var canvasPosition = canvasDiv.getBoundingClientRect();
+
+    if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
+      inside = true;
+    }
+
+    return inside;
+  }
+
+  /* mix Ingredients  */
   mixIngredient(ing1, ing2) {
 
     this.checkifInsideofTrash(ing1);
@@ -299,7 +408,7 @@ export class GameComponent implements OnInit {
           ing2.activeImg = '../../assets/pizza_cheese.png';
           ing1.onPizza = 'none';
           ing2.name = 'PizzaSauceCheese';
-          
+
         } else {
         }
       }
@@ -312,8 +421,8 @@ export class GameComponent implements OnInit {
           ing2.activeImg = '../../assets/mushroom_pizza.png';
           ing1.onPizza = 'none';
           ing2.progress = 0;
-          ing2.width='100px';
-          ing2.height='100px';
+          ing2.width = '100px';
+          ing2.height = '100px';
         } else {
         }
       }
@@ -324,8 +433,8 @@ export class GameComponent implements OnInit {
           ing2.activeImg = '../../assets/pepperoni_pizza.png';
           ing1.onPizza = 'none';
           ing2.progress = 0;
-          ing2.width='100px';
-          ing2.height='100px';
+          ing2.width = '100px';
+          ing2.height = '100px';
 
         } else {
         }
@@ -334,7 +443,7 @@ export class GameComponent implements OnInit {
 
     }
   }
-  //Check if ingredient is inside 
+  /*  */
   checkifInside(pos1, pos2) {
     var inside = false;
     var position1 = pos1.position;
@@ -348,7 +457,7 @@ export class GameComponent implements OnInit {
     }
     return inside;
   }
-  //Throw it in the garbage
+  /* throw it in the garbage if hovering the trash div  */
   checkifInsideofTrash(pos1) {
 
     var inside = false;
@@ -370,9 +479,23 @@ export class GameComponent implements OnInit {
 
     if (inside) {
       pos1.onPizza = 'none';
+      var arrayIng = [];
+      if (pos1.name == 'PizzaSauce') {
+        arrayIng = ['Tomato', 'Dough'];
+      } else {
+        if (pos1.name == 'PizzaSauceCheese') {
+          arrayIng = ['Tomato', 'Dough', 'Cheese'];
+        } else {
+          arrayIng = [pos1.name]
+        }
+      }
+
+      this.trashcan.push(arrayIng);
+      console.log(this.trashcan)
     }
   }
 
+  /* throw it in the oven if hovering the oven div  */
   checkifInsideofOven(pos1) {
 
     var inside = false;
@@ -388,16 +511,17 @@ export class GameComponent implements OnInit {
 
     if ((position1.right < position2.right) && (position2.left < position1.left)) {
       if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
-        inside = true;        
+        inside = true;
       }
     }
 
-    if(inside && pos1.name == 'PizzaSauceCheese'){
-      this.countUp(100,5000,pos1)
+    if (inside && pos1.name == 'PizzaSauceCheese') {
+      this.countUp(100, 5000, pos1)
     }
   }
 
-  checkifInsideofFinishedQueue(pos1){
+  /* check if an element is inside of the finished panel*/
+  checkifInsideofFinishedQueue(pos1) {
     var inside = false;
 
     var readyQueueDiv = document.querySelector('.readyQueue');
@@ -411,18 +535,17 @@ export class GameComponent implements OnInit {
 
     if ((position1.right < position2.right) && (position2.left < position1.left)) {
       if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
-        inside = true;        
-        console.log(pos1.progress)
+        inside = true;
       }
     }
 
-    if(inside && pos1.name == 'PizzaSauceCheese' && pos1.progress>=100){
-      pos1.finished=true;
-      console.log('yo')
+    if (inside && pos1.name == 'PizzaSauceCheese' && pos1.progress >= 100) {
+      pos1.finished = true;
     }
   }
 
-  countUp (max, time,p) {
+  /* fill the bar in a specific amount, time, */
+  countUp(max, time, p) {
     var num = 0;
     var step = time / max; // calculate the time between two steps of counting
     // create an inner function that performs one step of counting
@@ -433,9 +556,8 @@ export class GameComponent implements OnInit {
         window.setTimeout(fn, step);
       }
     }
-    
+
     // call the inner function for the first time
     fn();
   }
 }
-
