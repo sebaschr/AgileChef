@@ -16,10 +16,6 @@ export class LobbyComponent implements OnInit {
     console.log(dataService.session)
   }
 
-  /*printName() {
-    addPlayerToTeam()
-  }*/
-
   ngOnInit(): void {
 
   }
