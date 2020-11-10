@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatGridListModule} from '@angular/material/grid-list'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'planning',
@@ -8,9 +8,15 @@ import {MatGridListModule} from '@angular/material/grid-list';
 })
 export class PlanningComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
+
+  onTimerFinished(e:Event){
+    if (e["action"] == "done"){
+      this.router.navigate(['/game']);
+     }
+   }
 
 }

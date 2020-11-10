@@ -12,7 +12,7 @@
         </div>
         <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
             <div class="title" fxLayout="row">Planning</div>
-            <div class="timer" fxLayout="row"><countdown [config]="{leftTime: 60}"></countdown></div>
+            <div class="timer" fxLayout="row"><countdown [config]="{leftTime: 60}" (event)="onTimerFinished($event)"></countdown></div>
         </div>
     </div>
 </body>
