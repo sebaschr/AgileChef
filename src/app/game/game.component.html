@@ -18,7 +18,7 @@
                     <div class="queue">
                         <h2>Queue</h2>
                         <mat-card *ngFor="let p of pizzaList; let i = index;" cdkDrag class='pizza'
-                            (click)="moveOutofQueue(p,$event)" [class.active]="p.editing">
+                            (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing">
                             <p>{{p.name}}</p>
                             <img src="{{p.imgSrc}}" alt="">
                         </mat-card>
@@ -48,6 +48,9 @@
                     </div>
                     <div class="readyPanel">
                         <h2>Oven</h2>
+                        <div class="oven"><img src="../../assets/oven.png" alt="" width="200px"></div>
+                        <div class="readyQueue"></div>
+                        <div class="trash"><img src="../../assets/trash.png" alt="" width="200px"></div>
 
                     </div>
                 </div>
