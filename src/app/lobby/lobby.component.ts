@@ -16,11 +16,9 @@ export class LobbyComponent implements OnInit {
     console.log(dataService.session)
   }
 
-  public teamContainer = document.getElementsByClassName("team-container");
-
-  printName() {
-
-  }
+  /*printName() {
+    addPlayerToTeam()
+  }*/
 
   ngOnInit(): void {
 

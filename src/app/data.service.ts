@@ -36,7 +36,7 @@ export class DataService {
 
   addPlayerToTeam(player: Player, team: Team) {
 
-    for (let i = 0; i < this.session.teams.length; i++) {
+    /*for (let i = 0; i < this.session.teams.length; i++) {
       const teamStored = this.session.teams[i];
       for (let j = 0; j < teamStored.players.length; j++) {
         const playerStored = teamStored.players[j];
@@ -44,9 +44,9 @@ export class DataService {
           teamStored.players.splice(j, 1);
         }
       }
-    }
+    }*/
 
-    team.addPlayer(player);
+    //team.addPlayer(player);
 
     let allData = this.get('currentUser');
     if(allData.identifier === player.identifier){

@@ -8,7 +8,7 @@
 
         <title>Lobby</title>
     </head>
-    <body>
+    <body class="lobby-container">
         <section class="left-section">
             <div *ngFor="let team of dataService.session.teams">
                 <team-component [team]="team"></team-component>

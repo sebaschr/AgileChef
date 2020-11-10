@@ -22,6 +22,10 @@ export class TeamComponent implements OnInit {
 
   }
 
+  printPlayer() {
+    this.addPlayerToTeam()
+  }
+
   ngOnInit(): void {
   }
 
