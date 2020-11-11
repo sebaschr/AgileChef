@@ -45,40 +45,82 @@ export class DataService {
     return this.get('currentUser');
   }
 
-  loadTeams(){
-    let session = this.get('session');
-    let counter = 0;
-    for (let i = 0; i < session.teams.length; i++) {
-        return session.teams[i];  
-    } 
+  loadTeams() {
+    let newSession = new ACSession();
+    newSession = JSON.parse(localStorage.getItem('session'));
+    this.session = newSession;
   }
 
-  addPlayerToTeam(player: Player, teamNumber: Number) {
+  updateSessionTeams(team: Team) {
+    for (let i = 0; i < this.session.teams.length; i++) {
+      if (team.identifier == this.session.teams[i].identifier) {
+        this.session.teams[i] = team
+      }
+    }
+    console.log('yo')
+    console.log(this.session)
 
-    this.get('teams');
-    //TODO: Check Commented Process
-    // for (let i = 0; i < this.session.teams.length; i++) {
-    //   const teamStored = this.session.teams[i];
-    //   for (let j = 0; j < teamStored.players.length; j++) {
-    //     const playerStored = teamStored.players[j];
-    //     if (player.identifier === playerStored.identifier) {
-    //       teamStored.players.splice(j, 1);
-    //     }
-    //   }
-    // }
+    this.saveSessionToLocalStorage(this.session);
+  }
 
-    // team.addPlayer(player);
+  addPlayerToTeam(player: Player, team: Team) {
+    console.log('before')
+    console.log(this.session)
+    let newTeam = new Team(team.teamNumber);
 
-    let currentUserData = this.get('currentUser');
-    if(currentUserData.identifier === player.identifier){
-      console.log('yes');
-        currentUserData.teamNumber = teamNumber;
-        this.post('currentUser', currentUserData);
-      //this.post('currentUser', player);
-    }else{
-      console.log('false');
+    newTeam.identifier = team.identifier;
+    newTeam.pizzas = team.pizzas;
+    newTeam.teamNumber = team.teamNumber;
+    newTeam.players = team.players;
+
+    this.checkUserTeam(player);
+    newTeam.addPlayer(player);
+
+    this.updateSessionTeams(newTeam);
+    console.log(this.session)
+
+  }
+
+
+  checkUserTeam(player: Player) {
+    var teams = this.session.teams;
+    
+    for (let i = 0; i < teams.length; i++) {
+      for (let j = 0; j < teams[i].players.length; j++) {
+        var playerFound = teams[i].players[j];
+        if (playerFound.identifier == player.identifier) {
+          teams[i].players.splice(j, 1);
+        }
+      }      
     }
   }
+
+  // addPlayerToTeam(player: Player, teamNumber: Number) {
+
+  //   this.get('teams');
+  //   //TODO: Check Commented Process
+  //   // for (let i = 0; i < this.session.teams.length; i++) {
+  //   //   const teamStored = this.session.teams[i];
+  //   //   for (let j = 0; j < teamStored.players.length; j++) {
+  //   //     const playerStored = teamStored.players[j];
+  //   //     if (player.identifier === playerStored.identifier) {
+  //   //       teamStored.players.splice(j, 1);
+  //   //     }
+  //   //   }
+  //   // }
+
+  //   // team.addPlayer(player);
+
+  //   let currentUserData = this.get('currentUser');
+  //   if(currentUserData.identifier === player.identifier){
+  //     console.log('yes');
+  //       currentUserData.teamNumber = teamNumber;
+  //       this.post('currentUser', currentUserData);
+  //     //this.post('currentUser', player);
+  //   }else{
+  //     console.log('false');
+  //   }
+  // }
 
   removePlayerFromTeam(player: Player, team: Team) {
     for (let i = 0; i < this.session.teams.length; i++) {

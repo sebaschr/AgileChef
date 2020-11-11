@@ -26,10 +26,8 @@ export class TeamComponent implements OnInit {
   }
 
   addPlayerToTeam(e) {
-    let teamNumber = e.target.id;
     let currentPlayer = this.dataService.loadPlayerFromLocalStorage();
-    this.dataService.addPlayerToTeam(currentPlayer, teamNumber);    
-    console.log(teamNumber);
+    this.dataService.addPlayerToTeam(currentPlayer, e);    
   }
 
   removePlayerFromTeam() {
