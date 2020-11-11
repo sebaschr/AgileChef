@@ -38,39 +38,6 @@ body {
     padding: 60px 0px;
 }
 
-.team-top-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 40px 0px 30px;
-}
-
-.team-bottom-row {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 20px 0px;
-    padding-bottom: 50px;
-}
-
-.team-card div {
-    position: relative;
-    bottom: 75px;
-}
-
-.team-card h2 {
-    padding: 15px 20px;;
-    border-radius: 50px;
-}
-
-.team-card p {
-    margin-bottom: 20px;
-}
-
-.team-card button {
-    margin: 50px 0px 0px;
-    font-size: 40px;
-    background: #000000;
-}
-
 .objectives-card {
     display: flex;
     flex-direction: column;
