@@ -10,17 +10,11 @@ export class ACSession {
 
     public playersMin = 0;
     public playersMax = 0;
-    public objectives='';
+    public objectives = '';
     public teams = [];
     public sprints: { name: string, planeamiento: number, ejecucion: number, revision: number, retrospectiva: number }[] = [];
 
     constructor() {
-
-        //this.playersMin = 2;
-        //this.playersMax = 5;
-        //HACK:
-        this.teams.push(new Team(1));
-        this.teams.push(new Team(2));
 
     }
 }

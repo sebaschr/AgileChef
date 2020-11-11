@@ -15,13 +15,17 @@ export class DataService {
   admin: Admin = new Admin('admin', '1234');
   public session: ACSession = new ACSession();
 
-  constructor() { }
+  constructor() {
 
-  post (collection: string, data:object){
+
+
+  }
+
+  post(collection: string, data: object) {
     localStorage.setItem(collection, JSON.stringify(data));
   }
 
-  get (src: string){
+  get(src: string) {
     return JSON.parse(localStorage.getItem(src));
   }
 
@@ -36,8 +40,14 @@ export class DataService {
     this.get('teams');
   }
 
-  loadSessionFromLocalStorage(){
+  loadSessionFromLocalStorage() {
+    debugger;
     localStorage.getItem('session');
+  }
+
+
+  loadPlayerFromLocalStorage() {
+    this.currentPlayer = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   addPlayerToTeam(player: Player, team: Team) {
