@@ -31,7 +31,8 @@ export class TeamComponent implements OnInit {
   }
 
   removePlayerFromTeam() {
-    this.dataService.removePlayerFromTeam(this.dataService.currentPlayer, this.team);
+    let currentPlayer = this.dataService.loadPlayerFromLocalStorage();
+    this.dataService.removePlayerFromTeam(currentPlayer, this.team);
   }
 
 }

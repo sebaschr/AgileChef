@@ -4,6 +4,7 @@ import { ACSession } from './models/acSession';
 import { Player } from './models/player';
 import { Team } from './models/team';
 import { templateSourceUrl } from '@angular/compiler';
+import { runInThisContext } from 'vm';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,7 @@ export class DataService {
     newTeam.teamNumber = team.teamNumber;
     newTeam.players = team.players;
 
-    this.checkUserTeam(player);
+    this.checkUserTeam(player.identifier);
     newTeam.addPlayer(player);
 
     this.updateSessionTeams(newTeam);
@@ -82,13 +83,13 @@ export class DataService {
   }
 
 
-  checkUserTeam(player: Player) {
+  checkUserTeam(identifier) {
     var teams = this.session.teams;
     
     for (let i = 0; i < teams.length; i++) {
       for (let j = 0; j < teams[i].players.length; j++) {
         var playerFound = teams[i].players[j];
-        if (playerFound.identifier == player.identifier) {
+        if (playerFound.identifier == identifier) {
           teams[i].players.splice(j, 1);
         }
       }      
@@ -123,14 +124,35 @@ export class DataService {
   // }
 
   removePlayerFromTeam(player: Player, team: Team) {
+
+    this.findanddelete(player.identifier,team.identifier);
+
+    var newTeam = new Team(team.teamNumber)
+
+    for (let i = 0; i < team.players.length; i++) {
+      if (player.identifier == team.players[i].identifier) {
+        console.log('got em chief');
+        team.players.splice(i,1);
+        newTeam = team.players[i];
+      }
+    }
+
+    this.updateSessionTeams(newTeam);
+  }
+
+  findanddelete(pidentifier,tidenfitier){
+    var teams = this.session.teams;
+    
     for (let i = 0; i < this.session.teams.length; i++) {
-      const teamStored = this.session.teams[i];
-      for (let j = 0; j < teamStored.players.length; j++) {
-        const playerStored = teamStored.players[j];
-        if (player.identifier === playerStored.identifier) {
-          teamStored.players.splice(j, 1);
+      if (this.session.teams[i].identifier == tidenfitier) {
+        var foundTeam = this.session.teams[i];
+        for (let t = 0; t < foundTeam.players.length; t++) {
+            if(foundTeam.players[t].identifier ==pidentifier){
+              foundTeam.players.splice(t,1);
+            }          
         }
       }
+      
     }
   }
 
