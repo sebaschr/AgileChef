@@ -104,7 +104,7 @@
             </div>
         </div>
         <div class="timer" fxLayout="row" fxLayoutAlign="center center">
-            <countdown [config]="{leftTime: 60}"></countdown>
+            <countdown [config]="{leftTime: 10}" (event)="onTimerFinished($event)"></countdown>
         </div>
     </div>
 </body>
