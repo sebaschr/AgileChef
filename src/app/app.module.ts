@@ -34,6 +34,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChartsModule } from 'ng2-charts';
+import { IngredientComponent } from './ingredient/ingredient.component';
+import { PizzaComponent } from './pizza/pizza.component';
 
 // import { AngularFireModule } from '@angular/fire';
 // NEW APP
@@ -67,7 +69,9 @@ const appRoutes: Routes = [
     TeamComponent,
     SummaryComponent,
     SummaryGraphComponent,
-    GameComponent
+    GameComponent,
+    IngredientComponent,
+    PizzaComponent
 
   ],
   imports: [
