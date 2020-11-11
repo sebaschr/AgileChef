@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
+import { Team } from '../models/team';
+import { templateSourceUrl } from '@angular/compiler';
 
 
 @Component({
@@ -11,19 +13,21 @@ import { Router } from '@angular/router';
 
 
 export class LobbyComponent implements OnInit {
+    
+  teams: Team [] = [];
 
   constructor(public dataService: DataService, private router: Router) {
-    console.log(dataService.session);
-
-    if (typeof (dataService.currentPlayer) == 'undefined') {
+  
+   if (typeof (dataService.currentPlayer && dataService.session) == 'undefined') {
       dataService.loadPlayerFromLocalStorage();
-    }
+      dataService.loadSessionFromLocalStorage();
+      dataService.loadTeams();
+   }
 
-    console.log(dataService.currentPlayer);
   }
 
   ngOnInit(): void {
-
+      this.teams=this.dataService.loadSessionFromLocalStorage().teams;
   }
 
   startGame() {

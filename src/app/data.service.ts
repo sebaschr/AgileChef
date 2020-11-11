@@ -12,12 +12,10 @@ import { templateSourceUrl } from '@angular/compiler';
 export class DataService {
 
   public currentPlayer: Player;
-  admin: Admin = new Admin('admin', '1234');
+  admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
 
   constructor() {
-
-
 
   }
 
@@ -32,47 +30,54 @@ export class DataService {
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
     this.post('currentUser', this.currentPlayer);
-    this.get('session');
   }
 
   saveSessionToLocalStorage(session: ACSession) {
     this.post('session', session);
-    this.get('teams');
   }
 
   loadSessionFromLocalStorage() {
-    debugger;
-    localStorage.getItem('session');
+    return this.get('session');
   }
 
 
   loadPlayerFromLocalStorage() {
-    this.currentPlayer = JSON.parse(localStorage.getItem('currentUser'));
+    return this.get('currentUser');
   }
 
-  addPlayerToTeam(player: Player, team: Team) {
+  loadTeams(){
+    let session = this.get('session');
+    let counter = 0;
+    for (let i = 0; i < session.teams.length; i++) {
+        return session.teams[i];  
+    } 
+  }
+
+  addPlayerToTeam(player: Player, teamNumber: Number) {
 
     this.get('teams');
+    //TODO: Check Commented Process
+    // for (let i = 0; i < this.session.teams.length; i++) {
+    //   const teamStored = this.session.teams[i];
+    //   for (let j = 0; j < teamStored.players.length; j++) {
+    //     const playerStored = teamStored.players[j];
+    //     if (player.identifier === playerStored.identifier) {
+    //       teamStored.players.splice(j, 1);
+    //     }
+    //   }
+    // }
 
-    for (let i = 0; i < this.session.teams.length; i++) {
-      const teamStored = this.session.teams[i];
-      for (let j = 0; j < teamStored.players.length; j++) {
-        const playerStored = teamStored.players[j];
-        if (player.identifier === playerStored.identifier) {
-          teamStored.players.splice(j, 1);
-        }
-      }
-    }
+    // team.addPlayer(player);
 
-    team.addPlayer(player);
-
-    /*let allData = this.get('currentUser');
-    if(allData.identifier === player.identifier){
-      this.currentPlayer.teamNumber = team.teamNumber;
-      this.post('currentUser', player);
+    let currentUserData = this.get('currentUser');
+    if(currentUserData.identifier === player.identifier){
+      console.log('yes');
+        currentUserData.teamNumber = teamNumber;
+        this.post('currentUser', currentUserData);
+      //this.post('currentUser', player);
     }else{
       console.log('false');
-    }*/
+    }
   }
 
   removePlayerFromTeam(player: Player, team: Team) {

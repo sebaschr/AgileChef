@@ -15,24 +15,21 @@ export class TeamComponent implements OnInit {
 
   public sprint: Sprint;
 
-  public counter =+ 1;
+  teams = [];
 
   constructor(public dataService: DataService) {
 
   }
 
-  printPlayer() {
-    this.addPlayerToTeam()
-  }
-
   ngOnInit(): void {
+    this.teams = this.dataService.loadSessionFromLocalStorage().teams;
   }
 
-  addPlayerToTeam() {
-    //TODO: Add current player to this team.
-
-    this.dataService.addPlayerToTeam(this.dataService.currentPlayer, this.team);
-    
+  addPlayerToTeam(e) {
+    let teamNumber = e.target.id;
+    let currentPlayer = this.dataService.loadPlayerFromLocalStorage();
+    this.dataService.addPlayerToTeam(currentPlayer, teamNumber);    
+    console.log(teamNumber);
   }
 
   removePlayerFromTeam() {

@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private dataService: DataService) {
     
     console.log('AppComponent', this.dataService);
-    this.dataService.admin.username = 'esteban';
+    this.dataService.session;
   }
 
 }
