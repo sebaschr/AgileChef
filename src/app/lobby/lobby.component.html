@@ -11,7 +11,7 @@
     <body class="lobby-container">
         <section class="left-section">
             <div *ngFor="let n of teams; let i = index;">
-                <team-component [team]="1">{{n.teamNumber}}</team-component>
+                <team-component [team]="n">{{n.teamNumber}}</team-component>
             </div>
         </section>
         <section class="right-section">
