@@ -12,12 +12,10 @@ import { templateSourceUrl } from '@angular/compiler';
 export class DataService {
 
   public currentPlayer: Player;
-  admin: Admin = new Admin('admin', '1234');
+  admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
 
   constructor() {
-
-
 
   }
 
@@ -32,22 +30,27 @@ export class DataService {
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
     this.post('currentUser', this.currentPlayer);
-    this.get('session');
   }
 
   saveSessionToLocalStorage(session: ACSession) {
     this.post('session', session);
-    this.get('teams');
   }
 
   loadSessionFromLocalStorage() {
-    debugger;
-    localStorage.getItem('session');
+    return this.get('session');
   }
 
 
   loadPlayerFromLocalStorage() {
-    this.currentPlayer = JSON.parse(localStorage.getItem('currentUser'));
+    return this.get('currentUser');
+  }
+
+  loadTeams(){
+    let session = this.get('session');
+    let counter = 0;
+    for (let i = 0; i < session.teams.length; i++) {
+        return session.teams[i];  
+    } 
   }
 
   addPlayerToTeam(player: Player, team: Team) {

@@ -15,8 +15,6 @@ export class TeamComponent implements OnInit {
 
   public sprint: Sprint;
 
-  public counter =+ 1;
-
   constructor(public dataService: DataService) {
 
   }

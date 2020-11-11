@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
 export class LobbyComponent implements OnInit {
 
   constructor(public dataService: DataService, private router: Router) {
-    console.log(dataService.session);
 
-    if (typeof (dataService.currentPlayer) == 'undefined') {
+   if (typeof (dataService.currentPlayer && dataService.session) == 'undefined') {
       dataService.loadPlayerFromLocalStorage();
-    }
+      dataService.loadSessionFromLocalStorage();
+      dataService.loadTeams();
+   }
 
-    console.log(dataService.currentPlayer);
   }
 
   ngOnInit(): void {
