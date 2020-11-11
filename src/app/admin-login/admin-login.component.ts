@@ -39,6 +39,4 @@ submit() {
     }
   }
 }
-  //TODO: Validate adming user and move to next route, investigate how to change route using code.
-
 }

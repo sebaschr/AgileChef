@@ -5,6 +5,6 @@
     <div class="team-container"></div>
     <p></p>
     <p>Has click al "&#43;" para unirte a este equipo.</p>
-    <button mat-fab color="primary" class="team-btn" value="team1" (click)="addPlayerToTeam()">&#43;</button>
-    <button mat-fab color="primary" class="team-btn" value="team1" (click)="removePlayerFromTeam()">-</button>
+    <button mat-fab color="primary" class="team-btn" id={{team.teamNumber}} (click)="addPlayerToTeam($event)"><span id={{team.teamNumber}}>&#43;</span></button>
+    <button mat-fab color="primary" class="team-btn" id={{team.teamNumber} (click)="removePlayerFromTeam()">-</button>
 </div>

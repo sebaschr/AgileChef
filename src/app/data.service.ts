@@ -53,29 +53,31 @@ export class DataService {
     } 
   }
 
-  addPlayerToTeam(player: Player, team: Team) {
+  addPlayerToTeam(player: Player, teamNumber: Number) {
 
     this.get('teams');
+    //TODO: Check Commented Process
+    // for (let i = 0; i < this.session.teams.length; i++) {
+    //   const teamStored = this.session.teams[i];
+    //   for (let j = 0; j < teamStored.players.length; j++) {
+    //     const playerStored = teamStored.players[j];
+    //     if (player.identifier === playerStored.identifier) {
+    //       teamStored.players.splice(j, 1);
+    //     }
+    //   }
+    // }
 
-    for (let i = 0; i < this.session.teams.length; i++) {
-      const teamStored = this.session.teams[i];
-      for (let j = 0; j < teamStored.players.length; j++) {
-        const playerStored = teamStored.players[j];
-        if (player.identifier === playerStored.identifier) {
-          teamStored.players.splice(j, 1);
-        }
-      }
-    }
+    // team.addPlayer(player);
 
-    team.addPlayer(player);
-
-    /*let allData = this.get('currentUser');
-    if(allData.identifier === player.identifier){
-      this.currentPlayer.teamNumber = team.teamNumber;
-      this.post('currentUser', player);
+    let currentUserData = this.get('currentUser');
+    if(currentUserData.identifier === player.identifier){
+      console.log('yes');
+        currentUserData.teamNumber = teamNumber;
+        this.post('currentUser', currentUserData);
+      //this.post('currentUser', player);
     }else{
       console.log('false');
-    }*/
+    }
   }
 
   removePlayerFromTeam(player: Player, team: Team) {
