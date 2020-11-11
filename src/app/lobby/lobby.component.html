@@ -10,8 +10,8 @@
     </head>
     <body class="lobby-container">
         <section class="left-section">
-            <div *ngFor="let team of dataService.session.teams">
-                <team-component [team]="team"></team-component>
+            <div *ngFor="let n of teams; let i = index;">
+                <team-component [team]="1"></team-component>
             </div>
         </section>
         <section class="right-section">

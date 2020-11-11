@@ -15,6 +15,8 @@ export class TeamComponent implements OnInit {
 
   public sprint: Sprint;
 
+  teams = [];
+
   constructor(public dataService: DataService) {
 
   }
@@ -24,6 +26,7 @@ export class TeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.teams = this.dataService.loadSessionFromLocalStorage().teams;
   }
 
   addPlayerToTeam() {
