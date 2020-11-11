@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="readyPanel">
-                        <countdown [config]="{leftTime: 60}"></countdown>
+                        <countdown [config]="{leftTime: 60}" (event)="onTimerFinished($event)"></countdown>
                         
                         <div class="oven"><img src="../../assets/oven.png" alt="" width="200px"></div>
                         <div class="readyQueue"></div>

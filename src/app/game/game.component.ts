@@ -608,5 +608,11 @@ export class GameComponent implements OnInit {
     } 
   }
 
+  onTimerFinished(e:Event){
+    if (e["action"] == "done"){
+      this.router.navigate(['/results']);
+     }
+   }
+
   
 }
