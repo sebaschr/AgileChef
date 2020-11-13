@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
-import { element } from 'protractor';
+import { DataService } from '../data.service';
 
 
 interface Overlay {
@@ -165,8 +165,6 @@ export class GameComponent implements OnInit {
     inCanvas: []
   };
 
-
-
   counterPlayer = this.playerList.length - 1;
 
   // results = {
@@ -179,10 +177,10 @@ export class GameComponent implements OnInit {
   // }
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public dataService: DataService) { }
 
   ngOnInit(): void {
-    
+    this.dataService.loadIngredients();
   }
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {

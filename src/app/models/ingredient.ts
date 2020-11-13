@@ -1,12 +1,53 @@
+import { key } from 'firebase-key';
+import { DataService } from '../data.service';
 
-
-export class ACSession {
+export class Ingredient {
 
     public ingredientName;
-    public img: [img1:String , img2:String, img3:String];
+    public img = [];
     public price;
-    
-    constructor() {
+    public key;
 
+    public ingredientList = [];
+    constructor(public dataService: DataService) {
+
+    }
+
+    loadIngredients() {
+        var ingredientList = [
+            {
+                name: 'Dough',
+                images: ['../../assets/dough_1.png', '../../assets/dough_2.png', '../../assets/dough_3.png'],
+                price: 200
+            },
+            {
+                name: 'Tomato',
+                images: ['../../assets/tomato_1.png', '../../assets/tomato_2.png', '../../assets/tomato_3.png'],
+                price: 200
+            },
+            {
+                name: 'Chilli Pepper',
+                images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
+                price: 200
+            },
+            {
+                name: 'Pepperoni',
+                images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
+                price: 200
+            },
+            {
+                name: 'Mushroom',
+                images: ['../../assets/shroom_1.png', '../../assets/shroom_2.png', '../../assets/shroom_3.png'],
+                price: 200
+            }];
+
+            var x= this.dataService.loadIngredients
+            this.ingredientList = ingredientList;
+    }
+    
+    getIngredientList(){
+        var ingredients= [];
+        ingredients =this.ingredientList;
+        return ingredients
     }
 }

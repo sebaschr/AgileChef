@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+
 
 @Component({
   selector: 'app-ingredient',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IngredientComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dataService: DataService) {
+
+  }
 
   ngOnInit(): void {
   }
 
+  findIngredient(e){
+    
+  }
 }
+

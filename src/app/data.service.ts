@@ -3,6 +3,7 @@ import { Admin } from './models/admin';
 import { ACSession } from './models/acSession';
 import { Player } from './models/player';
 import { Team } from './models/team';
+import { Ingredient } from './models/ingredient';
 import { templateSourceUrl } from '@angular/compiler';
 import { runInThisContext } from 'vm';
 
@@ -15,6 +16,7 @@ export class DataService {
   public currentPlayer: Player;
   admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
+
 
   constructor() {
 
@@ -58,8 +60,6 @@ export class DataService {
         this.session.teams[i] = team
       }
     }
-    console.log('yo')
-    console.log(this.session)
 
     this.saveSessionToLocalStorage(this.session);
   }
@@ -96,6 +96,14 @@ export class DataService {
     }
   }
 
+  loadIngredients(){
+
+    
+  }
+
+  getIngredientList(){
+    
+  }
   // addPlayerToTeam(player: Player, teamNumber: Number) {
 
   //   this.get('teams');
