@@ -35,7 +35,8 @@ button:disabled {
     display:flex;
     flex-wrap: wrap;
     justify-content:center;
-    align-items:center
+    align-items:center;
+    padding-bottom: 3%;
 
 }
 .child{
@@ -53,11 +54,11 @@ button:disabled {
     margin:auto;
     padding:10px;
     background:white;
-    width:90%;
+    width:70%;
 }
 
 .edit-panel{
-    height:400px;
+    height:350px;
     width:250px;
 }
 
@@ -66,11 +67,11 @@ button:disabled {
 }
 
 .sprintBtn{
-    padding:5px 10px;
-    width:150px;
+    padding:5px;
+    width:100px;
     background-color:black;
     color:#fff;
-    margin-bottom:15px;
+    margin:0 5px;
 }
 
 .sprintBtn2{

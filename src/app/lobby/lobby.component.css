@@ -1,14 +1,9 @@
-body {
-    display: flex;
-    justify-content: space-around;
-    margin: 0;
-    height: max-content;
-}
-
-.lobby-container {
-    background-image: url('../../assets/WhiteOrange BG.jpg');
-    background-size: cover;
+body{
+    height: -webkit-fill-available;
+    background: url('../../assets/WhiteOrange BG.jpg');
+    background-size: contain;
     background-repeat: round;
+    display: flex;
 }
 
 .start-button {
@@ -34,8 +29,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    padding: 60px 0px;
+    padding-top: 5%;
 }
 
 .objectives-card {

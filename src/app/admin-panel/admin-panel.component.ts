@@ -1,8 +1,7 @@
 
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
-import { ACSession } from '../models/acSession';
 import { Sprint } from '../models/sprint';
 import { Router } from '@angular/router';
 import { Team } from '../models/team';
@@ -28,7 +27,6 @@ export class AdminPanelComponent implements OnInit {
   errorMax: boolean=false;
   errorMinMax: boolean=false;
   errorTeams: boolean=false;
-  errorObjectives: boolean=false;
 
 
   span = <HTMLInputElement>document.getElementById('sprintQuantity');
@@ -46,8 +44,7 @@ export class AdminPanelComponent implements OnInit {
     planningTime: ['', Validators.required],
     executionTime: ['', Validators.required],
     reviewingTime: ['', Validators.required],
-    retrospectiveTime: ['', Validators.required],
-    objectives: ['', Validators.required]
+    retrospectiveTime: ['', Validators.required]
   });
 
   constructor(public fb: FormBuilder, public dataService: DataService, private router: Router) {
@@ -58,15 +55,11 @@ export class AdminPanelComponent implements OnInit {
 
   }
 
-  submit() {
-
-  }
-
   submitInfo() {
-    this.dataService.session.objectives = this.form.value.objectives;
     this.dataService.session.playersMin = this.form.value.playerQuantityMin;
     this.dataService.session.playersMax = this.form.value.playerQuantityMax;
     var errors = this.validateFields();
+    this.saveSprint();
     if (errors==true) {
       
     } else {
@@ -133,11 +126,11 @@ export class AdminPanelComponent implements OnInit {
     sprint.retrospectiva = 45;
     this.sprintList.push(sprint);
   }
+
   addSprint() {
 
     this.savedLastSprint = false;
     this.sprintCounter += 1;
-
     this.sprintName = 'Sprint ' + this.sprintCounter;
     let sprint = new Sprint();
     sprint.name = this.sprintName;
@@ -146,7 +139,7 @@ export class AdminPanelComponent implements OnInit {
     sprint.revision = 45;
     sprint.retrospectiva = 45;
     this.sprintList.push(sprint);
-
+    this.saveSprint();
   }
 
   findUpdateSprint(sprint) {
