@@ -60,13 +60,19 @@ export class DataService {
         this.session.teams[i] = team
       }
     }
-
     this.saveSessionToLocalStorage(this.session);
   }
 
   addPlayerToTeam(player: Player, team: Team) {
-    console.log('before')
-    console.log(this.session)
+    
+    let currentUserData = this.get('currentUser');
+    if(currentUserData.identifier === player.identifier){
+      player.teamNumber = team.teamNumber;
+      this.post('currentUser', player);
+    }else{
+      console.log('false');
+    }
+
     let newTeam = new Team(team.teamNumber);
 
     newTeam.identifier = team.identifier;
@@ -78,7 +84,6 @@ export class DataService {
     newTeam.addPlayer(player);
 
     this.updateSessionTeams(newTeam);
-    console.log(this.session)
 
   }
 
@@ -143,6 +148,14 @@ export class DataService {
         team.players.splice(i,1);
         newTeam = team.players[i];
       }
+    }
+
+    let currentUserData = this.get('currentUser');
+    if(currentUserData.identifier === player.identifier){
+      player.teamNumber = null;
+      this.post('currentUser', player);
+    }else{
+      console.log('false');
     }
 
     this.updateSessionTeams(newTeam);

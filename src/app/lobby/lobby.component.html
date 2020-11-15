@@ -8,7 +8,7 @@
 
         <title>Lobby</title>
     </head>
-    <body class="lobby-container">
+    <body>
         <section class="left-section">
             <div *ngFor="let n of teams; let i = index;">
                 <team-component [team]="n">{{n.teamNumber}}</team-component>

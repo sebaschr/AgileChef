@@ -1,7 +1,7 @@
 <div class="container-bg">
     <div class="outer-container">
         <h1 class="title">Admin Panel</h1>
-        <form [formGroup]="form" (ngSubmit)="submit()">
+        <form [formGroup]="form">
             <div class="container-top">
                 <div class="container-game">
                     <div class="child">
@@ -39,59 +39,46 @@
                         <p>Edit Sprint</p>
                        
                         <mat-card class="edit-panel" id="edit-sprint">
-                            <button (click)="addSprint()"  class="sprintBtn" mat-raised-button color="secondary" [disabled]="!savedLastSprint">Add New Sprint</button>
-                            <br>
                             <mat-form-field appearance="fill">
                                 <mat-label>Sprint</mat-label>
                                 <select matNativeControl formControlName="selectSprint" (change)="onForm2NameChange($event.target)">
-                                    <!-- <option *ngFor="let sprint of dataService.session.sprints" value={{sprint.name}}> {{ sprint.name }}
-                                    </option> -->
                                     <option *ngFor="let sprint of sprintList" value={{sprint.name}}> {{ sprint.name }}
-                                    </option>
-                                    
+                                    </option>  
                                 </select>
 
                             </mat-form-field>
                             <br>
                             <mat-form-field>
-                                <mat-label>Planeamiento</mat-label>
+                                <mat-label>Planning</mat-label>
                                 <input type="number" matInput formControlName="planningTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
                             <br>
                             <mat-form-field>
-                                <mat-label>Ejecucion</mat-label>
+                                <mat-label>Execution</mat-label>
                                 <input type="number" matInput formControlName="executionTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
                             <br>
                             <mat-form-field>
-                                <mat-label>Revision</mat-label>
+                                <mat-label>Review</mat-label>
                                 <input type="number" matInput formControlName="reviewingTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
                             <br>
                             <mat-form-field>
-                                <mat-label>Retrospectiva</mat-label>
+                                <mat-label>Retrospective</mat-label>
                                 <input type="number" matInput formControlName="retrospectiveTime" oninput="this.value = Math.abs(this.value)" >
                             </mat-form-field>
 
                             <p class="error" *ngIf="errorSprints" id="sprintError">Las etapas del sprint tienen un minimo de 1s</p>
-                            <p class="error" *ngIf="errorMinSprint" id="sprintNotSaved">Tiene que haber minimo un sprint guardado</p>
-                            <button (click)="saveSprint()"  class="sprintBtn2 save" mat-raised-button color="secondary" [disabled]="firstSprint">Save</button>
+
+                            
+                            <button (click)="addSprint()"  class="sprintBtn" mat-raised-button color="secondary">Add</button>
+
                             <button (click)="removeSprint()" class="sprintBtn2 remove" mat-raised-button color="secondary" [disabled]="minReached">Remove</button>
                         </mat-card>
                     </div>
                 </div>
             </div>
 
-            <h2 class="title">Objetivos</h2>
-            <div class="container-obj">
-                <mat-form-field appearance="fill" class="objetivos" >
-                    <mat-label>Objetivos</mat-label>
-                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10"
-                        cdkAutosizeMaxRows="12"  formControlName="objectives"></textarea>
-                </mat-form-field>
-                <p class="error" *ngIf="errorObjectives" id="errorObjectives">This space cannot be blank </p>
-
-            </div>
             <button type="button" mat-raised-button color="secondary" (click)="submitInfo()">Start</button>
             <p class="error" *ngIf="errorTeams" id="errorTeams">Minimum of teams must be at least 1 </p>
 
