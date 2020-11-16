@@ -46,6 +46,7 @@ export class DataService {
 
 
   loadPlayerFromLocalStorage() {
+    this.currentPlayer = JSON.parse(localStorage.getItem('currentUser'));
     return this.get('currentUser');
   }
 
