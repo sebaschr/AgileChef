@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
 import { DataService } from '../data.service';
+import { Ingredient } from '../models/ingredient';
 
 
 interface Overlay {
@@ -177,10 +178,10 @@ export class GameComponent implements OnInit {
   // }
 
 
-  constructor(private router: Router,public dataService: DataService) { }
+  constructor(private router: Router,public dataService: DataService,public ingredient: Ingredient) { }
 
   ngOnInit(): void {
-    this.dataService.loadIngredients();
+    this.ingredient.getIngredientList();
   }
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {

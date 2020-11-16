@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { Ingredient } from '../models/ingredient';
 
 
 @Component({
@@ -9,15 +10,15 @@ import { DataService } from '../data.service';
 })
 export class IngredientComponent implements OnInit {
 
-  constructor(public dataService: DataService) {
+  constructor(public dataService: DataService,public ingredient: Ingredient) {
 
   }
 
   ngOnInit(): void {
   }
 
-  findIngredient(e){
-    
+  loadIngredients(){
+    console.log(this.ingredient.ingredientList);
   }
 }
 

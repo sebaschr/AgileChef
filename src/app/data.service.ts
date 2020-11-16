@@ -106,8 +106,8 @@ export class DataService {
     
   }
 
-  getIngredientList(){
-    
+  getIngredientList(e){
+        console.log(e);
   }
   // addPlayerToTeam(player: Player, teamNumber: Number) {
 
