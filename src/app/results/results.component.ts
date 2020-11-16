@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'results',
@@ -8,7 +9,11 @@ import { Router } from '@angular/router';
 })
 export class ResultsComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  timer = 0;
+  constructor(public dataService: DataService,private router: Router) { 
+    this.dataService.loadSessionFromLocalStorage();
+    this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].revision;
+  }
 
   ngOnInit(): void {
   }

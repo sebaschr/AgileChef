@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
 import { element } from 'protractor';
+import { DataService } from '../data.service';
 
 
 interface Overlay {
@@ -179,7 +180,10 @@ export class GameComponent implements OnInit {
   // }
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public dataService: DataService) { 
+    this.dataService.loadSessionFromLocalStorage();
+    this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
+  }
 
   ngOnInit(): void {
     
