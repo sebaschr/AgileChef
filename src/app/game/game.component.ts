@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
-import { DataService } from '../data.service';
 import { Ingredient } from '../models/ingredient';
+import { element } from 'protractor';
+import { DataService } from '../data.service';
 
 
 interface Overlay {
@@ -110,20 +111,6 @@ export class GameComponent implements OnInit {
     }];
 
   playerList = [
-    {
-      name: 'Joe',
-      id: 'player01',
-      ingredientsAssigned: [
-
-      ]
-    },
-    {
-      name: 'Elena (PO)',
-      id: 'player02',
-      ingredientsAssigned: [
-
-      ]
-    }
   ];
 
   pizzaList = [ {
@@ -166,7 +153,9 @@ export class GameComponent implements OnInit {
     inCanvas: []
   };
 
-  counterPlayer = this.playerList.length - 1;
+
+  counterPlayer = 0;
+
 
   // results = {
   //   totalSuccesful: 0, 
@@ -178,10 +167,49 @@ export class GameComponent implements OnInit {
   // }
 
 
-  constructor(private router: Router,public dataService: DataService,public ingredient: Ingredient) { }
+  constructor(private router: Router,public dataService: DataService) { 
+    this.dataService.loadSessionFromLocalStorage();
+      this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
+    this.dataService.loadPlayerFromLocalStorage
+    this.loadPlayers(this.dataService.loadPlayerFromLocalStorage);
+    this.dataService.currentPlayer;
+  }
 
   ngOnInit(): void {
     this.ingredient.getIngredientList();
+  }
+
+  loadPlayers(player){
+    let teamList = this.dataService.session.teams;
+    let players = [];
+
+    for (let i = 0; i < teamList.length; i++) {
+      for (let y = 0; y < teamList[i].players.length; y++) {
+        if(player.identifier == teamList[i].players.identifier){
+          players = teamList[i].players;
+        }
+        
+      }
+      
+    }
+
+    for (let i = 0; i < players.length; i++) {
+      let newplayer = {
+        name: String,
+        id: String,
+        ingredientsAssigned: []
+      };
+      newplayer.name = players[i].name;
+      newplayer.id = players[i].identifier;
+      newplayer.ingredientsAssigned =[];
+      this.playerList.push(newplayer);
+    } 
+
+    this.counterPlayer = this.playerList.length - 1;
+
+
+
+
   }
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {
@@ -340,9 +368,9 @@ export class GameComponent implements OnInit {
       } else {
         this.counterPlayer--;
       }
+      console.log(this.playerList);
+      console.log(this.counterPlayer)
       this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
-
-
     }
   }
 
@@ -547,7 +575,6 @@ export class GameComponent implements OnInit {
     }
 
     if (inside && (pos1.name == 'Pepperoni Pizza' || pos1.name == 'Mushroom Pizza') && pos1.progress >= 100) {
-      console.log('done');
       pos1.onPizza = 'none';
       this.finished.push(pos1);
       this.deletePizzafromQueue(pos1.name);
