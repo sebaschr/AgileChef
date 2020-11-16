@@ -171,7 +171,7 @@ export class GameComponent implements OnInit {
       this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
     this.dataService.loadPlayerFromLocalStorage
     this.loadPlayers(this.dataService.loadPlayerFromLocalStorage);
-
+    this.dataService.currentPlayer;
   }
 
   ngOnInit(): void {

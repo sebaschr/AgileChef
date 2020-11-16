@@ -50,9 +50,9 @@
                     <div class="readyPanel">
                         <countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown>
                         
-                        <div class="oven"><img src="../../assets/oven.png" alt="" width="200px"></div>
+                        <div class="oven" [class.isPO]="this.dataService.currentPlayer.isPO"><img src="../../assets/oven.png" alt="" width="200px"></div>
                         <div class="readyQueue"></div>
-                        <div class="trash"><img src="../../assets/trash.png" alt="" width="200px"></div>
+                        <div class="trash" [class.isPO]="this.dataService.currentPlayer.isPO"><img src="../../assets/trash.png" alt="" width="200px"></div>
 
                     </div>
                 </div>

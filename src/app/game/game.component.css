@@ -120,3 +120,11 @@
     height:420px;
     margin:15px auto;
 }
+
+.oven,.trash{
+    display:none;
+}
+
+.isPO{
+    display:block;
+}
