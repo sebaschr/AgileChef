@@ -18,7 +18,7 @@ export class IngredientComponent implements OnInit {
   }
 
   loadIngredients(){
-    console.log(this.ingredient.ingredientList);
+    this.dataService.ingredients = this.ingredient.getIngredientList()
   }
 }
 

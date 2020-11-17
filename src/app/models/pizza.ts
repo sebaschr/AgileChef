@@ -3,17 +3,52 @@ import { key } from 'firebase-key';
 
 export class Pizza {
     public name: String;
-    public recipe: Recipe;
+    public recipeid: String;
     public price:Number
     
-
+    recipeList= [];
+    pizzaList = [];
     constructor() {
-
+        
     }
 
     loadPizzas(){
-        
+
+        var pizzas = [{
+            name:"Mushroom Pizza",
+            price:6500,
+            imgSrc: '../../assets/mushroom_pizza.png',
+            recipeID: ''
+        },{
+            name:"Pepperoni Pizza",
+            price:6000,
+            imgSrc: '../../assets/pepperoni_pizza.png',
+            recipeID: ''
+        }]
+
+        for (let i = 0; i < pizzas.length; i++) {
+            pizzas[i].recipeID = this.findRecipeID(pizzas[i].name);
+        }
+
+        this.pizzaList = pizzas;
+        return this.pizzaList
     }
+
+    findRecipeID(name){
+        var x = new Recipe();
+        this.recipeList = x.getRecipeList();
+        var key;
+        for (let i = 0; i < this.recipeList.length; i++) {
+            if(this.recipeList[i].nombre == name){
+                key = this.recipeList[i].idRecipe
+            }
+            
+        }
+
+        return key
+    }
+
+    
 }
 
 /*

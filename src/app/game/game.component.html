@@ -18,7 +18,9 @@
                     <div class="queue">
                         <h2>Queue</h2>
                         <mat-card *ngFor="let p of pizzaList; let i = index;" cdkDrag class='pizza'
-                            (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing" [class.finished]="p.done">
+                         [class.onqueue]="p.editing" [class.finished]="p.done">
+
+                            <!-- (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing" [class.finished]="p.done"> -->
                             <p>{{p.name}}</p>
                             <img src="{{p.imgSrc}}" alt="">
                         </mat-card>
@@ -30,15 +32,15 @@
                         </div>
                         <div class="menu">
 
-                            <button class="player" *ngFor="let n of playerList; let i = index;"
-                                (click)='showIngredients(n.name)'>{{n.name}}</button>
+                            <button class="player" *ngFor="let n of playerList; let i = index;">{{n.name}}</button>
+                            <!-- (click)='showIngredients(n.name)' -->
 
 
                             <div class="ingredients-list ">
                                 <div cdkDrag class='ingredient' *ngFor="let ing of activePlayer.ing; let i = index;"
-                                    (click)='prepareIngredient(ing,$event)'
-                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'
-                                    (mouseup)="ingredientPlacement(ing,$event)">
+                                     
+                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'>
+                                    <!-- (mouseup)="ingredientPlacement(ing,$event)"> (click)='prepareIngredient(ing,$event)' -->
                                     <mat-progress-bar mode="determinate" value="{{ing.progress}}" [color]="color">
 
                                     </mat-progress-bar>
@@ -48,7 +50,7 @@
                         </div>
                     </div>
                     <div class="readyPanel">
-                        <countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown>
+                        <!-- <countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown> -->
                         
                         <div class="oven" [class.isPO]="this.dataService.currentPlayer.isPO"><img src="../../assets/oven.png" alt="" width="200px"></div>
                         <div class="readyQueue"></div>

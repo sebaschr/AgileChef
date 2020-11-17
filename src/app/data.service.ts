@@ -6,6 +6,7 @@ import { Team } from './models/team';
 import { Ingredient } from './models/ingredient';
 import { templateSourceUrl } from '@angular/compiler';
 import { runInThisContext } from 'vm';
+import { Pizza } from './models/pizza';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class DataService {
   admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
+  public ingredients= [];
+
+  public ingredient: Ingredient;
   constructor() {
 
   }
@@ -108,12 +112,15 @@ export class DataService {
   }
 
   loadIngredients(){
-
-    
+      let y = new DataService();
+      let x = new Ingredient(y);
+      this.ingredients = x.getIngredientList();
+      return this.ingredients;
   }
 
-  getIngredientList(e){
-        console.log(e);
+  loadPizzas(){
+    let x  = new Pizza();
+    return x.loadPizzas();
   }
   // addPlayerToTeam(player: Player, teamNumber: Number) {
 

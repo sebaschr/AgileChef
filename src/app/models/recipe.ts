@@ -2,20 +2,20 @@ import { Optional } from '@angular/core';
 import { faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
 import { database } from 'firebase';
 import { key } from 'firebase-key';
-import { Ingredient } from './ingredient';
 
 export class Recipe {
 
-    public ingredients = [{
+    public recipes = [{
         nombre: String,
+        idRecipe: String,
         ingredients: [{
-            idRecipe: key,
             idIngredient: String,
             amount: Number,
         }]
     }]
 
     public recipeList = [];
+    public ingredients = [];
 
     constructor() {
 
@@ -26,35 +26,34 @@ export class Recipe {
 
         ingredientList = [{
             nombre: 'Mushroom Pizza',
+            idRecipe: key(),
             ingredients: [{
-                idRecipe: key(),
                 idIngredient: 'Dough',
                 amount: 1
             },
             {
-                idRecipe: key(),
                 idIngredient: 'Mushroom',
                 amount: 1
             },
             {
-                idRecipe: key(),
                 idIngredient: 'Tomato',
                 amount: 1
             }]
         },{
             nombre: 'Pepperoni Pizza',
+            idRecipe: key(),
             ingredients: [{
-                idRecipe: key(),
+
                 idIngredient: 'Dough',
                 amount: 1
             },
             {
-                idRecipe: key(),
+
                 idIngredient: 'Pepperoni',
                 amount: 1
             },
             {
-                idRecipe: key(),
+
                 idIngredient: 'Tomato',
                 amount: 1
             }]
@@ -64,7 +63,10 @@ export class Recipe {
     }
 
     getRecipeList(){
-        return this.recipeList;
+        this.loadRecipes();
+        var x = []
+        x = this.recipeList;
+        return x
     }
 
 
