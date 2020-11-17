@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵsetCurrentInjector } from '@angular/core';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { Team } from '../models/team';
@@ -31,11 +31,21 @@ export class LobbyComponent implements OnInit {
   }
 
   startGame() {
-    this.router.navigate(['/planning']);
+    if(this.dataService.currentPlayer) {
+
+    } else if (this.dataService.admin){
+      this.router.navigate(['/planning']);
+    }
+
   }
 
   returnToPlayerLogIn() {
-    this.router.navigate(['/playerLogin']);
+    if (this.dataService.currentPlayer) {
+      this.router.navigate(['/playerLogin']);
+    } else {
+      
+    }
+
   }
 
 }
