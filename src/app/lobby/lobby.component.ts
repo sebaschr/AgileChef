@@ -20,7 +20,6 @@ export class LobbyComponent implements OnInit {
 
     if (typeof (dataService.currentPlayer && dataService.session) == 'undefined') {
       dataService.loadPlayerFromLocalStorage();
-      // dataService.loadSessionFromLocalStorage();
       dataService.loadTeams();
     }
   }

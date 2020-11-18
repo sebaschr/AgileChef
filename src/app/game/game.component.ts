@@ -167,7 +167,7 @@ export class GameComponent implements OnInit {
 
 
   constructor(private router: Router,public dataService: DataService) { 
-    this.dataService.loadSessionFromLocalStorage();
+    this.dataService.loadSession();
       this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
     this.dataService.loadPlayerFromLocalStorage
     this.loadPlayers(this.dataService.loadPlayerFromLocalStorage);

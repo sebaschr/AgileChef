@@ -22,7 +22,7 @@ export class TeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.teams = this.dataService.loadSessionFromLocalStorage().teams;
+    this.teams = this.dataService.loadSession().teams;
   }
 
   addPlayerToTeam(e) {

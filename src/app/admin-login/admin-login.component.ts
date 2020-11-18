@@ -18,7 +18,6 @@ AdminForm = this.fb.group({
 });
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
-    console.log('AdminLoginComponent', dataService);
 }
 
 ngOnInit(): void {

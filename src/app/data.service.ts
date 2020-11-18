@@ -15,25 +15,26 @@ import { Observable } from 'rxjs';
 export class DataService {
 
   public currentPlayer: Player;
-  admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
 
 
   constructor(public db: AngularFireDatabase) {
-    // console.log(firestore);
-    // console.log(db.object('session'));
-    // console.log(db.object('session').valueChanges());
-    this.loadSessionFromLocalStorage();
+    this.loadSession();
+    this.saveAdmin();
   }
 
   post(collection: string, data: object) {
     this.db.object(collection).set(data);
-    localStorage.setItem(collection, JSON.stringify(data));
   }
 
   get(src: string) {
     return JSON.parse(localStorage.getItem(src));
+  }
+
+  saveAdmin(){
+    let admin = new Admin ('esteban', '1234');
+    this.post('adminInfo', admin);
   }
 
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
@@ -47,19 +48,15 @@ export class DataService {
     this.post('session', session);
   }
 
-  loadSessionFromLocalStorage() {
-    // this.session = JSON.parse(localStorage.getItem('session'));
+  loadSession() {
     var sessionData = null;
     this.db.object('session').snapshotChanges().subscribe(action => {
-      // console.log(action.payload.val());
-      // return action.payload.val();
       sessionData = action.payload.val();
       this.session = new ACSession();
       this.session.sprints = sessionData.sprints;
       this.session.teams = sessionData.teams;
       this.session.playersMax = sessionData.playersMax;
       this.session.playersMin = sessionData.playersMin;
-      // console.log('loadSessionFromLocalStorage');
       return this.session;
     });
 
@@ -109,22 +106,11 @@ export class DataService {
 
     let isAdmin = false;
 
-    /*if(this.admin) {
-      console.log('no.')
-    } else if (this.currentPlayer){
-      console.log(this.session);
-      this.checkUserTeam(player.identifier)
-      newTeam.addPlayer(player);
-      this.updateSessionTeams(newTeam);
-    }*/
-
     console.log(this.session);
     this.checkUserTeam(player.identifier)
     newTeam.addPlayer(player);
     this.updateSessionTeams(newTeam);
 
-    // console.log(' add player')
-    // console.log(this.session)
   }
 
   getMinAndMaxPlayers(session) {

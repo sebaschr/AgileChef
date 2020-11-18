@@ -11,7 +11,7 @@ import { DataService} from '../data.service';
 export class PlanningComponent implements OnInit {
   timer =0;
 
-  constructor(private router: Router,public dataService: DataService) {  this.dataService.loadSessionFromLocalStorage();
+  constructor(private router: Router,public dataService: DataService) {  this.dataService.loadSession();
     this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
   }
 

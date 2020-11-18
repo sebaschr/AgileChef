@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class SummaryComponent implements OnInit {
   timer = 0;
   constructor(public dataService: DataService,private router: Router) { 
-    this.dataService.loadSessionFromLocalStorage();
+    this.dataService.loadSession();
     this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
   }
 
