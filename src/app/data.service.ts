@@ -16,30 +16,33 @@ import { database } from 'firebase';
 export class DataService {
 
   public currentPlayer: Player;
+  admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
 
   constructor(public db: AngularFireDatabase) {
     this.loadSession();
-    this.saveAdmin();
+    //this.saveAdmin();
   }
 
   post(collection: string, data: object) {
-    this.db.object(collection).set(data);
+    this.db.object(collection).set(data); //DB
+    localStorage.setItem(collection, JSON.stringify(data)); //LocalStorage
   }
 
   get(src: string) {
-    var data = null;
-    this.db.object(src).snapshotChanges().subscribe(action => {
-      data = action.payload.val();
-      return data;
-    });
+    return JSON.parse(localStorage.getItem(src)); //LocalStorage
+    // var data = null;
+    // this.db.object(src).snapshotChanges().subscribe(action => {
+    //   data = action.payload.val();
+    //   return data;
+    // });
   }
 
-  saveAdmin(){
-    let admin = new Admin ('esteban', '1234');
-    this.post('adminInfo', admin);
-  }
+  // saveAdmin(){
+  //   let admin = new Admin ('esteban', '1234');
+  //   this.post('adminInfo', admin);
+  // }
 
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);

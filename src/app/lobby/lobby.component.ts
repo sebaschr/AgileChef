@@ -19,7 +19,7 @@ export class LobbyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.dataService.loadPlayerFromLocalStorage());
+
   }
 
   startGame() {
