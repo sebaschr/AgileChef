@@ -5,6 +5,8 @@ import { Player } from './models/player';
 import { Team } from './models/team';
 import { templateSourceUrl } from '@angular/compiler';
 import { runInThisContext } from 'vm';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +18,21 @@ export class DataService {
   admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
-  constructor() {
 
+
+  constructor(public db: AngularFireDatabase) {
+    // console.log(firestore);
+    console.log(db.object('session'));
+    console.log(db.object('session').valueChanges());
   }
 
   post(collection: string, data: object) {
+    this.db.object(collection).set(data);
     localStorage.setItem(collection, JSON.stringify(data));
   }
 
   get(src: string) {
+
     return JSON.parse(localStorage.getItem(src));
   }
 
@@ -64,7 +72,7 @@ export class DataService {
         this.session.teams[i] = team
       }
     }
-      this.post('session',session);
+    this.post('session', session);
   }
 
   addPlayerToTeam(player: Player, team: Team) {
@@ -72,9 +80,9 @@ export class DataService {
 
     let currentUserData = this.get('currentUser');
 
-    if(currentUserData.identifier == player.identifier){
+    if (currentUserData.identifier == player.identifier) {
       currentUserData.teamNumber = team.teamNumber;
-      this.post('currentUser',currentUserData);
+      this.post('currentUser', currentUserData);
     }
 
     this.getMinAndMaxPlayers(this.session);
@@ -110,8 +118,8 @@ export class DataService {
     let maxPlayers = this.session.playersMax;
     let teams = this.session.teams;
 
-    for(let i = 0; i < teams.length; i++) {
-      for(let j = 0; j < teams[i].players.length; j++) {
+    for (let i = 0; i < teams.length; i++) {
+      for (let j = 0; j < teams[i].players.length; j++) {
         var teamTotal = teams[i].players[j];
         console.log('team total:' + teamTotal);
       }
@@ -121,56 +129,54 @@ export class DataService {
 
   checkUserTeam(identifier) {
     var teams = this.session.teams;
-    
+
     for (let i = 0; i < teams.length; i++) {
       for (let j = 0; j < teams[i].players.length; j++) {
         var playerFound = teams[i].players[j];
         if (playerFound.identifier == identifier) {
           teams[i].players.splice(j, 1);
         }
-      }      
+      }
     }
   }
 
   removePlayerFromTeam(player: Player, team: Team) {
 
-    this.findanddelete(player.identifier,team.identifier);
+    this.findanddelete(player.identifier, team.identifier);
 
     var newTeam = new Team(team.teamNumber)
 
     for (let i = 0; i < team.players.length; i++) {
       if (player.identifier == team.players[i].identifier) {
         console.log('got em chief');
-        team.players.splice(i,1);
+        team.players.splice(i, 1);
         newTeam = team.players[i];
       }
     }
 
     let currentUserData = this.get('currentUser');
-    if(currentUserData.identifier === player.identifier){
+    if (currentUserData.identifier === player.identifier) {
       player.teamNumber = null;
       this.post('currentUser', player);
-    }else{
+    } else {
       console.log('false');
     }
 
     this.updateSessionTeams(newTeam);
   }
 
-  findanddelete(pidentifier,tidenfitier){
+  findanddelete(pidentifier, tidenfitier) {
     var teams = this.session.teams;
-    
+
     for (let i = 0; i < this.session.teams.length; i++) {
       if (this.session.teams[i].identifier == tidenfitier) {
         var foundTeam = this.session.teams[i];
         for (let t = 0; t < foundTeam.players.length; t++) {
-            if(foundTeam.players[t].identifier ==pidentifier){
-              foundTeam.players.splice(t,1);
-            }          
+          if (foundTeam.players[t].identifier == pidentifier) {
+            foundTeam.players.splice(t, 1);
+          }
         }
       }
-      
     }
   }
-
 }

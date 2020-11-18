@@ -20,13 +20,13 @@ export class AdminPanelComponent implements OnInit {
   firstSprint = true;
   minReached = true;
   savedLastSprint = true;
-  
-  errorSprints: boolean=false;
-  errorMinSprint: boolean=false;
-  errorMin: boolean=false;
-  errorMax: boolean=false;
-  errorMinMax: boolean=false;
-  errorTeams: boolean=false;
+
+  errorSprints: boolean = false;
+  errorMinSprint: boolean = false;
+  errorMin: boolean = false;
+  errorMax: boolean = false;
+  errorMinMax: boolean = false;
+  errorTeams: boolean = false;
 
 
   span = <HTMLInputElement>document.getElementById('sprintQuantity');
@@ -60,11 +60,12 @@ export class AdminPanelComponent implements OnInit {
     this.dataService.session.playersMax = this.form.value.playerQuantityMax;
     var errors = this.validateFields();
     this.saveSprint();
-    if (errors==true) {
-      
+    if (errors == true) {
+
     } else {
+      this.dataService.session.teams = [];
       for (let index = 0; index < this.form.value.teamQuantity; index++) {
-        let team = new Team((index+1))
+        let team = new Team((index + 1))
         this.dataService.session.teams.push(team);
       }
       this.dataService.saveSessionToLocalStorage(this.dataService.session);
@@ -81,33 +82,33 @@ export class AdminPanelComponent implements OnInit {
     sprint.planeamiento = this.form.value.planningTime;
     sprint.revision = this.form.value.reviewingTime;
     sprint.retrospectiva = this.form.value.retrospectiveTime;
-    var validationError=false;
-    if(sprint.ejecucion==0||sprint.planeamiento==0||sprint.revision==0||sprint.retrospectiva==0){
-      validationError=true;
-      this.errorSprints=true;
-    }else{
-      this.errorSprints=false;
+    var validationError = false;
+    if (sprint.ejecucion == 0 || sprint.planeamiento == 0 || sprint.revision == 0 || sprint.retrospectiva == 0) {
+      validationError = true;
+      this.errorSprints = true;
+    } else {
+      this.errorSprints = false;
     }
 
     if (validationError) {
-      
+
     } else {
       this.findUpdateSprint(sprint);
       this.checkLastOneSaved(sprint.name);
-      this.errorMinSprint=false;
+      this.errorMinSprint = false;
     }
-    
+
   }
 
   removeSprint() {
 
-    if (this.sprintCounter==1) {
-      
+    if (this.sprintCounter == 1) {
+
     } else {
       var currentSprint = this.form.value.selectSprint;
       for (let index = 0; index < this.sprintList.length; index++) {
-        if(currentSprint==this.sprintList[index].name){
-          this.sprintList.splice(index,1);
+        if (currentSprint == this.sprintList[index].name) {
+          this.sprintList.splice(index, 1);
           this.reorderArrays();
         }
       }
@@ -202,55 +203,55 @@ export class AdminPanelComponent implements OnInit {
   }
 
   validateFields() {
-    var foundErrors=false;
-    var amountTeams=  this.form.value.teamQuantity;
-    var playerQuantityMin=  this.form.value.playerQuantityMin;
-    var playerQuantityMax=  this.form.value.playerQuantityMax;
+    var foundErrors = false;
+    var amountTeams = this.form.value.teamQuantity;
+    var playerQuantityMin = this.form.value.playerQuantityMin;
+    var playerQuantityMax = this.form.value.playerQuantityMax;
     var ejecucion = this.form.value.executionTime;
     var planeamiento = this.form.value.planningTime;
     var revision = this.form.value.reviewingTime;
     var retrospectiva = this.form.value.retrospectiveTime;
 
-    if(amountTeams==0){
-      foundErrors=true;
-      this.errorTeams=true;
-    }else{
-      this.errorTeams=false;
+    if (amountTeams == 0) {
+      foundErrors = true;
+      this.errorTeams = true;
+    } else {
+      this.errorTeams = false;
     }
 
-    if(playerQuantityMin==0){
-      foundErrors=true;
-      this.errorMin=true;
-    }else{
-      this.errorMin=false;
+    if (playerQuantityMin == 0) {
+      foundErrors = true;
+      this.errorMin = true;
+    } else {
+      this.errorMin = false;
     }
 
-    if(playerQuantityMax==0){
-      foundErrors=true;
-      this.errorMax=true;
-    }else{
-      this.errorMax=false;
+    if (playerQuantityMax == 0) {
+      foundErrors = true;
+      this.errorMax = true;
+    } else {
+      this.errorMax = false;
     }
 
-    if(playerQuantityMax<playerQuantityMin){
-      foundErrors=true;
-      this.errorMinMax=true;
-    }else{
-      this.errorMinMax=false;
+    if (playerQuantityMax < playerQuantityMin) {
+      foundErrors = true;
+      this.errorMinMax = true;
+    } else {
+      this.errorMinMax = false;
     }
 
-    if(ejecucion==0||planeamiento==0||revision==0||retrospectiva==0){
-      foundErrors=true;
-      this.errorSprints=true;
-    }else{
-      this.errorSprints=false;
+    if (ejecucion == 0 || planeamiento == 0 || revision == 0 || retrospectiva == 0) {
+      foundErrors = true;
+      this.errorSprints = true;
+    } else {
+      this.errorSprints = false;
     }
 
-    if(this.dataService.session.sprints.length==0){
-      foundErrors=true;
-      this.errorMinSprint=true;
-    }else{
-      this.errorMinSprint=false;
+    if (this.dataService.session.sprints.length == 0) {
+      foundErrors = true;
+      this.errorMinSprint = true;
+    } else {
+      this.errorMinSprint = false;
     }
     return foundErrors;
   }
@@ -269,7 +270,7 @@ export class AdminPanelComponent implements OnInit {
 
     this.sprintCounter--;
 
-    if(this.sprintCounter==1){
+    if (this.sprintCounter == 1) {
       this.form.controls['executionTime'].setValue(this.sprintList[0].ejecucion);
       this.form.controls['planningTime'].setValue(this.sprintList[0].planeamiento);
       this.form.controls['reviewingTime'].setValue(this.sprintList[0].revision);

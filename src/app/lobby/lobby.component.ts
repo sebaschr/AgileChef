@@ -13,27 +13,26 @@ import { templateSourceUrl } from '@angular/compiler';
 
 
 export class LobbyComponent implements OnInit {
-    
-  teams: Team [] = [];
+
+  teams: Team[] = [];
 
   constructor(public dataService: DataService, private router: Router) {
-  
-   if (typeof (dataService.currentPlayer && dataService.session) == 'undefined') {
+
+    if (typeof (dataService.currentPlayer && dataService.session) == 'undefined') {
       dataService.loadPlayerFromLocalStorage();
       dataService.loadSessionFromLocalStorage();
       dataService.loadTeams();
-   }
-
+    }
   }
 
   ngOnInit(): void {
-      this.teams=this.dataService.loadSessionFromLocalStorage().teams;
+    this.teams = this.dataService.loadSessionFromLocalStorage().teams;
   }
 
   startGame() {
-    if(this.dataService.currentPlayer) {
+    if (this.dataService.currentPlayer) {
 
-    } else if (this.dataService.admin){
+    } else if (this.dataService.admin) {
       this.router.navigate(['/planning']);
     }
 
@@ -43,7 +42,7 @@ export class LobbyComponent implements OnInit {
     if (this.dataService.currentPlayer) {
       this.router.navigate(['/playerLogin']);
     } else {
-      
+
     }
 
   }
