@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="lobby.component.css">
 
-        <title>Lobby</title>
-    </head>
-    <body>
-        <section class="left-section">
-            <div *ngFor="let n of teams; let i = index;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Roboto:wght@100;300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="lobby.component.css">
+
+    <title>Lobby</title>
+</head>
+
+<body>
+    <section class="left-section">
+        <div *ngIf="dataService.session">
+            <div *ngFor="let n of dataService.session.teams; let i = index;">
                 <team-component [team]="n">{{n.teamNumber}}</team-component>
             </div>
-        </section>
-        <section class="right-section">
-            <div class="objectives-card">
-                <h1>Objectives</h1>
-                <p><span>1.</span> With the teams representing a company, 
-                    the goal is to build a pizza chain/company that is
-                    <span>profitable.</span></p>
-                <p><span>2.</span> The pizza slices have to maintain a 
-                    <span>minimum</span> quality to be approved.</p>
-                <p><span>3.</span> The size and quantity of ingredients must be
-                    <span>similar.</span>
-                    </p>
-                <p><span>4.</span> Each team member can only do <span>one step </span> 
-                    at a time of the assamble process.
-                    </p>
-                <p><span>5. Only</span> the Product Owner (PO) 
-                    can approve or reject completed products.</p>
-            </div>
-            <div class="buttons-container">
-                <button class="start-button" (click)="returnToPlayerLogIn()" mat-raised-button color="primary">Return</button>
-                <button class="start-button" (click)="startGame()" mat-raised-button color="primary">Start</button>
-            </div>
-        </section>
-    </body>
-    </html>
+        </div>
+    </section>
+    <section class="right-section">
+        <div class="objectives-card">
+            <h1>Objectives</h1>
+            <p><span>1.</span> With the teams representing a company,
+                the goal is to build a pizza chain/company that is
+                <span>profitable.</span></p>
+            <p><span>2.</span> The pizza slices have to maintain a
+                <span>minimum</span> quality to be approved.</p>
+            <p><span>3.</span> The size and quantity of ingredients must be
+                <span>similar.</span>
+            </p>
+            <p><span>4.</span> Each team member can only do <span>one step </span>
+                at a time of the assamble process.
+            </p>
+            <p><span>5. Only</span> the Product Owner (PO)
+                can approve or reject completed products.</p>
+        </div>
+        <div class="buttons-container">
+            <button class="start-button" (click)="returnToPlayerLogIn()" mat-raised-button
+                color="primary">Return</button>
+            <button class="start-button" (click)="startGame()" mat-raised-button color="primary">Start</button>
+        </div>
+    </section>
+</body>
+
+</html>

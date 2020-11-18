@@ -22,8 +22,9 @@ export class DataService {
 
   constructor(public db: AngularFireDatabase) {
     // console.log(firestore);
-    console.log(db.object('session'));
-    console.log(db.object('session').valueChanges());
+    // console.log(db.object('session'));
+    // console.log(db.object('session').valueChanges());
+    this.loadSessionFromLocalStorage();
   }
 
   post(collection: string, data: object) {
@@ -32,7 +33,6 @@ export class DataService {
   }
 
   get(src: string) {
-
     return JSON.parse(localStorage.getItem(src));
   }
 
@@ -48,8 +48,22 @@ export class DataService {
   }
 
   loadSessionFromLocalStorage() {
-    this.session = JSON.parse(localStorage.getItem('session'));
-    return this.get('session');
+    // this.session = JSON.parse(localStorage.getItem('session'));
+    var sessionData = null;
+    this.db.object('session').snapshotChanges().subscribe(action => {
+      // console.log(action.payload.val());
+      // return action.payload.val();
+      sessionData = action.payload.val();
+      this.session = new ACSession();
+      this.session.sprints = sessionData.sprints;
+      this.session.teams = sessionData.teams;
+      this.session.playersMax = sessionData.playersMax;
+      this.session.playersMin = sessionData.playersMin;
+      // console.log('loadSessionFromLocalStorage');
+      return this.session;
+    });
+
+    return this.session;
   }
 
 
