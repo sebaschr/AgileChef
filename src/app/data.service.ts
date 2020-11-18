@@ -77,19 +77,45 @@ export class DataService {
       this.post('currentUser',currentUserData);
     }
 
+    this.getMinAndMaxPlayers(this.session);
+
     let newTeam = new Team(team.teamNumber);
     newTeam.identifier = team.identifier;
     newTeam.pizzas = team.pizzas;
     newTeam.teamNumber = team.teamNumber;
     newTeam.players = team.players;
 
+    let isAdmin = false;
+
+    /*if(this.admin) {
+      console.log('no.')
+    } else if (this.currentPlayer){
+      console.log(this.session);
+      this.checkUserTeam(player.identifier)
+      newTeam.addPlayer(player);
+      this.updateSessionTeams(newTeam);
+    }*/
+
     console.log(this.session);
     this.checkUserTeam(player.identifier)
     newTeam.addPlayer(player);
-    this.updateSessionTeams(newTeam)
+    this.updateSessionTeams(newTeam);
 
     // console.log(' add player')
     // console.log(this.session)
+  }
+
+  getMinAndMaxPlayers(session) {
+    let minPlayers = this.session.playersMin;
+    let maxPlayers = this.session.playersMax;
+    let teams = this.session.teams;
+
+    for(let i = 0; i < teams.length; i++) {
+      for(let j = 0; j < teams[i].players.length; j++) {
+        var teamTotal = teams[i].players[j];
+        console.log('team total:' + teamTotal);
+      }
+    }
   }
 
 
