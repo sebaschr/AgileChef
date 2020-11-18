@@ -7,6 +7,7 @@ import { templateSourceUrl } from '@angular/compiler';
 import { runInThisContext } from 'vm';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable } from 'rxjs';
+import { database } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,6 @@ export class DataService {
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
 
-
   constructor(public db: AngularFireDatabase) {
     this.loadSession();
     this.saveAdmin();
@@ -29,7 +29,11 @@ export class DataService {
   }
 
   get(src: string) {
-    return JSON.parse(localStorage.getItem(src));
+    var data = null;
+    this.db.object(src).snapshotChanges().subscribe(action => {
+      data = action.payload.val();
+      return data;
+    });
   }
 
   saveAdmin(){
@@ -65,7 +69,6 @@ export class DataService {
 
 
   loadPlayerFromLocalStorage() {
-    this.currentPlayer = JSON.parse(localStorage.getItem('currentUser'));
     return this.get('currentUser');
   }
 

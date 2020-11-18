@@ -14,18 +14,12 @@ import { templateSourceUrl } from '@angular/compiler';
 
 export class LobbyComponent implements OnInit {
 
-  //teams: Team[] = [];
-
   constructor(public dataService: DataService, private router: Router) {
 
-    if (typeof (dataService.currentPlayer && dataService.session) == 'undefined') {
-      dataService.loadPlayerFromLocalStorage();
-      dataService.loadTeams();
-    }
   }
 
   ngOnInit(): void {
-
+    console.log(this.dataService.loadPlayerFromLocalStorage());
   }
 
   startGame() {
