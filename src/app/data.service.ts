@@ -20,11 +20,10 @@ export class DataService {
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
 
-  public data: any;
-
   constructor(public db: AngularFireDatabase) {
     this.loadSession();
     this.saveAdmin();
+    this.loadAdmin();
   }
 
   post(collection: string, data: object) {

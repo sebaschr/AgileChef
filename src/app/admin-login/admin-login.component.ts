@@ -21,7 +21,7 @@ AdminForm = this.fb.group({
 }
 
 ngOnInit(): void {
-  this.dataService.loadAdmin();
+  
 }
 
 submit() {
