@@ -68,7 +68,7 @@ export class AdminPanelComponent implements OnInit {
         let team = new Team((index + 1))
         this.dataService.session.teams.push(team);
       }
-      this.dataService.saveSessionToLocalStorage(this.dataService.session);
+      this.dataService.saveSession(this.dataService.session);
       this.router.navigate(['/lobby']);
     }
   }

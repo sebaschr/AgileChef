@@ -19,25 +19,16 @@ export class LobbyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.loadPlayerFromLocalStorage();
+    this.dataService.loadSession();
+    this.dataService.loadPlayer();
   }
 
   startGame() {
-    if (this.dataService.currentPlayer) {
-
-    } else if (this.dataService.admin) {
       this.router.navigate(['/planning']);
-    }
-
   }
 
   returnToPlayerLogIn() {
-    if (this.dataService.currentPlayer) {
       this.router.navigate(['/playerLogin']);
-    } else {
-
-    }
-
   }
 
 }

@@ -30,7 +30,7 @@ export class TeamComponent implements OnInit {
   }
 
   removePlayerFromTeam(e) {
-    this.dataService.removePlayerFromTeam(this.dataService.currentPlayer, e.teamNumber);
+    this.dataService.removePlayerFromTeam(this.dataService.currentPlayer, e);
   }
 
 }
