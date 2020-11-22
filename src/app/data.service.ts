@@ -16,13 +16,15 @@ import { database } from 'firebase';
 export class DataService {
 
   public currentPlayer: Player;
-  admin: Admin = new Admin('esteban', '1234');
+  public admin : Admin;
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
 
+  public data: any;
+
   constructor(public db: AngularFireDatabase) {
     this.loadSession();
-    //this.saveAdmin();
+    this.saveAdmin();
   }
 
   post(collection: string, data: object) {
@@ -31,20 +33,19 @@ export class DataService {
   }
 
   get(src: string) {
-    return JSON.parse(localStorage.getItem(src)); //LocalStorage
-    // var data = null;
-    // this.db.object(src).snapshotChanges().subscribe(action => {
-    //   data = action.payload.val();
-    //   return data;
-    // });
+    return this.db.object(src).snapshotChanges();
   }
 
-  // saveAdmin(){
-  //   let admin = new Admin ('esteban', '1234');
-  //   this.post('adminInfo', admin);
-  // }
+  saveAdmin(){
+    let admin = new Admin ('esteban', '1234');
+    this.post('adminInfo', admin);
+  }
 
-  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
+  loadAdmin(){
+    this.get('adminInfo').subscribe( resp => this.admin = resp.payload.val() );
+  }
+
+  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
     this.post('currentUser', this.currentPlayer);
   }
@@ -72,7 +73,7 @@ export class DataService {
 
 
   loadPlayerFromLocalStorage() {
-    return this.get('currentUser');
+    this.get('currentUser').subscribe( resp => this.currentPlayer = resp.payload.val() );
   }
 
   loadTeams() {
@@ -93,38 +94,28 @@ export class DataService {
   }
 
   addPlayerToTeam(player: Player, team: Team) {
-    var session = this.session;
-
-    let currentUserData = this.get('currentUser');
-
-    if (currentUserData.identifier == player.identifier) {
-      currentUserData.teamNumber = team.teamNumber;
-      this.post('currentUser', currentUserData);
+    if (this.currentPlayer.identifier == player.identifier) {
+      this.currentPlayer.teamNumber = team.teamNumber;
+      this.post('currentUser', this.currentPlayer);
     }
 
-    this.getMinAndMaxPlayers(this.session);
+    // let newTeam = new Team(team.teamNumber);
+    // newTeam.identifier = team.identifier;
+    // newTeam.pizzas = team.pizzas;
+    // newTeam.teamNumber = team.teamNumber;
+    // newTeam.players = team.players;
 
-    let newTeam = new Team(team.teamNumber);
-    newTeam.identifier = team.identifier;
-    newTeam.pizzas = team.pizzas;
-    newTeam.teamNumber = team.teamNumber;
-    newTeam.players = team.players;
 
-    let isAdmin = false;
-
-    console.log(this.session);
-    this.checkUserTeam(player.identifier)
-    newTeam.addPlayer(player);
-    this.updateSessionTeams(newTeam);
+    // console.log(this.session);
+    // this.checkUserTeam(player.identifier)
+    // newTeam.addPlayer(player);
+    // this.updateSessionTeams(newTeam);
 
   }
 
-  getMinAndMaxPlayers(session) {
-    let minPlayers = this.session.playersMin;
-    let maxPlayers = this.session.playersMax;
-    let teams = this.session.teams;
-
-    for (let i = 0; i < teams.length; i++) {
+  getMinAndMaxPlayers() {
+    var teams = this.session.teams;
+    for (let i = 0; i < this.session.teams.length; i++) {
       for (let j = 0; j < teams[i].players.length; j++) {
         var teamTotal = teams[i].players[j];
         console.log('team total:' + teamTotal);
@@ -147,28 +138,26 @@ export class DataService {
   }
 
   removePlayerFromTeam(player: Player, team: Team) {
-
-    this.findanddelete(player.identifier, team.identifier);
-
-    var newTeam = new Team(team.teamNumber)
-
-    for (let i = 0; i < team.players.length; i++) {
-      if (player.identifier == team.players[i].identifier) {
-        console.log('got em chief');
-        team.players.splice(i, 1);
-        newTeam = team.players[i];
-      }
-    }
-
-    let currentUserData = this.get('currentUser');
-    if (currentUserData.identifier === player.identifier) {
+    if (this.currentPlayer.identifier === player.identifier) {
       player.teamNumber = null;
       this.post('currentUser', player);
     } else {
       console.log('false');
     }
 
-    this.updateSessionTeams(newTeam);
+    // this.findanddelete(player.identifier, team.identifier);
+
+    // var newTeam = new Team(team.teamNumber)
+
+    // for (let i = 0; i < team.players.length; i++) {
+    //   if (player.identifier == team.players[i].identifier) {
+    //     console.log('got em chief');
+    //     team.players.splice(i, 1);
+    //     newTeam = team.players[i];
+    //   }
+    // }
+
+    //this.updateSessionTeams(newTeam);
   }
 
   findanddelete(pidentifier, tidenfitier) {

@@ -1,13 +1,18 @@
 <div class="team-card">
     <div class="team-header">
-        <h2>Equipo {{team.teamNumber}}</h2>
-        
+        <h2>Equipo {{team.teamNumber}}</h2>   
     </div>
-    <div class="team-container" *ngFor="let n of team.players; let i = index;">
+    <div class="team-container" *ngFor="let n of teams; let i = index;">
         <p>{{n.name}}</p>
     </div>
     <p></p>
     <p>Has click al "&#43;" para unirte a este equipo.</p>
-    <button mat-fab color="primary" class="team-btn" id={{team.teamNumber}} (click)="addPlayerToTeam(team)"><span id={{team.teamNumber}}>&#43;</span></button>
-    <button mat-fab color="primary" class="team-btn" id={{team.teamNumber} (click)="removePlayerFromTeam()">-</button>
+
+    <button mat-fab color="primary" class="team-btn" (click)="addPlayerToTeam(team)" >
+        <mat-icon>add</mat-icon>
+    </button>
+
+    <button mat-fab color="primary" class="team-btn" (click)="removePlayerFromTeam(team)" >
+        <mat-icon>remove</mat-icon>
+    </button>
 </div>

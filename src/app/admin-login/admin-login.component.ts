@@ -21,17 +21,17 @@ AdminForm = this.fb.group({
 }
 
 ngOnInit(): void {
-
+  this.dataService.loadAdmin();
 }
 
 submit() {
   let userInfo = this.AdminForm.value;
-  let data = this.dataService;
-  if(userInfo.userID == data.admin.username && userInfo.password == data.admin.password){
+  let data = this.dataService.admin;
+  if(userInfo.userID == data.username && userInfo.password == data.password){
     console.log('Match');
     this.router.navigate(['/adminPanel']);
   }else{
-    if(userInfo.userID == data.admin.username && userInfo.password != data.admin.password){
+    if(userInfo.userID == data.username && userInfo.password != data.password){
       alert("Wrong Password.");
     } else{
       alert("User Not Found.");

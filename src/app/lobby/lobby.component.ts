@@ -13,13 +13,13 @@ import { templateSourceUrl } from '@angular/compiler';
 
 
 export class LobbyComponent implements OnInit {
-
+  
   constructor(public dataService: DataService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-
+    this.dataService.loadPlayerFromLocalStorage();
   }
 
   startGame() {
