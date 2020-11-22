@@ -20,9 +20,19 @@ export class DataService {
   public sprintCounter = 0;
   public ingredients= [];
 
+<<<<<<< Updated upstream
   public ingredient: Ingredient;
   constructor() {
 
+=======
+  item: Observable<any>;
+  constructor(public db: AngularFireDatabase) {
+    // console.log(firestore);
+
+    console.log(db.object('session'));
+    this.item = db.object('item').valueChanges();
+    console.log(this.item)
+>>>>>>> Stashed changes
   }
 
   post(collection: string, data: object) {
