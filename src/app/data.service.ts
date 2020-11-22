@@ -7,6 +7,9 @@ import { Ingredient } from './models/ingredient';
 import { templateSourceUrl } from '@angular/compiler';
 import { runInThisContext } from 'vm';
 import { Pizza } from './models/pizza';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs';
+import { database } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +21,9 @@ export class DataService {
   admin: Admin = new Admin('esteban', '1234');
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
+
   public ingredients= [];
 
-<<<<<<< Updated upstream
-  public ingredient: Ingredient;
-  constructor() {
-
-=======
   item: Observable<any>;
   constructor(public db: AngularFireDatabase) {
     // console.log(firestore);
@@ -32,16 +31,27 @@ export class DataService {
     console.log(db.object('session'));
     this.item = db.object('item').valueChanges();
     console.log(this.item)
->>>>>>> Stashed changes
+
   }
 
   post(collection: string, data: object) {
-    localStorage.setItem(collection, JSON.stringify(data));
+    this.db.object(collection).set(data); //DB
+    localStorage.setItem(collection, JSON.stringify(data)); //LocalStorage
   }
 
   get(src: string) {
-    return JSON.parse(localStorage.getItem(src));
+    return JSON.parse(localStorage.getItem(src)); //LocalStorage
+    // var data = null;
+    // this.db.object(src).snapshotChanges().subscribe(action => {
+    //   data = action.payload.val();
+    //   return data;
+    // });
   }
+
+  // saveAdmin(){
+  //   let admin = new Admin ('esteban', '1234');
+  //   this.post('adminInfo', admin);
+  // }
 
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
@@ -54,14 +64,23 @@ export class DataService {
     this.post('session', session);
   }
 
-  loadSessionFromLocalStorage() {
-    this.session = JSON.parse(localStorage.getItem('session'));
-    return this.get('session');
+  loadSession() {
+    var sessionData = null;
+    this.db.object('session').snapshotChanges().subscribe(action => {
+      sessionData = action.payload.val();
+      this.session = new ACSession();
+      this.session.sprints = sessionData.sprints;
+      this.session.teams = sessionData.teams;
+      this.session.playersMax = sessionData.playersMax;
+      this.session.playersMin = sessionData.playersMin;
+      return this.session;
+    });
+
+    return this.session;
   }
 
 
   loadPlayerFromLocalStorage() {
-    this.currentPlayer = JSON.parse(localStorage.getItem('currentUser'));
     return this.get('currentUser');
   }
 
@@ -79,7 +98,7 @@ export class DataService {
         this.session.teams[i] = team
       }
     }
-      this.post('session',session);
+    this.post('session', session);
   }
 
   addPlayerToTeam(player: Player, team: Team) {
@@ -87,10 +106,12 @@ export class DataService {
 
     let currentUserData = this.get('currentUser');
 
-    if(currentUserData.identifier == player.identifier){
+    if (currentUserData.identifier == player.identifier) {
       currentUserData.teamNumber = team.teamNumber;
-      this.post('currentUser',currentUserData);
+      this.post('currentUser', currentUserData);
     }
+
+    this.getMinAndMaxPlayers(this.session);
 
     let newTeam = new Team(team.teamNumber);
     newTeam.identifier = team.identifier;
@@ -98,26 +119,39 @@ export class DataService {
     newTeam.teamNumber = team.teamNumber;
     newTeam.players = team.players;
 
+    let isAdmin = false;
+
     console.log(this.session);
     this.checkUserTeam(player.identifier)
     newTeam.addPlayer(player);
-    this.updateSessionTeams(newTeam)
+    this.updateSessionTeams(newTeam);
 
-    // console.log(' add player')
-    // console.log(this.session)
+  }
+
+  getMinAndMaxPlayers(session) {
+    let minPlayers = this.session.playersMin;
+    let maxPlayers = this.session.playersMax;
+    let teams = this.session.teams;
+
+    for (let i = 0; i < teams.length; i++) {
+      for (let j = 0; j < teams[i].players.length; j++) {
+        var teamTotal = teams[i].players[j];
+        console.log('team total:' + teamTotal);
+      }
+    }
   }
 
 
   checkUserTeam(identifier) {
     var teams = this.session.teams;
-    
+
     for (let i = 0; i < teams.length; i++) {
       for (let j = 0; j < teams[i].players.length; j++) {
         var playerFound = teams[i].players[j];
         if (playerFound.identifier == identifier) {
           teams[i].players.splice(j, 1);
         }
-      }      
+      }
     }
   }
 
@@ -161,43 +195,41 @@ export class DataService {
 
   removePlayerFromTeam(player: Player, team: Team) {
 
-    this.findanddelete(player.identifier,team.identifier);
+    this.findanddelete(player.identifier, team.identifier);
 
     var newTeam = new Team(team.teamNumber)
 
     for (let i = 0; i < team.players.length; i++) {
       if (player.identifier == team.players[i].identifier) {
         console.log('got em chief');
-        team.players.splice(i,1);
+        team.players.splice(i, 1);
         newTeam = team.players[i];
       }
     }
 
     let currentUserData = this.get('currentUser');
-    if(currentUserData.identifier === player.identifier){
+    if (currentUserData.identifier === player.identifier) {
       player.teamNumber = null;
       this.post('currentUser', player);
-    }else{
+    } else {
       console.log('false');
     }
 
     this.updateSessionTeams(newTeam);
   }
 
-  findanddelete(pidentifier,tidenfitier){
+  findanddelete(pidentifier, tidenfitier) {
     var teams = this.session.teams;
-    
+
     for (let i = 0; i < this.session.teams.length; i++) {
       if (this.session.teams[i].identifier == tidenfitier) {
         var foundTeam = this.session.teams[i];
         for (let t = 0; t < foundTeam.players.length; t++) {
-            if(foundTeam.players[t].identifier ==pidentifier){
-              foundTeam.players.splice(t,1);
-            }          
+          if (foundTeam.players[t].identifier == pidentifier) {
+            foundTeam.players.splice(t, 1);
+          }
         }
       }
-      
     }
   }
-
 }

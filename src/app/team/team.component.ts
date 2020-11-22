@@ -18,15 +18,16 @@ export class TeamComponent implements OnInit {
   teams = [];
 
   constructor(public dataService: DataService) {
-
+    this.dataService.loadPlayerFromLocalStorage();
   }
 
   ngOnInit(): void {
-    this.teams = this.dataService.loadSessionFromLocalStorage().teams;
+    this.teams = this.dataService.loadSession().teams;
   }
 
   addPlayerToTeam(e) {
     let currentPlayer = this.dataService.loadPlayerFromLocalStorage();
+    console.log(currentPlayer);
     this.dataService.addPlayerToTeam(currentPlayer, e);    
   }
 

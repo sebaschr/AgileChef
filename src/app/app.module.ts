@@ -18,13 +18,13 @@ import { SummaryGraphComponent } from './summary-graph/summary-graph.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatGridListModule}  from '@angular/material/grid-list'; 
-import { MatListModule } from '@angular/material/list'; 
-import { MatCardModule } from '@angular/material/card'; 
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
-import { MatCheckboxModule } from '@angular/material/checkbox'; 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Routes, RouterModule } from '@angular/router';
@@ -36,23 +36,23 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChartsModule } from 'ng2-charts';
 import { IngredientComponent } from './ingredient/ingredient.component';
 import { PizzaComponent } from './pizza/pizza.component';
-
-// import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment'
+import { AngularFireModule } from '@angular/fire';
 // NEW APP
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'adminLogin', component: AdminLoginComponent },
-  { path: 'playerLogin', component: PlayerLoginComponent},
+  { path: 'playerLogin', component: PlayerLoginComponent },
   { path: 'adminPanel', component: AdminPanelComponent },
-  { path: 'lobby', component: LobbyComponent},
-  { path: 'planning', component: PlanningComponent},
-  { path: 'results', component: ResultsComponent},
-  { path: 'resultsGraph', component: ResultsGraphComponent},
-  { path: 'summary', component: SummaryComponent},
-  { path: 'summaryGraph', component: SummaryGraphComponent},
-  { path: 'game', component: GameComponent}
+  { path: 'lobby', component: LobbyComponent },
+  { path: 'planning', component: PlanningComponent },
+  { path: 'results', component: ResultsComponent },
+  { path: 'resultsGraph', component: ResultsGraphComponent },
+  { path: 'summary', component: SummaryComponent },
+  { path: 'summaryGraph', component: SummaryGraphComponent },
+  { path: 'game', component: GameComponent }
 ];
 
 @NgModule({
@@ -96,8 +96,8 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     DragDropModule,
     MatProgressBarModule,
-    ChartsModule
-    // AngularFireModule.initializeApp(environment.firebase)
+    ChartsModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   exports: [
     MatFormFieldModule,
