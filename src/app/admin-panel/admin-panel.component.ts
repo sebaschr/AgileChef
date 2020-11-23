@@ -66,6 +66,9 @@ export class AdminPanelComponent implements OnInit {
       this.dataService.session.teams = [];
       for (let index = 0; index < this.form.value.teamQuantity; index++) {
         let team = new Team((index + 1))
+        team.players = [{}]
+        console.log('yo');
+        console.log(team)
         this.dataService.session.teams.push(team);
       }
       this.dataService.saveSession(this.dataService.session);
