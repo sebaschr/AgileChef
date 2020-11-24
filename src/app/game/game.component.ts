@@ -168,7 +168,7 @@ export class GameComponent implements OnInit {
 
   constructor(private router: Router, public dataService: DataService) {
     this.dataService.loadSession();
-    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
+    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].ejecucion;
     this.dataService.loadPlayer();
     this.loadPlayers(this.dataService.currentPlayer);
     this.dataService.currentPlayer;
@@ -216,10 +216,12 @@ export class GameComponent implements OnInit {
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {
     var element = event.currentTarget;
-    if (this.checkifinsideofCanvas(element)) {
-      this.findPizza(p);
-      var neededIngredients = this.getIngredients(p);
-      this.assignIngredientstoPlayers(neededIngredients);
+    if(!p.editing){
+      if (this.checkifinsideofCanvas(element)) {
+        this.findPizza(p);
+        var neededIngredients = this.getIngredients(p);
+        this.assignIngredientstoPlayers(neededIngredients);
+      }
     }
   }
   /* Find a pizza in the queue and change the status to editing */
@@ -294,7 +296,7 @@ export class GameComponent implements OnInit {
   prepareIngredient(ing, e: MouseEvent) {
     var count = e.detail;
     var ingredientDiv = e.currentTarget;
-    var found = this.findActiveIng(ing.codigo);
+    var found = ing;
     var checkInside = this.checkifinsideofCanvas(ingredientDiv);
 
     if (checkInside) {
@@ -370,8 +372,7 @@ export class GameComponent implements OnInit {
       } else {
         this.counterPlayer--;
       }
-      console.log(this.playerList);
-      console.log(this.counterPlayer)
+
       this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
     }
   }
