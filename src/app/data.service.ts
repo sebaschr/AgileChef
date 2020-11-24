@@ -139,6 +139,8 @@ export class DataService {
     }
   }
 
+
+
   findanddelete(pidentifier) {
     for (let i = 0; i < this.session.teams.length; i++) {
       if (this.session.teams[i].players === undefined) {
@@ -154,30 +156,31 @@ export class DataService {
     }
   }
 
-  loadIngredients(){
+  loadIngredients() {
     var ingredients = null;
     this.get('ingredients').subscribe(action => {
       ingredients = action.payload.val();
-      this.ingredients= ingredients;
+      this.ingredients = ingredients;
     });
   }
 
-  loadPizzas(){
+  loadPizzas() {
     var ingredients = null;
     this.get('pizzas').subscribe(action => {
       ingredients = action.payload.val();
-      this.pizzas= ingredients;
+      this.pizzas = ingredients;
     });
   }
 
-  loadRecipes(){
+  loadRecipes() {
     var ingredients = null;
     this.get('ingredients').subscribe(action => {
       ingredients = action.payload.val();
-      this.recipes= ingredients;
+      this.recipes = ingredients;
 
     });
   }
+
 
   // loadIngredients() {
   //   let ingredientList = [
@@ -273,7 +276,7 @@ export class DataService {
   //       if (recipeList[y].nombre == pizzas[i].name) {
   //         pizzas[i].recipeID = recipeList[y].idRecipe
   //       }
-        
+
   //     }
 
   //   }

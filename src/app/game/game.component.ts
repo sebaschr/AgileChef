@@ -63,7 +63,7 @@ export class GameComponent implements OnInit {
   loadPlayers(player) {
     let teamList = this.dataService.session.teams;
     let players = [];
-
+    console.log(teamList)
     for (let i = 0; i < teamList.length; i++) {
       for (let y = 0; y < teamList[i].players.length; y++) {
         if (player.identifier == teamList[i].players.identifier) {
