@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Data, Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
-import { Ingredient } from '../models/ingredient';
 import { element } from 'protractor';
 import { DataService } from '../data.service';
 
@@ -13,128 +12,8 @@ import { DataService } from '../data.service';
 export class GameComponent implements OnInit {
   color: ThemePalette = 'primary';
 
-
-  ingredientList = [
-
-    {
-      name: 'Dough',
-      img2: '../../assets/dough_2.png',
-      img3: '../../assets/dough_3.png',
-      activeImg: '../../assets/dough_1.png',
-      progress: 0,
-      width: '100px',
-      height: '100px',
-      onpizza: 'block',
-      visibility: 'visible',
-      position: [{
-      }],
-      price: 100
-    },
-    {
-      name: 'Tomato',
-      img2: '../../assets/tomato_2.png',
-      img3: '../../assets/tomato_3.png',
-      activeImg: '../../assets/tomato_1.png',
-      progress: 0,
-      width: '100px',
-      height: '100px',
-      onPizza: 'block',
-      visibility: 'visible',
-      position: [{
-
-      }],
-      price: 100
-    },
-    {
-      name: 'Pepper',
-      img2: '../../assets/pepper_1.png',
-      img3: '../../assets/pepper_2.png',
-      activeImg: '../../assets/tomato_1.png',
-      progress: 0,
-      width: '100px',
-      height: '100px',
-      onPizza: 'block',
-      visibility: 'visible',
-      position: [{
-      }],
-      price: 100
-    },
-    {
-      name: 'Mushroom',
-      img2: '../../assets/shroom_2.png',
-      img3: '../../assets/shroom_3.png',
-      activeImg: '../../assets/shroom_1.png',
-      progress: 0,
-      width: '100px',
-      height: '100px',
-      onPizza: 'block',
-      position: [{
-
-      }]
-    },
-    {
-      name: 'Pepperoni',
-      img2: '../../assets/pepperoni_1.png',
-      img3: '../../assets/pepperoni_2.png',
-      activeImg: '../../assets/pepperoni_2.png',
-      progress: 0,
-      width: '100px',
-      height: '100px',
-      onPizza: 'block',
-      visibility: 'visible',
-      position: [{
-
-      }],
-      price: 100
-    },
-    {
-      name: 'Cheese',
-      activeImg: 'https://png.pngtree.com/element_our/png_detail/20181227/cheese-vector-icon-png_293618.jpg',
-      img2: 'https://media.istockphoto.com/vectors/grating-cheese-icon-flat-vector-id843941538?b=1&k=6&m=843941538&s=612x612&w=0&h=BI4SDehRI_lvIkea3FCZCnwPjN4P21flAYkScTiHnvY=',
-      img3: 'https://icon2.cleanpng.com/20180202/ide/kisspng-pizza-grated-cheese-processed-cheese-cheese-png-photos-5a74976e7d0ab7.1754448615175903825122.jpg',
-      progress: 0,
-      width: '100px',
-      height: '100px',
-      onpizza: 'block',
-      visibility: 'visible',
-
-      position: [{
-      }],
-      price: 100
-    }];
-
-  pizzaList = [{
-    pizzaID: 'pizza02',
-    name: 'Mushroom Pizza',
-    imgSrc: '../../assets/mushroom_pizza.png',
-    ingredients: [
-      { name: 'Dough', amount: 1 },
-      { name: 'Tomato', amount: 1 },
-      { name: 'Mushroom', amount: 1 },
-      { name: 'Cheese', amount: 1 }
-    ],
-    editing: false,
-    price: 1000,
-    done: false
-  }, {
-    pizzaID: 'pizza03',
-    name: 'Pepperoni Pizza',
-    imgSrc: '../../assets/pepperoni_pizza.png',
-    ingredients: [
-      { name: 'Dough', amount: 1 },
-      { name: 'Tomato', amount: 1 },
-      { name: 'Pepperoni', amount: 1 },
-      { name: 'Cheese', amount: 1 }
-
-    ],
-    editing: false,
-    price: 1000,
-    done: false
-  }]
-
   // Lists of Data we are going to use
-  playerList = [
-  ];
+  playerList = [];
   ingredients = []
   pizzas = [];
 
@@ -171,8 +50,8 @@ export class GameComponent implements OnInit {
   constructor(private router: Router,public dataService: DataService) { 
     this.dataService.loadSession();
       this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
-    this.dataService.loadPlayerFromLocalStorage
-    this.loadPlayers(this.dataService.loadPlayerFromLocalStorage);
+    
+    this.loadPlayers(this.dataService.currentPlayer);
     this.loadIngredients();
     this.loadPizzas();
   }
@@ -208,20 +87,16 @@ export class GameComponent implements OnInit {
     }
 
     this.counterPlayer = this.playerList.length - 1;
-
-
-
-
   }
 
   /* get players from the currentPlayerTeam*/
   loadIngredients() {
-    this.ingredients = this.dataService.loadIngredients();
+    this.ingredients = this.dataService.ingredients;
   }
 
   /* load Pizzas w recipees to place on the queue*/
   loadPizzas() {
-    this.pizzas = this.dataService.loadPizzas();
+    this.pizzas = this.dataService.pizzas;
   }
   // /* Move the pizza out of the queue into production  */
   // moveOutofQueue(p, event: MouseEvent) {

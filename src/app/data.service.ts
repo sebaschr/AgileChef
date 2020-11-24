@@ -3,13 +3,12 @@ import { Admin } from './models/admin';
 import { ACSession } from './models/acSession';
 import { Player } from './models/player';
 import { Team } from './models/team';
-import { Ingredient } from './models/ingredient';
 import { templateSourceUrl } from '@angular/compiler';
 import { runInThisContext } from 'vm';
-import { Pizza } from './models/pizza';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { database } from 'firebase';
+import { key } from 'firebase-key';
 
 @Injectable({
   providedIn: 'root'
@@ -18,47 +17,58 @@ import { database } from 'firebase';
 export class DataService {
 
   public currentPlayer: Player;
-  admin: Admin = new Admin('esteban', '1234');
+  public admin: Admin;
   public session: ACSession = new ACSession();
   public sprintCounter = 0;
+  public ingredients = [];
+  public pizzas = [];
+  public recipes = [];
 
-  public ingredients= [];
-
-  item: Observable<any>;
   constructor(public db: AngularFireDatabase) {
-    // console.log(firestore);
-
-    console.log(db.object('session'));
-    this.item = db.object('item').valueChanges();
-    console.log(this.item)
+    this.saveAdmin();
+    this.loadAdmin();
+    this.loadIngredients();
+    this.loadPizzas();
+    this.loadRecipes();
 
   }
 
   post(collection: string, data: object) {
     this.db.object(collection).set(data); //DB
-    localStorage.setItem(collection, JSON.stringify(data)); //LocalStorage
+    //localStorage.setItem(collection, JSON.stringify(data)); //LocalStorage
   }
 
   get(src: string) {
-    return JSON.parse(localStorage.getItem(src)); //LocalStorage
-    // var data = null;
-    // this.db.object(src).snapshotChanges().subscribe(action => {
-    //   data = action.payload.val();
-    //   return data;
-    // });
+    return this.db.object(src).snapshotChanges();
   }
 
-  // saveAdmin(){
-  //   let admin = new Admin ('esteban', '1234');
-  //   this.post('adminInfo', admin);
-  // }
+  saveAdmin() {
+    let admin = new Admin('esteban', '1234');
+    this.post('adminInfo', admin);
+  }
 
-  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber: number) {
+  loadAdmin() {
+    var adminData = null;
+    this.get('adminInfo').subscribe(action => {
+      adminData = action.payload.val()
+      this.admin = adminData;
+    });
+  }
+
+  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
     this.post('currentUser', this.currentPlayer);
   }
 
-  saveSessionToLocalStorage(session: ACSession) {
+  loadPlayer() {
+    var currentUserData = null;
+    this.get('currentUser').subscribe(action => {
+      currentUserData = action.payload.val()
+      this.currentPlayer = currentUserData;
+    });
+  }
+
+  saveSession(session: ACSession) {
     console.log('save Session: ')
     console.log(session);
     this.post('session', session);
@@ -66,33 +76,14 @@ export class DataService {
 
   loadSession() {
     var sessionData = null;
-    this.db.object('session').snapshotChanges().subscribe(action => {
-      sessionData = action.payload.val();
-      this.session = new ACSession();
-      this.session.sprints = sessionData.sprints;
-      this.session.teams = sessionData.teams;
-      this.session.playersMax = sessionData.playersMax;
-      this.session.playersMin = sessionData.playersMin;
-      return this.session;
+    this.get('session').subscribe(action => {
+      sessionData = action.payload.val()
+      this.session = sessionData;
     });
-
-    return this.session;
-  }
-
-
-  loadPlayerFromLocalStorage() {
-    return this.get('currentUser');
-  }
-
-  loadTeams() {
-    let newSession = new ACSession();
-    newSession = JSON.parse(localStorage.getItem('session'));
-    this.session = newSession;
   }
 
   updateSessionTeams(team: Team) {
     let session = this.session;
-    console.log(session);
     for (let i = 0; i < this.session.teams.length; i++) {
       if (team.identifier == this.session.teams[i].identifier) {
         this.session.teams[i] = team
@@ -101,39 +92,46 @@ export class DataService {
     this.post('session', session);
   }
 
-  addPlayerToTeam(player: Player, team: Team) {
-    var session = this.session;
+  addPlayerToTeam(player: Player, newTeam: Team) {
+    if (this.currentPlayer.identifier == player.identifier) {
+      this.findanddelete(player.identifier);
+      for (let i = 0; i < this.session.teams.length; i++) {
+        if (this.session.teams[i].identifier == newTeam.identifier) {
+          if (this.session.teams[i].players === undefined) {
+            this.session.teams[i].players = [];
+          }
+          this.session.teams[i].players.push(player)
+        }
+      }
 
-    let currentUserData = this.get('currentUser');
-
-    if (currentUserData.identifier == player.identifier) {
-      currentUserData.teamNumber = team.teamNumber;
-      this.post('currentUser', currentUserData);
+      this.currentPlayer.teamNumber = newTeam.teamNumber;
+      this.post('currentUser', this.currentPlayer);
+      this.saveSession(this.session);
     }
-
-    this.getMinAndMaxPlayers(this.session);
-
-    let newTeam = new Team(team.teamNumber);
-    newTeam.identifier = team.identifier;
-    newTeam.pizzas = team.pizzas;
-    newTeam.teamNumber = team.teamNumber;
-    newTeam.players = team.players;
-
-    let isAdmin = false;
-
-    console.log(this.session);
-    this.checkUserTeam(player.identifier)
-    newTeam.addPlayer(player);
-    this.updateSessionTeams(newTeam);
-
   }
 
-  getMinAndMaxPlayers(session) {
-    let minPlayers = this.session.playersMin;
-    let maxPlayers = this.session.playersMax;
-    let teams = this.session.teams;
+  removePlayerFromTeam(player: Player, team: Team) {
 
-    for (let i = 0; i < teams.length; i++) {
+    for (let i = 0; i < this.session.teams.length; i++) {
+      if (team.identifier == this.session.teams[i].identifier) {
+        if (this.session.teams[i].players === undefined) {
+
+        } else {
+          for (let y = 0; y < this.session.teams[i].players.length; y++) {
+            if (player.identifier == this.session.teams[i].players[y].identifier) {
+              this.session.teams[i].players.splice(y, 1)
+            }
+          }
+        }
+      }
+    }
+    this.currentPlayer.teamNumber = null;
+    this.saveSession(this.session);
+  }
+
+  getMinAndMaxPlayers() {
+    var teams = this.session.teams;
+    for (let i = 0; i < this.session.teams.length; i++) {
       for (let j = 0; j < teams[i].players.length; j++) {
         var teamTotal = teams[i].players[j];
         console.log('team total:' + teamTotal);
@@ -141,95 +139,146 @@ export class DataService {
     }
   }
 
+  findanddelete(pidentifier) {
+    for (let i = 0; i < this.session.teams.length; i++) {
+      if (this.session.teams[i].players === undefined) {
 
-  checkUserTeam(identifier) {
-    var teams = this.session.teams;
-
-    for (let i = 0; i < teams.length; i++) {
-      for (let j = 0; j < teams[i].players.length; j++) {
-        var playerFound = teams[i].players[j];
-        if (playerFound.identifier == identifier) {
-          teams[i].players.splice(j, 1);
+      } else {
+        for (let y = 0; y < this.session.teams[i].players.length; y++) {
+          if (this.session.teams[i].players[y].identifier == pidentifier) {
+            this.session.teams[i].players.splice(y, 1)
+          }
         }
       }
+
     }
   }
 
   loadIngredients(){
-      let y = new DataService();
-      let x = new Ingredient(y);
-      this.ingredients = x.getIngredientList();
-      return this.ingredients;
+    var ingredients = null;
+    this.get('ingredients').subscribe(action => {
+      ingredients = action.payload.val();
+      this.ingredients= ingredients;
+    });
   }
 
   loadPizzas(){
-    let x  = new Pizza();
-    return x.loadPizzas();
+    var ingredients = null;
+    this.get('pizzas').subscribe(action => {
+      ingredients = action.payload.val();
+      this.pizzas= ingredients;
+    });
   }
-  // addPlayerToTeam(player: Player, teamNumber: Number) {
 
-  //   this.get('teams');
-  //   //TODO: Check Commented Process
-  //   // for (let i = 0; i < this.session.teams.length; i++) {
-  //   //   const teamStored = this.session.teams[i];
-  //   //   for (let j = 0; j < teamStored.players.length; j++) {
-  //   //     const playerStored = teamStored.players[j];
-  //   //     if (player.identifier === playerStored.identifier) {
-  //   //       teamStored.players.splice(j, 1);
-  //   //     }
-  //   //   }
-  //   // }
+  loadRecipes(){
+    var ingredients = null;
+    this.get('ingredients').subscribe(action => {
+      ingredients = action.payload.val();
+      this.recipes= ingredients;
 
-  //   // team.addPlayer(player);
+    });
+  }
 
-  //   let currentUserData = this.get('currentUser');
-  //   if(currentUserData.identifier === player.identifier){
-  //     console.log('yes');
-  //       currentUserData.teamNumber = teamNumber;
-  //       this.post('currentUser', currentUserData);
-  //     //this.post('currentUser', player);
-  //   }else{
-  //     console.log('false');
+  // loadIngredients() {
+  //   let ingredientList = [
+  //     {
+  //       name: 'Dough',
+  //       images: ['../../assets/dough_1.png', '../../assets/dough_2.png', '../../assets/dough_3.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Tomato',
+  //       images: ['../../assets/tomato_1.png', '../../assets/tomato_2.png', '../../assets/tomato_3.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Chilli Pepper',
+  //       images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Pepperoni',
+  //       images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Mushroom',
+  //       images: ['../../assets/shroom_1.png', '../../assets/shroom_2.png', '../../assets/shroom_3.png'],
+  //       price: 200,
+  //       key: key()
+  //     }];
+  //   let recipeList = [{
+  //     nombre: 'Mushroom Pizza',
+  //     idRecipe: key(),
+  //     ingredients: [{
+  //       idIngredient: 'Dough',
+  //       amount: 1
+  //     },
+  //     {
+  //       idIngredient: 'Mushroom',
+  //       amount: 1
+  //     },
+  //     {
+  //       idIngredient: 'Tomato',
+  //       amount: 1
+  //     }]
+  //   }, {
+  //     nombre: 'Pepperoni Pizza',
+  //     idRecipe: key(),
+  //     ingredients: [{
+
+  //       idIngredient: 'Dough',
+  //       amount: 1
+  //     },
+  //     {
+
+  //       idIngredient: 'Pepperoni',
+  //       amount: 1
+  //     },
+  //     {
+
+  //       idIngredient: 'Tomato',
+  //       amount: 1
+  //     }]
+  //   }];
+
+  //   for (let i = 0; i < recipeList.length; i++) {
+  //     for (let y = 0; y < recipeList[i].ingredients.length; y++) {
+  //       for (let t = 0; t < ingredientList.length; t++) {
+  //         if (recipeList[i].ingredients[y].idIngredient == ingredientList[t].name) {
+  //           recipeList[i].ingredients[y].idIngredient = ingredientList[t].key;
+  //         }
+  //       }
+  //     }
   //   }
+
+  //   var pizzas = [{
+  //     name: "Mushroom Pizza",
+  //     price: 6500,
+  //     imgSrc: '../../assets/mushroom_pizza.png',
+  //     recipeID: ''
+  //   }, {
+  //     name: "Pepperoni Pizza",
+  //     price: 6000,
+  //     imgSrc: '../../assets/pepperoni_pizza.png',
+  //     recipeID: ''
+  //   }]
+
+  //   for (let i = 0; i < pizzas.length; i++) {
+  //     for (let y = 0; y < recipeList.length; y++) {
+  //       if (recipeList[y].nombre == pizzas[i].name) {
+  //         pizzas[i].recipeID = recipeList[y].idRecipe
+  //       }
+        
+  //     }
+
+  //   }
+  //   this.post('ingredients',ingredientList)
+  //   this.post('recipes',recipeList)
+  //   this.post('pizzas',pizzas)
   // }
-
-  removePlayerFromTeam(player: Player, team: Team) {
-
-    this.findanddelete(player.identifier, team.identifier);
-
-    var newTeam = new Team(team.teamNumber)
-
-    for (let i = 0; i < team.players.length; i++) {
-      if (player.identifier == team.players[i].identifier) {
-        console.log('got em chief');
-        team.players.splice(i, 1);
-        newTeam = team.players[i];
-      }
-    }
-
-    let currentUserData = this.get('currentUser');
-    if (currentUserData.identifier === player.identifier) {
-      player.teamNumber = null;
-      this.post('currentUser', player);
-    } else {
-      console.log('false');
-    }
-
-    this.updateSessionTeams(newTeam);
-  }
-
-  findanddelete(pidentifier, tidenfitier) {
-    var teams = this.session.teams;
-
-    for (let i = 0; i < this.session.teams.length; i++) {
-      if (this.session.teams[i].identifier == tidenfitier) {
-        var foundTeam = this.session.teams[i];
-        for (let t = 0; t < foundTeam.players.length; t++) {
-          if (foundTeam.players[t].identifier == pidentifier) {
-            foundTeam.players.splice(t, 1);
-          }
-        }
-      }
-    }
-  }
 }
