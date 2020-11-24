@@ -139,8 +139,6 @@ export class DataService {
     }
   }
 
-
-
   findanddelete(pidentifier) {
     for (let i = 0; i < this.session.teams.length; i++) {
       if (this.session.teams[i].players === undefined) {
@@ -156,132 +154,138 @@ export class DataService {
     }
   }
 
-  loadIngredients() {
+  loadIngredients(){
     var ingredients = null;
     this.get('ingredients').subscribe(action => {
       ingredients = action.payload.val();
-      this.ingredients = ingredients;
+      this.ingredients= ingredients;
     });
   }
 
-  loadPizzas() {
+  loadPizzas(){
     var ingredients = null;
     this.get('pizzas').subscribe(action => {
       ingredients = action.payload.val();
-      this.pizzas = ingredients;
+      this.pizzas= ingredients;
     });
   }
 
-  loadRecipes() {
+  loadRecipes(){
     var ingredients = null;
-    this.get('ingredients').subscribe(action => {
+    this.get('recipes').subscribe(action => {
       ingredients = action.payload.val();
-      this.recipes = ingredients;
+      this.recipes= ingredients;
 
     });
   }
-
-
-  // loadIngredients() {
-  //   let ingredientList = [
-  //     {
-  //       name: 'Dough',
-  //       images: ['../../assets/dough_1.png', '../../assets/dough_2.png', '../../assets/dough_3.png'],
-  //       price: 200,
-  //       key: key()
-  //     },
-  //     {
-  //       name: 'Tomato',
-  //       images: ['../../assets/tomato_1.png', '../../assets/tomato_2.png', '../../assets/tomato_3.png'],
-  //       price: 200,
-  //       key: key()
-  //     },
-  //     {
-  //       name: 'Chilli Pepper',
-  //       images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
-  //       price: 200,
-  //       key: key()
-  //     },
-  //     {
-  //       name: 'Pepperoni',
-  //       images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
-  //       price: 200,
-  //       key: key()
-  //     },
-  //     {
-  //       name: 'Mushroom',
-  //       images: ['../../assets/shroom_1.png', '../../assets/shroom_2.png', '../../assets/shroom_3.png'],
-  //       price: 200,
-  //       key: key()
-  //     }];
-  //   let recipeList = [{
-  //     nombre: 'Mushroom Pizza',
-  //     idRecipe: key(),
-  //     ingredients: [{
-  //       idIngredient: 'Dough',
-  //       amount: 1
-  //     },
-  //     {
-  //       idIngredient: 'Mushroom',
-  //       amount: 1
-  //     },
-  //     {
-  //       idIngredient: 'Tomato',
-  //       amount: 1
-  //     }]
-  //   }, {
-  //     nombre: 'Pepperoni Pizza',
-  //     idRecipe: key(),
-  //     ingredients: [{
-
-  //       idIngredient: 'Dough',
-  //       amount: 1
-  //     },
-  //     {
-
-  //       idIngredient: 'Pepperoni',
-  //       amount: 1
-  //     },
-  //     {
-
-  //       idIngredient: 'Tomato',
-  //       amount: 1
-  //     }]
-  //   }];
-
-  //   for (let i = 0; i < recipeList.length; i++) {
-  //     for (let y = 0; y < recipeList[i].ingredients.length; y++) {
-  //       for (let t = 0; t < ingredientList.length; t++) {
-  //         if (recipeList[i].ingredients[y].idIngredient == ingredientList[t].name) {
-  //           recipeList[i].ingredients[y].idIngredient = ingredientList[t].key;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   var pizzas = [{
-  //     name: "Mushroom Pizza",
-  //     price: 6500,
-  //     imgSrc: '../../assets/mushroom_pizza.png',
-  //     recipeID: ''
-  //   }, {
-  //     name: "Pepperoni Pizza",
-  //     price: 6000,
-  //     imgSrc: '../../assets/pepperoni_pizza.png',
-  //     recipeID: ''
-  //   }]
-
-  //   for (let i = 0; i < pizzas.length; i++) {
-  //     for (let y = 0; y < recipeList.length; y++) {
-  //       if (recipeList[y].nombre == pizzas[i].name) {
-  //         pizzas[i].recipeID = recipeList[y].idRecipe
-  //       }
-
-  //     }
-
-  //   }
-  //   this.post('ingredients',ingredientList)
-  //   this.post('recipes',recipeList)
-  //   this.post('pizzas',pizzas)
-  // }
 }
+
+
+/*
+
+  loadEv() {
+    let ingredientList = [
+      {
+        name: 'Dough',
+        images: ['../../assets/dough_1.png', '../../assets/dough_2.png', '../../assets/dough_3.png'],
+        price: 200,
+        key: key()
+      },
+      {
+        name: 'Tomato',
+        images: ['../../assets/tomato_1.png', '../../assets/tomato_2.png', '../../assets/tomato_3.png'],
+        price: 200,
+        key: key()
+      },
+      {
+        name: 'Chilli Pepper',
+        images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
+        price: 200,
+        key: key()
+      },
+      {
+        name: 'Pepperoni',
+        images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
+        price: 200,
+        key: key()
+      },
+      {
+        name: 'Mushroom',
+        images: ['../../assets/shroom_1.png', '../../assets/shroom_2.png', '../../assets/shroom_3.png'],
+        price: 200,
+        key: key()
+      }];
+    let recipeList = [{
+      nombre: 'Mushroom Pizza',
+      idRecipe: key(),
+      ingredients: [{
+        idIngredient: 'Dough',
+        amount: 1
+      },
+      {
+        idIngredient: 'Mushroom',
+        amount: 1
+      },
+      {
+        idIngredient: 'Tomato',
+        amount: 1
+      }]
+    }, {
+      nombre: 'Pepperoni Pizza',
+      idRecipe: key(),
+      ingredients: [{
+
+        idIngredient: 'Dough',
+        amount: 1
+      },
+      {
+
+        idIngredient: 'Pepperoni',
+        amount: 1
+      },
+      {
+
+        idIngredient: 'Tomato',
+        amount: 1
+      }]
+    }];
+
+    for (let i = 0; i < recipeList.length; i++) {
+      for (let y = 0; y < recipeList[i].ingredients.length; y++) {
+        for (let t = 0; t < ingredientList.length; t++) {
+          if (recipeList[i].ingredients[y].idIngredient == ingredientList[t].name) {
+            recipeList[i].ingredients[y].idIngredient = ingredientList[t].key;
+          }
+        }
+      }
+    }
+
+    var pizzas = [{
+      key:key(),
+      name: "Mushroom Pizza",
+      price: 6500,
+      imgSrc: '../../assets/mushroom_pizza.png',
+      recipeID: ''
+    }, {
+      key:key(),
+      name: "Pepperoni Pizza",
+      price: 6000,
+      imgSrc: '../../assets/pepperoni_pizza.png',
+      recipeID: ''
+    }]
+
+    for (let i = 0; i < pizzas.length; i++) {
+      for (let y = 0; y < recipeList.length; y++) {
+        if (recipeList[y].nombre == pizzas[i].name) {
+          pizzas[i].recipeID = recipeList[y].idRecipe
+        }
+        
+      }
+
+    }
+    this.post('ingredients',ingredientList)
+    this.post('recipes',recipeList)
+    this.post('pizzas',pizzas)
+  }
+
+*/

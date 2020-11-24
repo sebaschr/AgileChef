@@ -17,10 +17,10 @@
 
                     <div class="queue">
                         <h2>Queue</h2>
-                        <mat-card *ngFor="let p of pizzaList; let i = index;" cdkDrag class='pizza'
+                        <mat-card  (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing" [class.finished]="p.done" *ngFor="let p of queue; let i = index;" cdkDrag class='pizza'
                          [class.onqueue]="p.editing" [class.finished]="p.done">
 
-                            <!-- (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing" [class.finished]="p.done"> -->
+                           
                             <p>{{p.name}}</p>
                             <img src="{{p.imgSrc}}" alt="">
                         </mat-card>
@@ -32,12 +32,11 @@
                         </div>
                         <div class="menu">
 
-                            <button class="player" *ngFor="let n of playerList; let i = index;">{{n.name}}</button>
-                            <!-- (click)='showIngredients(n.name)' -->
-
+                            <button class="player" *ngFor="let n of playerList; let i = index;" (click)='showIngredients(n.name)'>{{n.name}}</button>
+                           
 
                             <div class="ingredients-list ">
-                                <div cdkDrag class='ingredient' *ngFor="let ing of activePlayer.ing; let i = index;"
+                                <div cdkDrag class='ingredient' *ngFor="let ing of playerList; let i = index;"
                                      
                             style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'>
                                     <!-- (mouseup)="ingredientPlacement(ing,$event)"> (click)='prepareIngredient(ing,$event)' -->

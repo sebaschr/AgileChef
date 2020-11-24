@@ -79,8 +79,8 @@
 /* object pizza */
 .pizza{
     text-align:center;
-    width:120px;
-    height:120px;
+    width:75px;
+    height:75px;
     overflow-x:30;
     margin:10px auto;
 }

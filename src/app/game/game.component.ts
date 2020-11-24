@@ -3,6 +3,7 @@ import { Data, Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
 import { element } from 'protractor';
 import { DataService } from '../data.service';
+import { key } from 'firebase-key';
 
 @Component({
   selector: 'game',
@@ -13,9 +14,13 @@ export class GameComponent implements OnInit {
   color: ThemePalette = 'primary';
 
   // Lists of Data we are going to use
-  playerList = [];
+  playerList = [{
+    name: '',
+    id: '',
+    ingredientsAssigned: []
+  }];
   ingredients = []
-  pizzas = [];
+  pizzaList = [];
 
 
   //lists of new data
@@ -47,13 +52,15 @@ export class GameComponent implements OnInit {
 
 
 
-  constructor(private router: Router,public dataService: DataService) { 
+  constructor(private router: Router, public dataService: DataService) {
     this.dataService.loadSession();
-      this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
-    
+    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
+
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadIngredients();
     this.loadPizzas();
+
+    this.loadQueue(5);
   }
 
   ngOnInit(): void {
@@ -63,13 +70,16 @@ export class GameComponent implements OnInit {
   loadPlayers(player) {
     let teamList = this.dataService.session.teams;
     let players = [];
-    console.log(teamList)
     for (let i = 0; i < teamList.length; i++) {
-      for (let y = 0; y < teamList[i].players.length; y++) {
-        if (player.identifier == teamList[i].players.identifier) {
-          players = teamList[i].players;
-        }
+      if (teamList[i].players === undefined) {
 
+      } else {
+        for (let y = 0; y < teamList[i].players.length; y++) {
+          if (player.identifier == teamList[i].players[y].identifier) {
+            players = teamList[i].players
+          }
+
+        }
       }
 
     }
@@ -87,6 +97,8 @@ export class GameComponent implements OnInit {
     }
 
     this.counterPlayer = this.playerList.length - 1;
+    console.log('yo')
+    console.log(this.playerList)
   }
 
   /* get players from the currentPlayerTeam*/
@@ -96,45 +108,76 @@ export class GameComponent implements OnInit {
 
   /* load Pizzas w recipees to place on the queue*/
   loadPizzas() {
-    this.pizzas = this.dataService.pizzas;
+    this.pizzaList = this.dataService.pizzas;
   }
-  // /* Move the pizza out of the queue into production  */
-  // moveOutofQueue(p, event: MouseEvent) {
-  //   var element = event.currentTarget;
-  //   if (this.checkifinsideofCanvas(element)) {
-  //     this.findPizza(p);
-  //     var neededIngredients = this.getIngredients(p);
-  //     this.assignIngredientstoPlayers(neededIngredients);
-  //   }
-  // }
-  // /* Find a pizza in the queue and change the status to editing */
-  // findPizza(p) {
-  //   this.pizzaList.forEach(pizza => {
-  //     if (p.pizzaID == pizza.pizzaID) {
-  //       pizza.editing = true;
-  //     }
-  //   });
-  // }
-  // /* Get the ingredients that makes a pizza */
-  // getIngredients(p) {
-  //   var pizzaIngredients = [];
-  //   this.pizzaList.forEach(pizza => {
-  //     if (p.pizzaID == pizza.pizzaID) {
-  //       pizzaIngredients = pizza.ingredients;
-  //     }
-  //   })
-  //   return pizzaIngredients;
-  // }
 
-  // getIngredientInfo(name) {
-  //   for (let index = 0; index < this.ingredientList.length; index++) {
-  //     if (name == this.ingredientList[index].name) {
-  //      var ing = this.ingredientList[index];
-  //     }
-  //   }
+  loadQueue(counter) {
+    for (let i = 0; i < counter; i++) {
+      for (let y = 0; y < this.pizzaList.length; y++) {
+        let newQueueEl = {
+          imgSrc: String,
+          pizzaKey: String,
+          name: String,
+          price: Number,
+          recipeID: String,
+          key: key()
+        };
+        newQueueEl.imgSrc = this.pizzaList[y].imgSrc;
+        newQueueEl.pizzaKey = this.pizzaList[y].key;
+        newQueueEl.name = this.pizzaList[y].name;
+        newQueueEl.price = this.pizzaList[y].price;
+        newQueueEl.recipeID = this.pizzaList[y].recipeID;
+        newQueueEl.key = key()
 
-  //   return ing;
-  // }
+        this.queue.push(newQueueEl)
+      }
+    }
+
+  }
+  /* Move the pizza out of the queue into production  */
+  moveOutofQueue(p, event: MouseEvent) {
+    var element = event.currentTarget;
+    if (this.checkifinsideofCanvas(element)) {
+      this.findPizza(p);
+      var neededIngredients = this.getIngredients(p);
+      console.log('Needed')
+
+      console.log(neededIngredients)
+      this.assignIngredientstoPlayers(neededIngredients);
+    }
+  }
+
+  /* Find a pizza in the queue and change the status to editing */
+  findPizza(p) {
+    this.pizzaList.forEach(pizza => {
+      if (p.pizzaKey == pizza.key) {
+        p.editing = true;
+      }
+    });
+  }
+  /* Get the ingredients that makes a pizza */
+  getIngredients(p) {
+
+    var pizzaIngredients = [];
+
+    for (let i = 0; i < this.dataService.recipes.length; i++) {
+      if (this.dataService.recipes[i].idRecipe == p.recipeID) {
+        pizzaIngredients = this.dataService.recipes[i].ingredients
+      }
+
+    }
+    return pizzaIngredients;
+  }
+
+  getIngredientInfo(key) {
+    for (let index = 0; index < this.ingredients.length; index++) {
+      if (key == this.ingredients[index].key) {
+        var ing = this.ingredients[index];
+      }
+    }
+
+    return ing;
+  }
   // /* Place the ingredients and mix depending on the result */
   // ingredientPlacement(ing, event: MouseEvent) {
 
@@ -210,100 +253,111 @@ export class GameComponent implements OnInit {
   //   this.updateIng(found);
   // }
 
-  // /* check if an element is inside of canvas*/
-  // checkifinsideofCanvas(el) {
-  //   var inside = false;
+  /* check if an element is inside of canvas*/
+  checkifinsideofCanvas(el) {
 
-  //   var canvasDiv = document.querySelector('.gameCanvas');
+    var inside = false;
 
-  //   var p = el.getBoundingClientRect();
-  //   var canvasPosition = canvasDiv.getBoundingClientRect();
+    var canvasDiv = document.querySelector('.gameCanvas');
 
-  //   if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
-  //     inside = true;
-  //   }
+    var p = el.getBoundingClientRect();
+    var canvasPosition = canvasDiv.getBoundingClientRect();
 
-  //   return inside;
-  // }
+    if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
+      inside = true;
+    }
+
+    return inside;
+  }
 
   // /* check if an element is inside of the finished panel*/
   // checkiffinished() {
 
   // }
 
-  // /* assigns the ingredients of a pizza to the players in the playerlist */
-  // assignIngredientstoPlayers(ing) {
+  /* assigns the ingredients of a pizza to the players in the playerlist */
+  assignIngredientstoPlayers(ing) {
 
-  //   var ingredients = [];
+    var ingredients = [];
 
-  //   for (let i = 0; i < ing.length; i++) {
-  //     for (let index = 0; index < ing[i].amount; index++) {
-  //       ingredients.push(this.getIngredientInfo(ing[i].name));
-  //     }
-  //   }
+    for (let i = 0; i < ing.length; i++) {
+      for (let index = 0; index < ing[i].amount; index++) {
 
-  //   ingredients.forEach(el => {
-  //     var x = this.getIngredientInfo(el.name);
-  //     el.visibility = 'visible';
-  //     this.inProduction.push(x);
-  //   });
+        ingredients.push(this.getIngredientInfo(ing[i].idIngredient));
+      }
+    }
 
-  //   for (let i = 0; i < ingredients.length; i++) {
-  //     if (this.counterPlayer == 0) {
+    ingredients.forEach(el => {
+      var x = this.getIngredientInfo(el.idIngredient);
+      el.visibility = 'visible';
+      el.activeImg = el.images[0];
+      el.position = {
+        top: 0, bottom: 0, right: 0, left: 0
+      }
+      this.inProd.push(x);
+    });
 
-  //       this.counterPlayer = this.playerList.length - 1;
-  //     } else {
-  //       this.counterPlayer--;
-  //     }
-  //     console.log(this.playerList);
-  //     console.log(this.counterPlayer)
-  //     this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
-  //   }
-  // }
+    for (let i = 0; i < ingredients.length; i++) {
+      if (this.counterPlayer == 0) {
 
-  // showIngredients(pname) {
-  //   this.activePlayer.name = pname;
-  //   var fullArray  = [];
-  //   for (let index = 0; index < this.playerList.length; index++) {
-  //     for (let i = 0; i < this.playerList[index].ingredientsAssigned.length; i++) {
-  //       if(pname == this.playerList[index].name){
-  //         this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
-  //         fullArray.push(this.playerList[index].ingredientsAssigned[i]);
-  //       }else{
-  //         var inCanvas = this.checkifInsideofCanvasPos(this.playerList[index].ingredientsAssigned[i].position);
-  //         if(!inCanvas){
-  //           this.playerList[index].ingredientsAssigned[i].visibility = 'hidden';
-  //           fullArray.push(this.playerList[index].ingredientsAssigned[i]);
-  //         }else{
-  //           fullArray.push(this.playerList[index].ingredientsAssigned[i]);
-  //           this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
-  //         }
-  //       }
-  //     }
-  //   }
-  //   var codigo = 0;
-  //   fullArray.forEach(el => {
-  //     el.codigo = codigo;
-  //     codigo++;
-  //   });
+        this.counterPlayer = this.playerList.length - 1;
+      } else {
+        this.counterPlayer--;
+      }
 
-  //   this.activePlayer.ing = fullArray;
-  // }
+      this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
+    }
+    console.log('yo')
+    console.log(this.playerList);
 
-  // checkifInsideofCanvasPos(el){
+  }
 
-  //   var inside = false;
-  //   var p = el;
-  //   var canvasDiv = document.querySelector('.gameCanvas');
+  showIngredients(pname) {
+    this.activePlayer.name = pname;
+    var fullArray = [];
+    for (let index = 0; index < this.playerList.length; index++) {
+      for (let i = 0; i < this.playerList[index].ingredientsAssigned.length; i++) {
+        if (pname == this.playerList[index].name) {
+          this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
+          fullArray.push(this.playerList[index].ingredientsAssigned[i]);
+        } else {
+          var inCanvas = this.checkifInsideofCanvasPos(this.playerList[index].ingredientsAssigned[i].position);
+          if (!inCanvas) {
+            this.playerList[index].ingredientsAssigned[i].visibility = 'hidden';
+            fullArray.push(this.playerList[index].ingredientsAssigned[i]);
+          } else {
+            fullArray.push(this.playerList[index].ingredientsAssigned[i]);
+            this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
+          }
+        }
+      }
+    }
+    var codigo = 0;
+    fullArray.forEach(el => {
+      el.codigo = codigo;
+      codigo++;
+    });
 
-  //   var canvasPosition = canvasDiv.getBoundingClientRect();
 
-  //   if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
-  //     inside = true;
-  //   }
 
-  //   return inside;
-  // }
+  }
+
+  checkifInsideofCanvasPos(p) {
+
+
+
+    var inside = false;
+
+    var canvasDiv = document.querySelector('.gameCanvas');
+
+    var canvasPosition = canvasDiv.getBoundingClientRect();
+
+    if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
+      inside = true;
+    }
+
+    return inside;
+  }
 
   // /* mix Ingredients  */
   // mixIngredient(ing1, ing2) {
@@ -413,7 +467,7 @@ export class GameComponent implements OnInit {
   //       }
   //     }
 
-  //     this.trashcan.push(arrayIng);
+  //     this.trash.push(arrayIng);
   //   }
   // }
 
@@ -485,17 +539,17 @@ export class GameComponent implements OnInit {
   //   fn();
   // }
 
-  // getIngredientPrice(pName){
-  //   var x = 0;
-  //   for (let i = 0; i < this.ingredientList.length; i++) {
-  //     if (pName == this.ingredientList[i]) {
-  //       x = this.ingredientList[i].price;
-  //     }
+  // // getIngredientPrice(pName){
+  // //   var x = 0;
+  // //   for (let i = 0; i < this.ingredientList.length; i++) {
+  // //     if (pName == this.ingredientList[i]) {
+  // //       x = this.ingredientList[i].price;
+  // //     }
 
-  //   }
+  // //   }
 
-  //   return x;
-  // }
+  // //   return x;
+  // // }
   // deletePizzafromQueue(pName){
   //   for (let i = 0; i < this.pizzaList.length; i++) {
 
@@ -521,11 +575,11 @@ export class GameComponent implements OnInit {
   //   } 
   // }
 
-  onTimerFinished(e: Event) {
-    if (e["action"] == "done") {
-      this.router.navigate(['/results']);
-    }
-  }
+  // onTimerFinished(e: Event) {
+  //   if (e["action"] == "done") {
+  //     this.router.navigate(['/results']);
+  //   }
+  // }
 
 
 }
