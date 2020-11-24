@@ -24,11 +24,35 @@ export class LobbyComponent implements OnInit {
   }
 
   startGame() {
+
+    if(this.dataService.admin) {
+      this.dataService.loadAdmin();
       this.router.navigate(['/planning']);
+    } else if (this.dataService.currentPlayer){
+      this.hideStartButton();
+      this.dataService.loadPlayer();
+      this.router.navigate(['/lobby']);
+    }
+  }
+
+  hideStartButton () {
+    this.dataService.loadPlayer();
+    let startButton = document.getElementById('startBtn');
+
+    if (this.dataService.currentPlayer) {
+      startButton.style.visibility = "hidden";
+    }
   }
 
   returnToPlayerLogIn() {
+    this.dataService.loadAdmin();
+    this.dataService.loadPlayer();
+
+    if(this.dataService.currentPlayer) {
       this.router.navigate(['/playerLogin']);
+    } else {
+      this.router.navigate(['/adminPanel']);
+    }
   }
 
 }
