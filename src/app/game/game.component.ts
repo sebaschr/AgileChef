@@ -61,7 +61,7 @@ export class GameComponent implements OnInit {
       height: '100px',
       onPizza: 'block',
       visibility: 'visible',
-            position: [{
+      position: [{
       }],
       price: 100
     },
@@ -112,7 +112,7 @@ export class GameComponent implements OnInit {
   playerList = [
   ];
 
-  pizzaList = [ {
+  pizzaList = [{
     pizzaID: 'pizza02',
     name: 'Mushroom Pizza',
     imgSrc: '../../assets/mushroom_pizza.png',
@@ -123,8 +123,8 @@ export class GameComponent implements OnInit {
       { name: 'Cheese', amount: 1 }
     ],
     editing: false,
-    price:1000,
-    done:false
+    price: 1000,
+    done: false
   }, {
     pizzaID: 'pizza03',
     name: 'Pepperoni Pizza',
@@ -137,8 +137,8 @@ export class GameComponent implements OnInit {
 
     ],
     editing: false,
-    price:1000,
-    done:false
+    price: 1000,
+    done: false
   }]
 
   inProduction = [];
@@ -166,30 +166,33 @@ export class GameComponent implements OnInit {
   // }
 
 
-  constructor(private router: Router,public dataService: DataService) { 
+  constructor(private router: Router, public dataService: DataService) {
     this.dataService.loadSession();
-      this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
+    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
     this.dataService.loadPlayer();
-    this.loadPlayers(this.dataService.loadPlayer());
+    this.loadPlayers(this.dataService.currentPlayer);
     this.dataService.currentPlayer;
   }
 
   ngOnInit(): void {
-    
+
   }
 
-  loadPlayers(player){
+  loadPlayers(player) {
+    console.log(player)
     let teamList = this.dataService.session.teams;
     let players = [];
-
+    console.log(teamList)
     for (let i = 0; i < teamList.length; i++) {
-      for (let y = 0; y < teamList[i].players.length; y++) {
-        if(player.identifier == teamList[i].players.identifier){
-          players = teamList[i].players;
-        }
+      if (teamList[i].players ===undefined) {
         
+      } else {
+        for (let y = 0; y < teamList[i].players.length; y++) {
+          if (teamList[i].players[y].identifier == player.identifier) {
+            players = teamList[i].players
+          }
+        }
       }
-      
     }
 
     for (let i = 0; i < players.length; i++) {
@@ -200,9 +203,9 @@ export class GameComponent implements OnInit {
       };
       newplayer.name = players[i].name;
       newplayer.id = players[i].identifier;
-      newplayer.ingredientsAssigned =[];
+      newplayer.ingredientsAssigned = [];
       this.playerList.push(newplayer);
-    } 
+    }
 
     this.counterPlayer = this.playerList.length - 1;
 
@@ -241,7 +244,7 @@ export class GameComponent implements OnInit {
   getIngredientInfo(name) {
     for (let index = 0; index < this.ingredientList.length; index++) {
       if (name == this.ingredientList[index].name) {
-       var ing = this.ingredientList[index];
+        var ing = this.ingredientList[index];
       }
     }
 
@@ -249,14 +252,14 @@ export class GameComponent implements OnInit {
   }
   /* Place the ingredients and mix depending on the result */
   ingredientPlacement(ing, event: MouseEvent) {
-    
+
     var ingredientDiv = event.currentTarget;
-    ing.position = this.getPosition(ingredientDiv); 
+    ing.position = this.getPosition(ingredientDiv);
 
     for (let i = 0; i < this.activePlayer.ing.length; i++) {
-      this.mixIngredient(ing,this.activePlayer.ing[i]);
+      this.mixIngredient(ing, this.activePlayer.ing[i]);
     }
-    
+
     // for (let index = 0; index < this.ingredientList.length; index++) {
     //   this.mixIngredient(ing, this.ingredientList[index]);
     // }
@@ -267,11 +270,11 @@ export class GameComponent implements OnInit {
     var p = el.getBoundingClientRect();
     return p;
   }
-  
-  findActiveIng(cod){
+
+  findActiveIng(cod) {
     var found;
     this.activePlayer.ing.forEach(element => {
-      if(element.codigo == cod){
+      if (element.codigo == cod) {
         found = element;
       }
     });
@@ -279,9 +282,9 @@ export class GameComponent implements OnInit {
     return found
   }
 
-  updateIng(newFound){
+  updateIng(newFound) {
     this.activePlayer.ing.forEach(element => {
-      if(element.codigo == newFound.codigo){
+      if (element.codigo == newFound.codigo) {
         element = newFound;
       }
     });
@@ -375,18 +378,18 @@ export class GameComponent implements OnInit {
 
   showIngredients(pname) {
     this.activePlayer.name = pname;
-    var fullArray  = [];
+    var fullArray = [];
     for (let index = 0; index < this.playerList.length; index++) {
       for (let i = 0; i < this.playerList[index].ingredientsAssigned.length; i++) {
-        if(pname == this.playerList[index].name){
+        if (pname == this.playerList[index].name) {
           this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
           fullArray.push(this.playerList[index].ingredientsAssigned[i]);
-        }else{
+        } else {
           var inCanvas = this.checkifInsideofCanvasPos(this.playerList[index].ingredientsAssigned[i].position);
-          if(!inCanvas){
+          if (!inCanvas) {
             this.playerList[index].ingredientsAssigned[i].visibility = 'hidden';
             fullArray.push(this.playerList[index].ingredientsAssigned[i]);
-          }else{
+          } else {
             fullArray.push(this.playerList[index].ingredientsAssigned[i]);
             this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
           }
@@ -402,7 +405,7 @@ export class GameComponent implements OnInit {
     this.activePlayer.ing = fullArray;
   }
 
-  checkifInsideofCanvasPos(el){
+  checkifInsideofCanvasPos(el) {
 
     var inside = false;
     var p = el;
@@ -549,7 +552,7 @@ export class GameComponent implements OnInit {
       }
     }
 
-    if (inside && (pos1.name == 'Mushroom Pizza'||pos1.name == 'Pepperoni Pizza')) {
+    if (inside && (pos1.name == 'Mushroom Pizza' || pos1.name == 'Pepperoni Pizza')) {
       this.countUp(100, 5000, pos1)
     }
   }
@@ -597,25 +600,25 @@ export class GameComponent implements OnInit {
     fn();
   }
 
-  getIngredientPrice(pName){
+  getIngredientPrice(pName) {
     var x = 0;
     for (let i = 0; i < this.ingredientList.length; i++) {
       if (pName == this.ingredientList[i]) {
         x = this.ingredientList[i].price;
       }
-      
+
     }
 
     return x;
   }
-  deletePizzafromQueue(pName){
+  deletePizzafromQueue(pName) {
     for (let i = 0; i < this.pizzaList.length; i++) {
 
-      if(pName == this.pizzaList[i].name){
+      if (pName == this.pizzaList[i].name) {
         this.pizzaList[i].done = true;
         // this.results.earned = this.pizzaList[i].price + this.results.earned;
         // this.results.totalSuccesful++;
-        
+
         // var cost = 0;
         // for (let t = 0; t < this.pizzaList[i].ingredients.length; t++) {
         //   var x = this.getIngredientPrice(this.pizzaList[i].ingredients[i].name);
@@ -626,18 +629,18 @@ export class GameComponent implements OnInit {
 
         // this.results.profit = profit + this.results.profit; 
         setTimeout(function () {
-            this.pizzaList[i].remove();
-      }, 5000);
+          this.pizzaList[i].remove();
+        }, 5000);
       }
-      
-    } 
+
+    }
   }
 
-  onTimerFinished(e:Event){
-    if (e["action"] == "done"){
+  onTimerFinished(e: Event) {
+    if (e["action"] == "done") {
       this.router.navigate(['/results']);
-     }
-   }
+    }
+  }
 
-  
+
 }
