@@ -20,9 +20,9 @@ export class SummaryComponent implements OnInit {
   onTimerFinished(e:Event){
     if (e["action"] == "done"){
       if (this.dataService.sprintCounter == (this.dataService.session.sprints.length - 1)) {
-        this.router.navigate(['/landing']);
-      } else {
         this.router.navigate(['/lobby']);
+      } else {
+        this.router.navigate(['/planning']);
         this.dataService.sprintCounter++;
       }
       

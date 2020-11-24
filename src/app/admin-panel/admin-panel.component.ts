@@ -218,43 +218,68 @@ export class AdminPanelComponent implements OnInit {
     if (amountTeams == 0) {
       foundErrors = true;
       this.errorTeams = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorTeams = false;
+      document.getElementById('edit-sprint').style.height='350px';
+      document.getElementById('edit-panel').style.height='350px';
     }
 
     if (playerQuantityMin == 0) {
       foundErrors = true;
       this.errorMin = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorMin = false;
+      document.getElementById('edit-sprint').style.height='350px';
+      document.getElementById('edit-panel').style.height='350px';
     }
 
     if (playerQuantityMax == 0) {
       foundErrors = true;
       this.errorMax = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorMax = false;
+      document.getElementById('edit-sprint').style.height='350px';
+      document.getElementById('edit-panel').style.height='350px';
     }
 
     if (playerQuantityMax < playerQuantityMin) {
       foundErrors = true;
       this.errorMinMax = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorMinMax = false;
+      document.getElementById('edit-sprint').style.height='350px';
+      document.getElementById('edit-panel').style.height='350px';
     }
 
     if (ejecucion == 0 || planeamiento == 0 || revision == 0 || retrospectiva == 0) {
       foundErrors = true;
       this.errorSprints = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
+
     } else {
       this.errorSprints = false;
+      document.getElementById('edit-sprint').style.height='350px';
+      document.getElementById('edit-panel').style.height='350px';
     }
 
     if (this.dataService.session.sprints.length == 0) {
       foundErrors = true;
       this.errorMinSprint = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorMinSprint = false;
+      document.getElementById('edit-sprint').style.height='350px';
+      document.getElementById('edit-panel').style.height='350px';
     }
     return foundErrors;
   }
