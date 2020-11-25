@@ -27,7 +27,9 @@ export class IngredientComponent implements OnInit {
 
   //Maria Paula
 
-
+  removeOne(value: number) {
+    this.value = value - 1;
+  }
 
   //Sebastian
 
