@@ -44,7 +44,8 @@ describe('IngredientComponent', () => {
 
   //Maria Paula
   it('methods should deduct a 1', () => {
-    expect(component.removeOne(20)).toEqual(19);
+    component.removeOne(20);
+    expect(component.value).toEqual(19);
   });
 
   //Sebastian
