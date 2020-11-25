@@ -38,14 +38,12 @@ describe('IngredientComponent', () => {
 
   //Christine 
   it('method should add a 1', () => {
-    component.addOne(10);
-    expect(component.value).toEqual(11);
+    expect(component.addOne(10)).toEqual(11);
   });
 
   //Maria Paula
   it('methods should deduct a 1', () => {
-    component.removeOne(20);
-    expect(component.value).toEqual(19);
+    expect(component.removeOne(20)).toEqual(19);
   });
 
   //Sebastian
