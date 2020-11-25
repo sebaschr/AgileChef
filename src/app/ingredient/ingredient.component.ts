@@ -19,4 +19,15 @@ export class IngredientComponent implements OnInit {
     this.ingredientName = value;
   }
 
+  //Christine 
+
+
+
+  //Maria Paula
+
+
+
+  //Sebastian
+
+
 }

@@ -36,7 +36,7 @@ describe('IngredientComponent', () => {
     expect(component.ingredientName).not.toEqual('banana');
   })
 
-  //Christine
+  //Christine 
   it('method should add a 1', () => {
     expect(component.addOne(10)).toEqual(11);
   });
