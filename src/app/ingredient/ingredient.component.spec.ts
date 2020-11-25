@@ -35,4 +35,20 @@ describe('IngredientComponent', () => {
     component.changeIngredientName('carrot');
     expect(component.ingredientName).not.toEqual('banana');
   })
+
+  //Christine
+  it('method should add a 1', () => {
+    expect(component.addOne(10)).toEqual(11);
+  });
+
+  //Maria Paula
+  it('methods should deduct a 1', () => {
+    expect(component.removeOne(20)).toEqual(19);
+  });
+
+  //Sebastian
+  it('method should multiply by 2', () => {
+    expect(component.multiplyByTwo(5)).toEqual(10);
+  });
+
 });
