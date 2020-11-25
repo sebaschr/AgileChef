@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IngredientComponent implements OnInit {
 
+  ingredientName = 'banana';
+
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+
+  changeIngredientName(value: string) {
+    this.ingredientName = value;
   }
 
 }

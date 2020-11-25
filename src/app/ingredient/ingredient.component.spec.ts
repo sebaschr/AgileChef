@@ -8,9 +8,9 @@ describe('IngredientComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IngredientComponent ]
+      declarations: [IngredientComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -22,4 +22,17 @@ describe('IngredientComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('ingredientName should containt the value banana', () => {
+    expect(component.ingredientName).toEqual('banana');
+  });
+
+  it('ingredientName should not be empty', () => {
+    expect(component.ingredientName).not.toEqual('');
+  });
+
+  it('should change ingredientName using the method changeIngredientName', () => {
+    component.changeIngredientName('carrot');
+    expect(component.ingredientName).not.toEqual('banana');
+  })
 });
