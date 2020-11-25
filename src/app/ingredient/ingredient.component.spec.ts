@@ -38,7 +38,8 @@ describe('IngredientComponent', () => {
 
   //Christine 
   it('method should add a 1', () => {
-    expect(component.addOne(10)).toEqual(11);
+    component.addOne(10);
+    expect(component.value).toEqual(11);
   });
 
   //Maria Paula

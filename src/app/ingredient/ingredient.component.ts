@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class IngredientComponent implements OnInit {
 
   ingredientName = 'banana';
+  value = 0;
 
   constructor() { }
 
@@ -20,8 +21,9 @@ export class IngredientComponent implements OnInit {
   }
 
   //Christine 
-
-
+  addOne(value: number){
+    this.value = value + 1;
+  }
 
   //Maria Paula
 
