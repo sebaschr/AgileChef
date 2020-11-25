@@ -33,5 +33,7 @@ export class IngredientComponent implements OnInit {
 
   //Sebastian
 
-
+  multiplyByTwo(number:number){
+    return number * 2
+  }
 }
