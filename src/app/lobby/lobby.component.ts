@@ -37,11 +37,7 @@ export class LobbyComponent implements OnInit {
 
   hideStartButton () {
     this.dataService.loadPlayer();
-    let startButton = document.getElementById('startBtn');
-
-    if (this.dataService.currentPlayer) {
-      startButton.style.visibility = "hidden";
-    }
+    document.getElementById('startBtn').style.visibility = 'hidden';
   }
 
   returnToPlayerLogIn() {

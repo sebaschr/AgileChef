@@ -37,7 +37,7 @@ export class DataService {
   }
 
   saveAdmin() {
-    let admin = new Admin('esteban', '1234');
+    let admin = new Admin('admin', '1234');
     this.post('adminInfo', admin);
   }
 
@@ -47,7 +47,6 @@ export class DataService {
       adminData = action.payload.val()
       this.admin = adminData;
     });
-    console.log(adminData);
   }
 
   savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber) {
@@ -64,8 +63,6 @@ export class DataService {
   }
 
   saveSession(session: ACSession) {
-    console.log('save Session: ')
-    console.log(session);
     this.post('session', session);
   }
 
