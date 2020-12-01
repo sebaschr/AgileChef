@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <section class="left-section">
-        <div *ngIf="dataService.session">
+    <section class="section-container">
+        <div class="left-section" *ngIf="dataService.session">
             <div *ngFor="let n of dataService.session.teams; let i = index;">
                 <team-component [team]="n">{{n.teamNumber}}</team-component>
             </div>
