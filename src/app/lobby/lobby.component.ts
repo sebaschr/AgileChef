@@ -24,15 +24,15 @@ export class LobbyComponent implements OnInit {
   }
 
   startGame() {
-
-    if(this.dataService.admin) {
+    this.router.navigate(['/planning']);
+    /*if(this.dataService.admin) {
       this.dataService.loadAdmin();
       this.router.navigate(['/planning']);
     } else if (this.dataService.currentPlayer){
       this.hideStartButton();
       this.dataService.loadPlayer();
       this.router.navigate(['/lobby']);
-    }
+    }*/
   }
 
   hideStartButton () {
