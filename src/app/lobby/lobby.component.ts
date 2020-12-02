@@ -13,7 +13,7 @@ import { templateSourceUrl } from '@angular/compiler';
 
 
 export class LobbyComponent implements OnInit {
-  
+
   constructor(public dataService: DataService, private router: Router) {
 
   }
@@ -24,18 +24,17 @@ export class LobbyComponent implements OnInit {
   }
 
   startGame() {
-    this.router.navigate(['/planning']);
-    /*if(this.dataService.admin) {
+    if (this.dataService.admin) {
       this.dataService.loadAdmin();
       this.router.navigate(['/planning']);
-    } else if (this.dataService.currentPlayer){
+    } else if (this.dataService.currentPlayer) {
       this.hideStartButton();
       this.dataService.loadPlayer();
-      this.router.navigate(['/lobby']);
-    }*/
+      // this.router.navigate(['/lobby']);
+    }
   }
 
-  hideStartButton () {
+  hideStartButton() {
     this.dataService.loadPlayer();
     document.getElementById('startBtn').style.visibility = 'hidden';
   }
@@ -44,7 +43,7 @@ export class LobbyComponent implements OnInit {
     this.dataService.loadAdmin();
     this.dataService.loadPlayer();
 
-    if(this.dataService.currentPlayer) {
+    if (this.dataService.currentPlayer) {
       this.router.navigate(['/playerLogin']);
     } else {
       this.router.navigate(['/adminPanel']);

@@ -10,15 +10,15 @@ import { DataService } from '../data.service';
 })
 export class PlayerLoginComponent implements OnInit {
 
-  IsProductOwner:boolean;
+  IsProductOwner: boolean;
 
   PlayerForm = this.fb.group({
     name: ['', Validators.required],
     isProductOwner: [false, Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private router: Router, private dataService: DataService) { 
- 
+  constructor(private fb: FormBuilder, private router: Router, private dataService: DataService) {
+
   }
 
   ngOnInit(): void {
@@ -27,6 +27,7 @@ export class PlayerLoginComponent implements OnInit {
 
   submit() {
     let playerInfo = this.PlayerForm.value;
+    this.dataService.admin = null;
     this.dataService.savePlayerToLocalStorage(playerInfo.name, playerInfo.isProductOwner, 0);
     this.router.navigate(['/lobby']);
   }
