@@ -4,12 +4,13 @@ body{
     background-size: contain;
     background-repeat: round;
     display: flex;
+    overflow-x: scroll;
 }
 
 mat-card{
     background-color: white;
     margin:auto;
-    padding: 5% 7% 5% 7%;
+    padding: 10vh;
     border-radius: 50%;
 }
 

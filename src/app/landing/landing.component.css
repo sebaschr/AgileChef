@@ -1,22 +1,31 @@
 body{
     background: #B39267;
+    overflow-x: scroll;
+}
+
+.container{
+    display: flex;
+    height: inherit;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+mat-toolbar{
+    background-color: #2c1b16;
 }
 
 .navButton{
-     margin-top: 5%;
-     margin-right: 5%;
-     position:absolute;
-     top:0;
-     right:0;
      color:white;
      font-size: 4vh;
      cursor: pointer;
 }
 
-mat-card {
+.content {
     margin-left: 5%;
     margin-right: 5%;
-    padding: 5% 10% 5% 10%;
+    padding: 3% 7% 3% 7%;
     border: 5px solid white;
     border-radius: 25px;
     border-color: #ffff;
