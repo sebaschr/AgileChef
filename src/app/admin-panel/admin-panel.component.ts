@@ -87,6 +87,8 @@ export class AdminPanelComponent implements OnInit {
     if (sprint.ejecucion == 0 || sprint.planeamiento == 0 || sprint.revision == 0 || sprint.retrospectiva == 0) {
       validationError = true;
       this.errorSprints = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorSprints = false;
     }
@@ -311,6 +313,8 @@ export class AdminPanelComponent implements OnInit {
   }
 
   removeSprintErrors(){
-    document.getElementById('sprintError').style.display='none'
+    document.getElementById('sprintError').style.display='none';
+    document.getElementById('edit-sprint').style.height='350px';
+    document.getElementById('edit-panel').style.height='350px';
   }
 }
