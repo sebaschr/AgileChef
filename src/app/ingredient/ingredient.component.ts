@@ -10,15 +10,32 @@ import { Ingredient } from '../models/ingredient';
 })
 export class IngredientComponent implements OnInit {
 
-  constructor(public dataService: DataService,public ingredient: Ingredient) {
+  ingredientName = 'banana';
 
-  }
+  constructor() { }
 
   ngOnInit(): void {
+
   }
 
-  loadIngredients(){
-    this.dataService.ingredients = this.ingredient.getIngredientList()
+  changeIngredientName(value: string) {
+    this.ingredientName = value;
+  }
+
+  //Christine 
+  addOne(value: number) {
+    return value + 1;
+  }
+
+  //Maria Paula
+
+  removeOne(value: number) {
+    return value - 1;
+  }
+
+  //Sebastian
+  multiplyByTwo(number: number) {
+    return number * 2
   }
 }
 

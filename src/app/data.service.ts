@@ -43,7 +43,7 @@ export class DataService {
   }
 
   saveAdmin() {
-    let admin = new Admin('esteban', '1234');
+    let admin = new Admin('admin', '1234');
     this.post('adminInfo', admin);
   }
 
@@ -69,8 +69,6 @@ export class DataService {
   }
 
   saveSession(session: ACSession) {
-    console.log('save Session: ')
-    console.log(session);
     this.post('session', session);
   }
 
@@ -93,6 +91,7 @@ export class DataService {
   }
 
   addPlayerToTeam(player: Player, newTeam: Team) {
+    //this.maxPlayersReached();
     if (this.currentPlayer.identifier == player.identifier) {
       this.findanddelete(player.identifier);
       for (let i = 0; i < this.session.teams.length; i++) {
@@ -129,12 +128,23 @@ export class DataService {
     this.saveSession(this.session);
   }
 
-  getMinAndMaxPlayers() {
+  maxPlayersReached() {
+    var minPlayers = this.session.playersMin;
+    var maxPlayers = this.session.playersMax;
+
+    var maxReached = false
     var teams = this.session.teams;
+
     for (let i = 0; i < this.session.teams.length; i++) {
       for (let j = 0; j < teams[i].players.length; j++) {
-        var teamTotal = teams[i].players[j];
+        var teamTotal = teams[i].players.length;
         console.log('team total:' + teamTotal);
+        if (teamTotal === maxPlayers) {
+          maxReached = true;
+        } else {
+          maxReached = false;
+        }
+        return maxReached;
       }
     }
   }

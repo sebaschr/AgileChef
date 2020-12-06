@@ -10,7 +10,7 @@ import { DataService } from './data.service';
 
 export class AppComponent {
 
-
+  title = 'AgileChef';
 
   constructor(private dataService: DataService) {
 

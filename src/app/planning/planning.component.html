@@ -6,14 +6,20 @@
     <title>Planning</title>
 </head>
 <body>
-    <div class="container" fxLayout="row" fxLayoutAlign="space-evenly stretch">
-        <div fxLayout="column" style="overflow: hidden;">
-            <img src="../../assets/Timer.jpg" width="80%">
+    <div class="container">
+        <div fxLayout="row" fxLayoutAlign="space-around center" fxLayout.xs="column" fxLayoutAlign.xs="space-evenly center" >
+          <div fxLayout="column" style="padding: 3vh; display: flex;">
+              <img src="../../assets/Timer.jpg" style="width: 90%; margin: auto;" alt="Agile Logo">
+          </div>
+          <div fxLayout="column">
+            <div class="title" fxLayout="row" fxflexorder="1">
+                <h1>Planning</h1>
+            </div>
+            <div class="timer" fxLayout="row" fxflexorder="-100">
+                <countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown>
+            </div>
+          </div>
         </div>
-        <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
-            <div class="title" fxLayout="row">Planning</div>
-            <div class="timer" fxLayout="row"><countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown></div>
-        </div>
-    </div>
+      </div>
 </body>
 </html>
