@@ -43,7 +43,7 @@ export class GameComponent implements OnInit {
     this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].ejecucion;
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadDBLists();
-    this.loadQueue(5);
+    this.loadQueue(3);
 
   }
 
@@ -548,6 +548,10 @@ export class GameComponent implements OnInit {
         break;
       }
       this.finished.push(pos1);
+    }
+
+    if(this.queue.length=4){
+      this.loadQueue(2);
     }
 
   }
