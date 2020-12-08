@@ -4,18 +4,27 @@ body{
     background-size: contain;
     background-repeat: round;
     display: flex;
+    overflow-x: scroll;
 }
 
 table{
     margin: auto;
 }
 
+@media screen and (max-width:959px) {
+    .container{ 
+        margin-top:10% !important;
+        margin-bottom: 10% !important;
+    }
+}
+
 .container{
     background-color: white;
-    width: 80%;
+    width: 70%;
+    height: max-content;
     margin: auto;
-    margin: 10%;
-    padding: 2% 5% 2% 5%;
+    padding: 2% 5% 5% 5%;
+    display: block !important;
 }
 
 .timer{
@@ -25,4 +34,5 @@ table{
     border-radius: 5px;
     font-size: 3vh;
     color: white;
+    margin-top: 3vh;
 }

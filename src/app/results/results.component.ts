@@ -23,4 +23,5 @@ export class ResultsComponent implements OnInit {
       this.router.navigate(['/summary']);
     }
   }
+  
 }
