@@ -28,25 +28,19 @@ export class LobbyComponent implements OnInit {
       this.dataService.loadAdmin();
       this.router.navigate(['/planning']);
     } else if (this.dataService.currentPlayer) {
-      this.hideStartButton();
       this.dataService.loadPlayer();
-      // this.router.navigate(['/lobby']);
+      alert("Debes esperar a que el administrador inicie el juego.")
     }
   }
 
-  hideStartButton() {
-    this.dataService.loadPlayer();
-    document.getElementById('startBtn').style.visibility = 'hidden';
-  }
-
   returnToPlayerLogIn() {
-    this.dataService.loadAdmin();
-    this.dataService.loadPlayer();
 
-    if (this.dataService.currentPlayer) {
-      this.router.navigate(['/playerLogin']);
-    } else {
+    if (this.dataService.admin) {
+      this.dataService.loadAdmin();
       this.router.navigate(['/adminPanel']);
+    } else if (this.dataService.currentPlayer) {
+      this.dataService.loadPlayer();
+      this.router.navigate(['/playerLogin']);
     }
   }
 

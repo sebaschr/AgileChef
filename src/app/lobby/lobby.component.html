@@ -13,13 +13,6 @@
 </head>
 
 <body>
-    <section class="section-container">
-        <div class="left-section" *ngIf="dataService.session">
-            <div *ngFor="let n of dataService.session.teams; let i = index;">
-                <team-component [team]="n">{{n.teamNumber}}</team-component>
-            </div>
-        </div>
-    </section>
     <section class="right-section">
         <div class="objectives-card">
             <h1>Objectives</h1>
@@ -41,6 +34,13 @@
             <button class="start-button" (click)="returnToPlayerLogIn()" mat-raised-button
                 color="primary" id="returnBtn">Return</button>
             <button class="start-button" (click)="startGame()" mat-raised-button color="primary" id="startBtn">Start</button>
+        </div>
+    </section>
+    <section class="section-container">
+        <div class="left-section" *ngIf="dataService.session">
+            <div *ngFor="let n of dataService.session.teams; let i = index;">
+                <team-component [team]="n">{{n.teamNumber}}</team-component>
+            </div>
         </div>
     </section>
 </body>
