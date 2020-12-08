@@ -451,9 +451,24 @@ export class GameComponent implements OnInit {
       }
 
       this.trash.push(arrayIng);
+
+      for (let x = 0; x < arrayIng.length; x++) {
+        this.cleanTrashfromProd(arrayIng[x])
+      }
     }
 
   }
+
+  cleanTrashfromProd(arrayIng) {
+    for (let i = 0; i < this.inProd.length; i++) {
+
+      if (this.inProd[i].name == arrayIng) {
+        this.inProd.splice(i, 1);
+        break
+      }
+    }
+  }
+
 
   /* throw it in the oven if hovering the oven div  */
   checkifInsideofOven(pos1) {
@@ -472,7 +487,7 @@ export class GameComponent implements OnInit {
     }
     if (inside && (pos1.name == 'Mushroom Pizza' || pos1.name == 'Pepperoni Pizza')) {
       this.countUp(100, 5000, pos1);
-      
+
       // this.removeFromProd(pos1.name);
 
     }
@@ -480,12 +495,12 @@ export class GameComponent implements OnInit {
     console.log(this.queueEditing)
   }
 
-  deletePizzafromQueue(pKey){
+  deletePizzafromQueue(pKey) {
     for (let i = 0; i < this.queue.length; i++) {
       if (pKey == this.queue[i].key) {
-        this.queue.splice(i,1);
+        this.queue.splice(i, 1);
       }
-      
+
     }
   }
 
@@ -520,14 +535,21 @@ export class GameComponent implements OnInit {
       pos1.onPizza = 'none';
 
       for (let i = 0; i < this.queueEditing.length; i++) {
-        if(pos1.name == this.queueEditing[i].name)
-        this.deletePizzafromQueue(this.queueEditing[i].key);
-        this.queueEditing.splice(i,1);
-        
+        if (pos1.name == this.queueEditing[i].name)
+          this.deletePizzafromQueue(this.queueEditing[i].key);
+        this.queueEditing.splice(i, 1);
+
+        break;
+      }
+
+      for (let i = 0; i < this.inProd.length; i++) {
+        if (pos1.name == this.inProd[i].name)
+          this.inProd.splice(i, 1);
         break;
       }
       this.finished.push(pos1);
     }
+
   }
 
   findFirstAndDelete(name) {
@@ -557,20 +579,20 @@ export class GameComponent implements OnInit {
 
   getIngredientPrice(pName) {
     var x = 0;
-    if(pName == 'Mushroom Pizza'||pName == 'Pepperoni Pizza'){
+    if (pName == 'Mushroom Pizza' || pName == 'Pepperoni Pizza') {
       for (let i = 0; i < this.pizzaList.length; i++) {
         if (pName == this.pizzaList[i].name) {
           x = this.pizzaList[i].price;
         }
       }
-    }else{
+    } else {
       for (let i = 0; i < this.ingredients.length; i++) {
         if (pName == this.ingredients[i].name) {
           x = this.ingredients[i].price;
         }
       }
     }
-    
+
     return x;
   }
   getResults() {
@@ -592,7 +614,7 @@ export class GameComponent implements OnInit {
     }
 
     for (let i = 0; i < this.inProd.length; i++) {
-      if (this.inProd[i].name == 'Mushroom Pizza' || this.inProd[i].name== 'Pepperoni Pizza' || this.inProd[i].name== 'PizzaSauce' || this.inProd[i].name == 'PizzaSauceCheese') {
+      if (this.inProd[i].name == 'Mushroom Pizza' || this.inProd[i].name == 'Pepperoni Pizza' || this.inProd[i].name == 'PizzaSauce' || this.inProd[i].name == 'PizzaSauceCheese') {
         let array = this.getElements(this.inProd[i].name);
         inProduction = inProduction + array.length;
         for (let t = 0; t < array.length; t++) {
@@ -618,7 +640,7 @@ export class GameComponent implements OnInit {
     }
     let results = {
       inTrash: 0,
-      inTrashSum:0,
+      inTrashSum: 0,
       inProduction: 0,
       inProdSum: 0,
       succesful: 0,
@@ -634,8 +656,19 @@ export class GameComponent implements OnInit {
     console.log(this.finished)
     console.log(results)
     this.dataService.results[this.dataService.sprintCounter] = results
-    
-    
+
+    console.log('Prod')
+    console.log(this.inProd)
+
+    console.log('Trash')
+    console.log(this.trash)
+
+    console.log('Finish')
+    console.log(this.finished)
+
+    console.log(this.dataService.results)
+
+
   }
 
   getElements(name) {
