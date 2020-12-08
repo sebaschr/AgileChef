@@ -4,14 +4,23 @@ body{
     background-size: contain;
     background-repeat: round;
     display: flex;
+    overflow-x: scroll;
+}
+
+@media screen and (max-width:959px) {
+    .container{ 
+        margin-top:10% !important;
+        margin-bottom: 10% !important;
+    }
 }
 
 .container{
-    margin: auto;
-    height: max-content;
-    width: 80%;
-    padding: 2% 5% 2% 5%;
     background-color: white;
+    width: 80%;
+    height: max-content;
+    margin: auto;
+    padding: 3vh;
+    display: block !important;
 }
 
 .titleBox{
@@ -25,4 +34,15 @@ body{
     border-radius: 5px;
     font-size: 3vh;
     color: white;
+}
+
+.dataCard{
+    padding-top: 3vh;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    width: -webkit-fill-available;
+}
+
+.graphCard{
+    padding-bottom: 3vh;
 }

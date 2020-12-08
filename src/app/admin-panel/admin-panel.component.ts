@@ -87,6 +87,8 @@ export class AdminPanelComponent implements OnInit {
     if (sprint.ejecucion == 0 || sprint.planeamiento == 0 || sprint.revision == 0 || sprint.retrospectiva == 0) {
       validationError = true;
       this.errorSprints = true;
+      document.getElementById('edit-sprint').style.height='415px';
+      document.getElementById('edit-panel').style.height='415px';
     } else {
       this.errorSprints = false;
     }
@@ -97,6 +99,7 @@ export class AdminPanelComponent implements OnInit {
       this.findUpdateSprint(sprint);
       this.checkLastOneSaved(sprint.name);
       this.errorMinSprint = false;
+      // document.getElementById('addBtn').innerHTML='Add'
     }
 
   }
@@ -111,10 +114,11 @@ export class AdminPanelComponent implements OnInit {
         if (currentSprint == this.sprintList[index].name) {
           this.sprintList.splice(index, 1);
           this.reorderArrays();
+          this.removeSprintErrors();
         }
       }
     }
-
+    
 
   }
 
@@ -193,7 +197,9 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onForm2NameChange({ target }) {
+
     var selectedSprint = this.sprintList.find(x => x.name == this.form.value.selectSprint);
+    console.log(selectedSprint)
     this.form.controls['executionTime'].setValue(selectedSprint.ejecucion);
     this.form.controls['planningTime'].setValue(selectedSprint.planeamiento);
     this.form.controls['reviewingTime'].setValue(selectedSprint.revision);
@@ -306,4 +312,9 @@ export class AdminPanelComponent implements OnInit {
 
   }
 
+  removeSprintErrors(){
+    document.getElementById('sprintError').style.display='none';
+    document.getElementById('edit-sprint').style.height='350px';
+    document.getElementById('edit-panel').style.height='350px';
+  }
 }

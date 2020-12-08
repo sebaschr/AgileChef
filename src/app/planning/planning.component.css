@@ -1,5 +1,6 @@
 body{
     height:100%;
+    display: flex;
 }
 
 .title{
@@ -27,4 +28,5 @@ body{
     background-color: white;
     width: 80%;
     margin: auto;
+    height: inherit;
 }

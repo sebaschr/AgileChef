@@ -10,64 +10,70 @@
         <mat-card>
             <h1 style="text-align: center;">Business Values</h1>
         </mat-card>
-        <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
-            <div fxLayout="column" style="width:30%; padding: 1%; height: auto;">
-                <mat-card style="margin-bottom: 1%;">
-                    <div class="titleBox">
-                        <mat-card-title>Pieces</mat-card-title>
-                        <mat-card-subtitle>Sprint 1</mat-card-subtitle>
-                    </div>
-                    <mat-card-content>
-                        <mat-list role="list">
-                            <mat-list-item role="listitem">Completed: 19 </mat-list-item>
-                            <mat-list-item role="listitem">Failed: 8 </mat-list-item>
-                            <mat-list-item role="listitem">In Progress: 12 </mat-list-item>
-                        </mat-list>
-                    </mat-card-content>
-                </mat-card>
-                <mat-card style="margin-bottom: 1%;">
-                  <div class="titleBox">
-                      <mat-card-title>Total</mat-card-title>
-                      <mat-card-subtitle>Sprint 1</mat-card-subtitle>
-                  </div>
-                  <mat-card-content>
-                      <mat-list role="list">
-                          <mat-list-item role="listitem"> Revenue: $26 </mat-list-item>
-                          <mat-list-item role="listitem"> Costs: $17.38 </mat-list-item>
-                          <mat-list-item role="listitem"> Profit: $8.17 </mat-list-item>
-                      </mat-list>  
-                  </mat-card-content>
-              </mat-card>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly center" style="padding-top: 3vh;">
+          <div fxLayout="column" class="dataCard">
+            <mat-card style="margin-bottom: 1%;">
+              <div class="titleBox">
+                  <mat-card-title>Pieces</mat-card-title>
+                  <mat-card-subtitle>Sprint 1</mat-card-subtitle>
+              </div>
+              <mat-card-content>
+                  <mat-list role="list">
+                      <mat-list-item role="listitem">Completed: 19 </mat-list-item>
+                      <mat-list-item role="listitem">Failed: 8 </mat-list-item>
+                      <mat-list-item role="listitem">In Progress: 12 </mat-list-item>
+                  </mat-list>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div fxLayout="column" class="dataCard">
+            <mat-card style="margin-bottom: 1%;">
+              <div class="titleBox">
+                  <mat-card-title>Total</mat-card-title>
+                  <mat-card-subtitle>Sprint 1</mat-card-subtitle>
+              </div>
+              <mat-card-content>
+                  <mat-list role="list">
+                      <mat-list-item role="listitem"> Revenue: $26 </mat-list-item>
+                      <mat-list-item role="listitem"> Costs: $17.38 </mat-list-item>
+                      <mat-list-item role="listitem"> Profit: $8.17 </mat-list-item>
+                  </mat-list>  
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
 
-            </div>
-            <div fxLayout="column" style="padding: 1%">
-                <mat-card style="margin-bottom: 1%;">
-                  <div class="titleBox">
-                    <mat-card-title>Sprint 1</mat-card-title>
-                  </div>
-                  <mat-card-content>
-                    <summary-graph></summary-graph>
-                  </mat-card-content>
-                </mat-card>
-
-                <mat-card style="margin-bottom: 1%;">
-                  <div class="titleBox">
-                    <mat-card-title>Sprint 2</mat-card-title>
-                  </div>
-                  <mat-card-content>
-                    <summary-graph></summary-graph>
-                  </mat-card-content>
-                </mat-card>
-
-                <mat-card style="margin-bottom: 1%;">
-                  <div class="titleBox">
-                    <mat-card-title>Sprint 3</mat-card-title>
-                  </div>
-                  <mat-card-content>
-                    <summary-graph></summary-graph>
-                  </mat-card-content>
-                </mat-card>
-            </div>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly stretch" style="padding-top: 3vh;">
+          <div fxLayout="column" class="graphCard">
+            <mat-card style="margin-bottom: 1%;">
+              <div class="titleBox">
+                <mat-card-title>Sprint 1</mat-card-title>
+              </div>
+              <mat-card-content>
+                <summary-graph></summary-graph>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div fxLayout="column" class="graphCard">
+            <mat-card style="margin-bottom: 1%;">
+              <div class="titleBox">
+                <mat-card-title>Sprint 2</mat-card-title>
+              </div>
+              <mat-card-content>
+                <summary-graph></summary-graph>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div fxLayout="column" class="graphCard">
+            <mat-card style="margin-bottom: 1%;">
+              <div class="titleBox">
+                <mat-card-title>Sprint 3</mat-card-title>
+              </div>
+              <mat-card-content>
+                <summary-graph></summary-graph>
+              </mat-card-content>
+            </mat-card>
+          </div>
         </div>
         
         <div class="timer" fxLayout="row" fxLayoutAlign="center center">
