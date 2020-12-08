@@ -610,7 +610,7 @@ export class GameComponent implements OnInit {
       succesfulSum: succesfulSum
     }]
 
-    this.dataService.results = results
+    this.dataService.results.push(results)
   }
 
   getElements(name) {
