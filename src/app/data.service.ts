@@ -92,8 +92,13 @@ export class DataService {
     this.post('session', session);
   }
 
+  hideInstruction(){
+    document.getElementById('instructions').style.visibility = 'hidden';
+  }
+
   addPlayerToTeam(player: Player, newTeam: Team) {
     //this.maxPlayersReached();
+    this.hideInstruction();
     if (this.currentPlayer.identifier == player.identifier) {
       this.findanddelete(player.identifier);
       for (let i = 0; i < this.session.teams.length; i++) {
