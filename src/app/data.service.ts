@@ -25,6 +25,7 @@ export class DataService {
   public recipes = [];
 
   constructor(public db: AngularFireDatabase) {
+    // this.loadEv();
     this.saveAdmin();
     this.loadAdmin();
     this.loadIngredients();
@@ -188,114 +189,124 @@ export class DataService {
 
     });
   }
-}
 
+  // loadEv() {
+  //   let ingredientList = [
+  //     {
+  //       name: 'Dough',
+  //       images: ['../../assets/dough_1.png', '../../assets/dough_2.png', '../../assets/dough_3.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Cheese',
+  //       images: ['../../assets/cheese_01.png', '../../assets/cheese_02.png', '../../assets/cheese_03.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Tomato',
+  //       images: ['../../assets/tomato_1.png', '../../assets/tomato_2.png', '../../assets/tomato_3.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Chilli Pepper',
+  //       images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Pepperoni',
+  //       images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
+  //       price: 200,
+  //       key: key()
+  //     },
+  //     {
+  //       name: 'Mushroom',
+  //       images: ['../../assets/shroom_1.png', '../../assets/shroom_2.png', '../../assets/shroom_3.png'],
+  //       price: 200,
+  //       key: key()
+  //     }];
+  //   let recipeList = [{
+  //     nombre: 'Mushroom Pizza',
+  //     idRecipe: key(),
+  //     ingredients: [{
+  //       idIngredient: 'Dough',
+  //       amount: 1
+  //     },
+  //     {
+  //       idIngredient: 'Mushroom',
+  //       amount: 1
+  //     },
+  //     {
+  //       idIngredient: 'Cheese',
+  //       amount: 1
+  //     },
+  //     {
+  //       idIngredient: 'Tomato',
+  //       amount: 1
+  //     }]
+  //   }, {
+  //     nombre: 'Pepperoni Pizza',
+  //     idRecipe: key(),
+  //     ingredients: [{
 
-/*
+  //       idIngredient: 'Dough',
+  //       amount: 1
+  //     },
+  //     {
+  //       idIngredient: 'Cheese',
+  //       amount: 1
+  //     },
+  //     {
 
-  loadEv() {
-    let ingredientList = [
-      {
-        name: 'Dough',
-        images: ['../../assets/dough_1.png', '../../assets/dough_2.png', '../../assets/dough_3.png'],
-        price: 200,
-        key: key()
-      },
-      {
-        name: 'Tomato',
-        images: ['../../assets/tomato_1.png', '../../assets/tomato_2.png', '../../assets/tomato_3.png'],
-        price: 200,
-        key: key()
-      },
-      {
-        name: 'Chilli Pepper',
-        images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
-        price: 200,
-        key: key()
-      },
-      {
-        name: 'Pepperoni',
-        images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
-        price: 200,
-        key: key()
-      },
-      {
-        name: 'Mushroom',
-        images: ['../../assets/shroom_1.png', '../../assets/shroom_2.png', '../../assets/shroom_3.png'],
-        price: 200,
-        key: key()
-      }];
-    let recipeList = [{
-      nombre: 'Mushroom Pizza',
-      idRecipe: key(),
-      ingredients: [{
-        idIngredient: 'Dough',
-        amount: 1
-      },
-      {
-        idIngredient: 'Mushroom',
-        amount: 1
-      },
-      {
-        idIngredient: 'Tomato',
-        amount: 1
-      }]
-    }, {
-      nombre: 'Pepperoni Pizza',
-      idRecipe: key(),
-      ingredients: [{
+  //       idIngredient: 'Pepperoni',
+  //       amount: 1
+  //     },
+  //     {
 
-        idIngredient: 'Dough',
-        amount: 1
-      },
-      {
+  //       idIngredient: 'Tomato',
+  //       amount: 1
+  //     }]
+  //   }];
 
-        idIngredient: 'Pepperoni',
-        amount: 1
-      },
-      {
+  //   for (let i = 0; i < recipeList.length; i++) {
+  //     for (let y = 0; y < recipeList[i].ingredients.length; y++) {
+  //       for (let t = 0; t < ingredientList.length; t++) {
+  //         if (recipeList[i].ingredients[y].idIngredient == ingredientList[t].name) {
+  //           recipeList[i].ingredients[y].idIngredient = ingredientList[t].key;
+  //         }
+  //       }
+  //     }
+  //   }
 
-        idIngredient: 'Tomato',
-        amount: 1
-      }]
-    }];
+  //   var pizzas = [{
+  //     key:key(),
+  //     name: "Mushroom Pizza",
+  //     price: 6500,
+  //     imgSrc: '../../assets/mushroom_pizza.png',
+  //     recipeID: ''
+  //   }, {
+  //     key:key(),
+  //     name: "Pepperoni Pizza",
+  //     price: 6000,
+  //     imgSrc: '../../assets/pepperoni_pizza.png',
+  //     recipeID: ''
+  //   }]
 
-    for (let i = 0; i < recipeList.length; i++) {
-      for (let y = 0; y < recipeList[i].ingredients.length; y++) {
-        for (let t = 0; t < ingredientList.length; t++) {
-          if (recipeList[i].ingredients[y].idIngredient == ingredientList[t].name) {
-            recipeList[i].ingredients[y].idIngredient = ingredientList[t].key;
-          }
-        }
-      }
-    }
-
-    var pizzas = [{
-      key:key(),
-      name: "Mushroom Pizza",
-      price: 6500,
-      imgSrc: '../../assets/mushroom_pizza.png',
-      recipeID: ''
-    }, {
-      key:key(),
-      name: "Pepperoni Pizza",
-      price: 6000,
-      imgSrc: '../../assets/pepperoni_pizza.png',
-      recipeID: ''
-    }]
-
-    for (let i = 0; i < pizzas.length; i++) {
-      for (let y = 0; y < recipeList.length; y++) {
-        if (recipeList[y].nombre == pizzas[i].name) {
-          pizzas[i].recipeID = recipeList[y].idRecipe
-        }
+  //   for (let i = 0; i < pizzas.length; i++) {
+  //     for (let y = 0; y < recipeList.length; y++) {
+  //       if (recipeList[y].nombre == pizzas[i].name) {
+  //         pizzas[i].recipeID = recipeList[y].idRecipe
+  //       }
         
-      }
+  //     }
 
-    }
-    this.post('ingredients',ingredientList)
-    this.post('recipes',recipeList)
-    this.post('pizzas',pizzas)
-  }
+  //   }
+  //   this.post('ingredients',ingredientList)
+  //   this.post('recipes',recipeList)
+  //   this.post('pizzas',pizzas)
+  // }
 
-*/
+}

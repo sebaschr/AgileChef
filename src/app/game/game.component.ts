@@ -245,7 +245,7 @@ export class GameComponent implements OnInit {
     for (let i = 0; i < ing.length; i++) {
       ingredients.push(this.getIngredientInfo(ing[i].idIngredient));
     }
-    console.log(ingredients)
+
     for (let i = 0; i < ingredients.length; i++) {
       let newQueueEl = {
         name: String,
