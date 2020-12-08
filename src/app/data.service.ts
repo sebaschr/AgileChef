@@ -97,8 +97,7 @@ export class DataService {
   }
 
   addPlayerToTeam(player: Player, newTeam: Team) {
-    //this.maxPlayersReached();
-    this.hideInstruction();
+    //this.hideInstruction();
     if (this.currentPlayer.identifier == player.identifier) {
       this.findanddelete(player.identifier);
       for (let i = 0; i < this.session.teams.length; i++) {
