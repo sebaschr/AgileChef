@@ -228,8 +228,8 @@ export class GameComponent implements OnInit {
             found.progress = 100;
 
             if (found.name == "Dough") {
-              found.width = '250px';
-              found.height = '250px';
+              found.width = '100px';
+              found.height = '100px';
             }
           } else {
             found.activeImg = found.images[1];
@@ -275,8 +275,8 @@ export class GameComponent implements OnInit {
         images: [{}],
         activeImg: String,
         progress: 0,
-        width: '100px',
-        height: '100px',
+        width: '50px',
+        height: '50px',
         onPizza: 'block',
         visibility: 'visible',
         editing: false,
