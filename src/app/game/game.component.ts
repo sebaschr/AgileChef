@@ -39,7 +39,7 @@ export class GameComponent implements OnInit {
 
   constructor(private router: Router, public dataService: DataService) {
     this.dataService.loadSession();
-    // this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
+    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].ejecucion;
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadDBLists();
     this.loadQueue(5);
@@ -99,6 +99,7 @@ export class GameComponent implements OnInit {
           name: String,
           price: Number,
           recipeID: String,
+          editing: false,
           key: key()
         };
         newQueueEl.imgSrc = this.pizzaList[y].imgSrc;
@@ -116,7 +117,7 @@ export class GameComponent implements OnInit {
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {
     var element = event.currentTarget;
-
+    console.log(this.queue)
     if (this.checkifinsideofCanvas(element)) {
       if (p.editing) {
 
@@ -163,12 +164,33 @@ export class GameComponent implements OnInit {
   }
   // /* Place the ingredients and mix depending on the result */
   ingredientPlacement(ing, event: MouseEvent) {
-    ing.position = this.getPosition(event.currentTarget)
 
+    ing.position = this.getPosition(event.currentTarget)
+    if (this.checkifInsideofCanvasPos(ing.position)) {
+      ing.editing = true;
+      if (!(this.checkifInprod(ing))) {
+        this.inProd.push(ing);
+      }
+    }
     for (let i = 0; i < this.activePlayer.ing.length; i++) {
       this.mixIngredient(ing, this.activePlayer.ing[i]);
     }
 
+    this.checkifInsideofTrash(ing);
+    this.checkifInsideofOven(ing);
+    this.checkifInsideofFinishedQueue(ing);
+  }
+  /*  */
+  checkifInprod(ing) {
+    let inProduction = false;
+
+    for (let index = 0; index < this.inProd.length; index++) {
+      if (this.inProd[index].key == ing.key) {
+        inProduction = true
+      }
+    }
+
+    return inProduction
   }
   /* get the position of an element, returns the position */
   getPosition(el) {
@@ -256,6 +278,7 @@ export class GameComponent implements OnInit {
         height: '100px',
         onPizza: 'block',
         visibility: 'visible',
+        editing: false,
         position: [{
 
         }],
@@ -267,7 +290,6 @@ export class GameComponent implements OnInit {
       newQueueEl.activeImg = ingredients[i].images[0];
 
       ingredients[i] = newQueueEl;
-      this.inProd.push(newQueueEl);
     }
     for (let i = 0; i < ingredients.length; i++) {
       if (this.counterPlayer == 0) {
@@ -279,7 +301,6 @@ export class GameComponent implements OnInit {
 
       this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
     }
-    console.log(this.playerList)
   }
 
   showIngredients(p) {
@@ -323,13 +344,7 @@ export class GameComponent implements OnInit {
 
   /* mix Ingredients  */
   mixIngredient(ing1, ing2) {
-    console.log('ing1')
-    console.log(ing1)
-    console.log('ing2')
-    console.log(ing2)
-    // this.checkifInsideofTrash(ing1);
-    // this.checkifInsideofOven(ing1);
-    // this.checkifInsideofFinishedQueue(ing1);
+
 
     if (ing1.progress < 100 || ing2.progress < 100) {
     } else {
@@ -338,6 +353,7 @@ export class GameComponent implements OnInit {
         if (checkifInside) {
           ing2.activeImg = '../../assets/pizza_sauce.png';
           ing1.onPizza = 'none';
+          this.removefromProd(ing1.name);
           ing2.name = 'PizzaSauce';
         } else {
         }
@@ -348,6 +364,7 @@ export class GameComponent implements OnInit {
         if (checkifInside) {
           ing2.activeImg = '../../assets/pizza_cheese.png';
           ing1.onPizza = 'none';
+          this.removefromProd(ing1.name);
           ing2.name = 'PizzaSauceCheese';
 
         } else {
@@ -361,6 +378,8 @@ export class GameComponent implements OnInit {
         if (checkifInside) {
           ing2.activeImg = '../../assets/mushroom_pizza.png';
           ing1.onPizza = 'none';
+          this.removefromProd(ing1.name);
+          console.log(this.inProd)
           ing2.progress = 0;
           ing2.width = '100px';
           ing2.height = '100px';
@@ -374,6 +393,7 @@ export class GameComponent implements OnInit {
         if (checkifInside) {
           ing2.activeImg = '../../assets/pepperoni_pizza.png';
           ing1.onPizza = 'none';
+          this.removefromProd(ing1.name);
           ing2.progress = 0;
           ing2.width = '100px';
           ing2.height = '100px';
@@ -385,7 +405,7 @@ export class GameComponent implements OnInit {
 
     }
   }
-  /*  */
+  /* check if one el is inside of another */
   checkifInside(pos1, pos2) {
     var inside = false;
     var position1 = pos1.position;
@@ -399,152 +419,224 @@ export class GameComponent implements OnInit {
     }
     return inside;
   }
-  // /* throw it in the garbage if hovering the trash div  */
-  // checkifInsideofTrash(pos1) {
+  /* throw it in the garbage if hovering the trash div  */
+  checkifInsideofTrash(pos1) {
 
-  //   var inside = false;
+    var inside = false;
+    var trashDiv = document.querySelector('.trash');
+    var trashPosition = trashDiv.getBoundingClientRect();
 
-  //   var trashDiv = document.querySelector('.trash');
-
-  //   var trashPosition = trashDiv.getBoundingClientRect();
-
-  //   var inside = false;
-  //   var position1 = pos1.position;
-  //   var position2 = trashPosition;
+    var inside = false;
+    var position1 = pos1.position;
+    var position2 = trashPosition;
 
 
-  //   if ((position1.right < position2.right) && (position2.left < position1.left)) {
-  //     if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
-  //       inside = true;
-  //     }
-  //   }
+    if ((position1.right < position2.right) && (position2.left < position1.left)) {
+      if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
+        inside = true;
+      }
+    }
 
-  //   if (inside) {
-  //     pos1.onPizza = 'none';
-  //     var arrayIng = [];
-  //     if (pos1.name == 'PizzaSauce') {
-  //       arrayIng = ['Tomato', 'Dough'];
-  //     } else {
-  //       if (pos1.name == 'PizzaSauceCheese') {
-  //         arrayIng = ['Tomato', 'Dough', 'Cheese'];
-  //       } else {
-  //         arrayIng = [pos1.name]
-  //       }
-  //     }
+    if (inside) {
+      pos1.onPizza = 'none';
+      var arrayIng = [];
+      if (pos1.name == 'PizzaSauce') {
+        arrayIng = ['Tomato', 'Dough'];
+      } else {
+        if (pos1.name == 'PizzaSauceCheese') {
+          arrayIng = ['Tomato', 'Dough', 'Cheese'];
+        } else {
+          arrayIng = [pos1.name]
+        }
+      }
 
-  //     this.trash.push(arrayIng);
-  //   }
-  // }
+      this.trash.push(arrayIng);
+    }
 
-  // /* throw it in the oven if hovering the oven div  */
-  // checkifInsideofOven(pos1) {
+    console.log(this.trash)
+  }
 
-  //   var inside = false;
-
-  //   var ovenDiv = document.querySelector('.oven');
-
-  //   var ovenPosition = ovenDiv.getBoundingClientRect();
-
-  //   var inside = false;
-  //   var position1 = pos1.position;
-  //   var position2 = ovenPosition;
+  /* throw it in the oven if hovering the oven div  */
+  checkifInsideofOven(pos1) {
+    var inside = false;
+    var ovenDiv = document.querySelector('.oven');
+    var ovenPosition = ovenDiv.getBoundingClientRect();
+    var inside = false;
+    var position1 = pos1.position;
+    var position2 = ovenPosition;
 
 
-  //   if ((position1.right < position2.right) && (position2.left < position1.left)) {
-  //     if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
-  //       inside = true;
-  //     }
-  //   }
+    if ((position1.right < position2.right) && (position2.left < position1.left)) {
+      if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
+        inside = true;
+      }
+    }
+    if (inside && (pos1.name == 'Mushroom Pizza' || pos1.name == 'Pepperoni Pizza')) {
+      this.countUp(100, 5000, pos1);
+      // this.removeFromProd(pos1.name);
 
-  //   if (inside && (pos1.name == 'Mushroom Pizza'||pos1.name == 'Pepperoni Pizza')) {
-  //     this.countUp(100, 5000, pos1)
-  //   }
-  // }
-
-  // /* check if an element is inside of the finished panel*/
-  // checkifInsideofFinishedQueue(pos1) {
-  //   var inside = false;
-
-  //   var readyQueueDiv = document.querySelector('.readyQueue');
-
-  //   var readyQueuePosition = readyQueueDiv.getBoundingClientRect();
-
-  //   var inside = false;
-  //   var position1 = pos1.position;
-  //   var position2 = readyQueuePosition;
+    }
 
 
-  //   if ((position1.right < position2.right) && (position2.left < position1.left)) {
-  //     if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
-  //       inside = true;
-  //     }
-  //   }
+  }
 
-  //   if (inside && (pos1.name == 'Pepperoni Pizza' || pos1.name == 'Mushroom Pizza') && pos1.progress >= 100) {
-  //     pos1.onPizza = 'none';
-  //     this.finished.push(pos1);
-  //     this.deletePizzafromQueue(pos1.name);
-  //   }
-  // }
+  removefromProd(name) {
+    for (let i = 0; i < this.inProd.length; i++) {
+      if (this.inProd[i].name == name) {
+        this.inProd.splice(i, 1);
+        break;
+      }
+    }
+  }
+  /* check if an element is inside of the finished panel*/
+  checkifInsideofFinishedQueue(pos1) {
+    var inside = false;
 
-  // /* fill the bar in a specific amount, time, */
-  // countUp(max, time, p) {
-  //   var num = 0;
-  //   var step = time / max; // calculate the time between two steps of counting
-  //   // create an inner function that performs one step of counting
-  //   var fn = function () {
-  //     p.progress++;
-  //     if (num <= max) {
-  //       // ... and call the inner function again, some time in the future
-  //       window.setTimeout(fn, step);
-  //     }
-  //   }
+    var readyQueueDiv = document.querySelector('.readyQueue');
 
-  //   // call the inner function for the first time
-  //   fn();
-  // }
+    var readyQueuePosition = readyQueueDiv.getBoundingClientRect();
 
-  // // getIngredientPrice(pName){
-  // //   var x = 0;
-  // //   for (let i = 0; i < this.ingredientList.length; i++) {
-  // //     if (pName == this.ingredientList[i]) {
-  // //       x = this.ingredientList[i].price;
-  // //     }
+    var inside = false;
+    var position1 = pos1.position;
+    var position2 = readyQueuePosition;
 
-  // //   }
 
-  // //   return x;
-  // // }
-  // deletePizzafromQueue(pName){
-  //   for (let i = 0; i < this.pizzaList.length; i++) {
+    if ((position1.right < position2.right) && (position2.left < position1.left)) {
+      if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
+        inside = true;
+      }
+    }
 
-  //     if(pName == this.pizzaList[i].name){
-  //       this.pizzaList[i].done = true;
-  //       // this.results.earned = this.pizzaList[i].price + this.results.earned;
-  //       // this.results.totalSuccesful++;
+    if (inside && (pos1.name == 'Pepperoni Pizza' || pos1.name == 'Mushroom Pizza') && pos1.progress >= 100) {
+      pos1.onPizza = 'none';
+      console.log(pos1.name)
+      // this.findFirstAndDelete(pos1.name);
 
-  //       // var cost = 0;
-  //       // for (let t = 0; t < this.pizzaList[i].ingredients.length; t++) {
-  //       //   var x = this.getIngredientPrice(this.pizzaList[i].ingredients[i].name);
-  //       //   cost = x + (3*x);
-  //       // }
-  //       // this.results.cost = cost;
-  //       // var profit = this.pizzaList[i].price - cost;
+      this.finished.push(pos1);
+      // this.deletePizzafromQueue(pos1.name);
 
-  //       // this.results.profit = profit + this.results.profit; 
-  //       setTimeout(function () {
-  //           this.pizzaList[i].remove();
-  //     }, 5000);
-  //     }
+      console.log(this.finished);
+      console.log(this.queue)
+      console.log(this.inProd)
 
-  //   } 
-  // }
+    }
+  }
 
-  // onTimerFinished(e: Event) {
-  //   if (e["action"] == "done") {
-  //     this.router.navigate(['/results']);
-  //   }
-  // }
+  findFirstAndDelete(name) {
+    for (let i = 0; i < this.queue.length; i++) {
+      if (this.queue[i].name == name) {
+        this.queue.splice(i, 1);
+        break;
+      }
+    }
+  }
+  /* fill the bar in a specific amount, time, */
+  countUp(max, time, p) {
+    var num = 0;
+    var step = time / max; // calculate the time between two steps of counting
+    // create an inner function that performs one step of counting
+    var fn = function () {
+      p.progress++;
+      if (num <= max) {
+        // ... and call the inner function again, some time in the future
+        window.setTimeout(fn, step);
+      }
+    }
+
+    // call the inner function for the first time
+    fn();
+  }
+
+  getIngredientPrice(pName) {
+    var x = 0;
+    for (let i = 0; i < this.ingredients.length; i++) {
+      if (pName == this.ingredients[i].name) {
+        x = this.ingredients[i].price;
+      }
+    }
+    return x;
+  }
+  getResults() {
+    let inTrash = 0, inTrashSum = 0,
+      inProduction = 0, inProdSum = 0,
+      succesful = 0, succesfulSum = 0
+
+    for (let i = 0; i < this.trash.length; i++) {
+      if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
+        console.log(this.getElements(this.trash[i]))
+        let array = this.getElements(this.trash[i]);
+        inTrash = inTrash + array.length;
+        for (let t = 0; t < array.length; t++) {
+          inTrashSum = this.getIngredientPrice(array[t]) + inTrashSum;
+        }
+      } else {
+        inTrash++;
+        inTrashSum = this.getIngredientPrice(this.trash[i]) + inTrashSum;
+      }
+    }
+
+    for (let i = 0; i < this.trash.length; i++) {
+      if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
+        console.log(this.getElements(this.trash[i]))
+        let array = this.getElements(this.trash[i]);
+        inProduction = inProduction + array.length;
+        for (let t = 0; t < array.length; t++) {
+          inProdSum = this.getIngredientPrice(array[t]);
+        }
+      } else {
+        inProduction++;
+        inProdSum = this.getIngredientPrice(this.trash[i]) + inProdSum;
+      }
+    }
+
+    for (let i = 0; i < this.trash.length; i++) {
+      if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
+        let array = this.getElements(this.trash[i]);
+        succesful = succesful + array.length;
+        for (let t = 0; t < array.length; t++) {
+          succesfulSum = this.getIngredientPrice(array[t]);
+        }
+      } else {
+        succesful++;
+        succesfulSum = this.getIngredientPrice(this.trash[i]);
+      }
+    }
+    let results = [{
+      inTrash: inTrash,
+      inTrashSum:inTrashSum,
+      inProduction: inProduction,
+      inProdSum: inProdSum,
+      succesful: succesful,
+      succesfulSum: succesfulSum
+    }]
+
+    this.dataService.results = results
+  }
+
+  getElements(name) {
+    let array = [];
+    if (name == 'Mushroom Pizza') {
+      array = ['Dough', 'Mushroom', 'Cheese', 'Tomato']
+    }
+    if (name == 'Pepperoni Pizza') {
+      array = ['Dough', 'Pepperoni', 'Cheese', 'Tomato']
+    }
+    if (name == 'PizzaSauce') {
+      array = ['Dough', 'Tomato']
+    }
+    if (name == 'PizzaSauceCheese') {
+      array = ['Dough', 'Cheese', 'Tomato']
+    }
+
+    return array
+  }
+
+  onTimerFinished(e: Event) {
+    this.getResults();
+    if (e["action"] == "done") {
+      this.router.navigate(['/results']);
+    }
+  }
 
 
 }

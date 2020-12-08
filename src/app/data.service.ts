@@ -23,6 +23,7 @@ export class DataService {
   public ingredients = [];
   public pizzas = [];
   public recipes = [];
+  public results = [];
 
   constructor(public db: AngularFireDatabase) {
     // this.loadEv();
