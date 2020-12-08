@@ -17,10 +17,8 @@
 
                     <div class="queue">
                         <h2>Queue</h2>
-                        <mat-card  (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing" [class.finished]="p.done" *ngFor="let p of queue; let i = index;" cdkDrag class='pizza'
-                         [class.onqueue]="p.editing" [class.finished]="p.done">
-
-                           
+                        <mat-card *ngFor="let p of queue; let i = index;" cdkDrag class='pizza'
+                            (click)="moveOutofQueue(p,$event)" [class.onqueue]="p.editing" [class.finished]="p.done">
                             <p>{{p.name}}</p>
                             <img src="{{p.imgSrc}}" alt="">
                         </mat-card>
@@ -32,14 +30,15 @@
                         </div>
                         <div class="menu">
 
-                            <button class="player" *ngFor="let n of playerList; let i = index;" (click)='showIngredients(n.name)'>{{n.name}}</button>
-                           
+                            <button class="player" *ngFor="let n of playerList; let i = index;"
+                                (click)='showIngredients(n)'>{{n.name}}</button>
+
 
                             <div class="ingredients-list ">
-                                <div cdkDrag class='ingredient' *ngFor="let ing of playerList; let i = index;"
-                                     
-                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'>
-                                    <!-- (mouseup)="ingredientPlacement(ing,$event)"> (click)='prepareIngredient(ing,$event)' -->
+                                <div cdkDrag class='ingredient' *ngFor="let ing of activePlayer.ing; let i = index;" (mouseup)="ingredientPlacement(ing,$event)"
+                                (click)='prepareIngredient(ing,$event)' 
+                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'
+                                >
                                     <mat-progress-bar mode="determinate" value="{{ing.progress}}" [color]="color">
 
                                     </mat-progress-bar>

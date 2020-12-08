@@ -4,6 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { element } from 'protractor';
 import { DataService } from '../data.service';
 import { key } from 'firebase-key';
+import { Ingredient } from '../models/ingredient';
 
 @Component({
   selector: 'game',
@@ -14,11 +15,7 @@ export class GameComponent implements OnInit {
   color: ThemePalette = 'primary';
 
   // Lists of Data we are going to use
-  playerList = [{
-    name: '',
-    id: '',
-    ingredientsAssigned: []
-  }];
+  playerList = [];
   ingredients = []
   pizzaList = [];
 
@@ -31,8 +28,6 @@ export class GameComponent implements OnInit {
   inProd = [];
   finished = []
   trash = []
-
-
   timer = 0;
 
   activePlayer = {
@@ -41,26 +36,14 @@ export class GameComponent implements OnInit {
     inCanvas: []
   };
   counterPlayer = 0;
-  // results = {
-  //   totalSuccesful: 0, 
-  //   totalFailed: 0,
-  //   totalInProcess:0,
-  //   earned:0,
-  //   cost:0,
-  //   profit:0
-  // }
-
-
 
   constructor(private router: Router, public dataService: DataService) {
     this.dataService.loadSession();
-    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
-
+    // this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
     this.loadPlayers(this.dataService.currentPlayer);
-    this.loadIngredients();
-    this.loadPizzas();
-
+    this.loadDBLists();
     this.loadQueue(5);
+
   }
 
   ngOnInit(): void {
@@ -94,20 +77,16 @@ export class GameComponent implements OnInit {
       newplayer.id = players[i].identifier;
       newplayer.ingredientsAssigned = [];
       this.playerList.push(newplayer);
+
     }
 
     this.counterPlayer = this.playerList.length - 1;
-    console.log('yo')
-    console.log(this.playerList)
+
   }
 
   /* get players from the currentPlayerTeam*/
-  loadIngredients() {
+  loadDBLists() {
     this.ingredients = this.dataService.ingredients;
-  }
-
-  /* load Pizzas w recipees to place on the queue*/
-  loadPizzas() {
     this.pizzaList = this.dataService.pizzas;
   }
 
@@ -137,14 +116,18 @@ export class GameComponent implements OnInit {
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {
     var element = event.currentTarget;
-    if (this.checkifinsideofCanvas(element)) {
-      this.findPizza(p);
-      var neededIngredients = this.getIngredients(p);
-      console.log('Needed')
 
-      console.log(neededIngredients)
-      this.assignIngredientstoPlayers(neededIngredients);
+    if (this.checkifinsideofCanvas(element)) {
+      if (p.editing) {
+
+      } else {
+        this.findPizza(p);
+        var neededIngredients = this.getIngredients(p);
+        this.assignIngredientstoPlayers(neededIngredients);
+        this.showIngredients(this.playerList[0]);
+      }
     }
+
   }
 
   /* Find a pizza in the queue and change the status to editing */
@@ -179,79 +162,63 @@ export class GameComponent implements OnInit {
     return ing;
   }
   // /* Place the ingredients and mix depending on the result */
-  // ingredientPlacement(ing, event: MouseEvent) {
+  ingredientPlacement(ing, event: MouseEvent) {
+    ing.position = this.getPosition(event.currentTarget)
 
-  //   var ingredientDiv = event.currentTarget;
-  //   ing.position = this.getPosition(ingredientDiv); 
+    for (let i = 0; i < this.activePlayer.ing.length; i++) {
+      this.mixIngredient(ing, this.activePlayer.ing[i]);
+    }
 
-  //   for (let i = 0; i < this.activePlayer.ing.length; i++) {
-  //     this.mixIngredient(ing,this.activePlayer.ing[i]);
-  //   }
+  }
+  /* get the position of an element, returns the position */
+  getPosition(el) {
+    var p = el.getBoundingClientRect()
+    return p;
+  }
 
-  //   // for (let index = 0; index < this.ingredientList.length; index++) {
-  //   //   this.mixIngredient(ing, this.ingredientList[index]);
-  //   // }
+  findActiveIng(cod) {
+    var found;
+    this.activePlayer.ing.forEach(element => {
+      if (element.key == cod) {
+        found = element;
+      }
+    });
 
-  // }
-  // /* get the position of an element, returns the position */
-  // getPosition(el) {
-  //   var p = el.getBoundingClientRect();
-  //   return p;
-  // }
+    return found
+  }
 
-  // findActiveIng(cod){
-  //   var found;
-  //   this.activePlayer.ing.forEach(element => {
-  //     if(element.codigo == cod){
-  //       found = element;
-  //     }
-  //   });
+  /* on 3 clicks prepares the ingredient and changes img and progress */
+  prepareIngredient(ing, e: MouseEvent) {
+    var count = e.detail;
+    var ingredientDiv = e.currentTarget;
+    var found = this.findActiveIng(ing.key);
+    var checkInside = this.checkifinsideofCanvas(ingredientDiv);
 
-  //   return found
-  // }
+    if (checkInside) {
+      if (count == 3) {
+        count = 0;
+        if (found.progress == 100) {
 
-  // updateIng(newFound){
-  //   this.activePlayer.ing.forEach(element => {
-  //     if(element.codigo == newFound.codigo){
-  //       element = newFound;
-  //     }
-  //   });
+        } else {
+          if (found.progress == 50) {
+            found.activeImg = found.images[2];
+            found.progress = 100;
 
-  // }
-  // /* on 3 clicks prepares the ingredient and changes img and progress */
-  // prepareIngredient(ing, e: MouseEvent) {
-  //   var count = e.detail;
-  //   var ingredientDiv = e.currentTarget;
-  //   var found = this.findActiveIng(ing.codigo);
-  //   var checkInside = this.checkifinsideofCanvas(ingredientDiv);
+            if (found.name == "Dough") {
+              found.width = '250px';
+              found.height = '250px';
+            }
+          } else {
+            found.activeImg = found.images[1];
+            found.progress = 50;
+          }
 
-  //   if (checkInside) {
-  //     if (count == 3) {
-  //       count = 0;
-  //       if (found.progress == 100) {
+        }
+      } else {
 
-  //       } else {
-  //         if (found.progress == 50) {
-  //           found.activeImg = found.img3;
-  //           found.progress = 100;
-
-  //           if (found.name == "Dough") {
-  //             found.width = '250px';
-  //             found.height = '250px';
-  //           }
-  //         } else {
-  //           found.activeImg = found.img2;
-  //           found.progress = 50;
-  //         }
-
-  //       }
-  //     } else {
-
-  //     }
-  //   }
-
-  //   this.updateIng(found);
-  // }
+      }
+    }
+  }
 
   /* check if an element is inside of canvas*/
   checkifinsideofCanvas(el) {
@@ -270,33 +237,38 @@ export class GameComponent implements OnInit {
     return inside;
   }
 
-  // /* check if an element is inside of the finished panel*/
-  // checkiffinished() {
-
-  // }
-
   /* assigns the ingredients of a pizza to the players in the playerlist */
   assignIngredientstoPlayers(ing) {
 
-    var ingredients = [];
+    let ingredients = [];
 
     for (let i = 0; i < ing.length; i++) {
-      for (let index = 0; index < ing[i].amount; index++) {
-
-        ingredients.push(this.getIngredientInfo(ing[i].idIngredient));
-      }
+      ingredients.push(this.getIngredientInfo(ing[i].idIngredient));
     }
+    console.log(ingredients)
+    for (let i = 0; i < ingredients.length; i++) {
+      let newQueueEl = {
+        name: String,
+        images: [{}],
+        activeImg: String,
+        progress: 0,
+        width: '100px',
+        height: '100px',
+        onPizza: 'block',
+        visibility: 'visible',
+        position: [{
 
-    ingredients.forEach(el => {
-      var x = this.getIngredientInfo(el.idIngredient);
-      el.visibility = 'visible';
-      el.activeImg = el.images[0];
-      el.position = {
-        top: 0, bottom: 0, right: 0, left: 0
-      }
-      this.inProd.push(x);
-    });
+        }],
+        key: key(),
+      };
+      newQueueEl.name = ingredients[i].name;
+      newQueueEl.images = ingredients[i].images;
+      newQueueEl.key = key();
+      newQueueEl.activeImg = ingredients[i].images[0];
 
+      ingredients[i] = newQueueEl;
+      this.inProd.push(newQueueEl);
+    }
     for (let i = 0; i < ingredients.length; i++) {
       if (this.counterPlayer == 0) {
 
@@ -307,17 +279,15 @@ export class GameComponent implements OnInit {
 
       this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
     }
-    console.log('yo')
-    console.log(this.playerList);
-
+    console.log(this.playerList)
   }
 
-  showIngredients(pname) {
-    this.activePlayer.name = pname;
+  showIngredients(p) {
+    this.activePlayer.name = p.name;
     var fullArray = [];
     for (let index = 0; index < this.playerList.length; index++) {
       for (let i = 0; i < this.playerList[index].ingredientsAssigned.length; i++) {
-        if (pname == this.playerList[index].name) {
+        if (p.name == this.playerList[index].name) {
           this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
           fullArray.push(this.playerList[index].ingredientsAssigned[i]);
         } else {
@@ -332,20 +302,12 @@ export class GameComponent implements OnInit {
         }
       }
     }
-    var codigo = 0;
-    fullArray.forEach(el => {
-      el.codigo = codigo;
-      codigo++;
-    });
 
-
+    this.activePlayer.ing = fullArray;
 
   }
 
   checkifInsideofCanvasPos(p) {
-
-
-
     var inside = false;
 
     var canvasDiv = document.querySelector('.gameCanvas');
@@ -359,81 +321,84 @@ export class GameComponent implements OnInit {
     return inside;
   }
 
-  // /* mix Ingredients  */
-  // mixIngredient(ing1, ing2) {
+  /* mix Ingredients  */
+  mixIngredient(ing1, ing2) {
+    console.log('ing1')
+    console.log(ing1)
+    console.log('ing2')
+    console.log(ing2)
+    // this.checkifInsideofTrash(ing1);
+    // this.checkifInsideofOven(ing1);
+    // this.checkifInsideofFinishedQueue(ing1);
 
-  //   this.checkifInsideofTrash(ing1);
-  //   this.checkifInsideofOven(ing1);
-  //   this.checkifInsideofFinishedQueue(ing1);
+    if (ing1.progress < 100 || ing2.progress < 100) {
+    } else {
+      if ((ing1.name == 'Dough' || ing2.name == 'Dough') && (ing1.name == 'Tomato' || ing2.name == 'Tomato')) {
+        var checkifInside = this.checkifInside(ing1, ing2);
+        if (checkifInside) {
+          ing2.activeImg = '../../assets/pizza_sauce.png';
+          ing1.onPizza = 'none';
+          ing2.name = 'PizzaSauce';
+        } else {
+        }
+      }
 
-  //   if (ing1.progress < 100 || ing2.progress < 100) {
-  //   } else {
-  //     if ((ing1.name == 'Dough' || ing2.name == 'Dough') && (ing1.name == 'Tomato' || ing2.name == 'Tomato')) {
-  //       var checkifInside = this.checkifInside(ing1, ing2);
-  //       if (checkifInside) {
-  //         ing2.activeImg = '../../assets/pizza_sauce.png';
-  //         ing1.onPizza = 'none';
-  //         ing2.name = 'PizzaSauce';
-  //       } else {
-  //       }
-  //     }
+      if ((ing1.name == 'PizzaSauce' || ing2.name == 'PizzaSauce') && (ing1.name == 'Cheese' || ing2.name == 'Cheese')) {
+        var checkifInside = this.checkifInside(ing1, ing2);
+        if (checkifInside) {
+          ing2.activeImg = '../../assets/pizza_cheese.png';
+          ing1.onPizza = 'none';
+          ing2.name = 'PizzaSauceCheese';
 
-  //     if ((ing1.name == 'PizzaSauce' || ing2.name == 'PizzaSauce') && (ing1.name == 'Cheese' || ing2.name == 'Cheese')) {
-  //       var checkifInside = this.checkifInside(ing1, ing2);
-  //       if (checkifInside) {
-  //         ing2.activeImg = '../../assets/pizza_cheese.png';
-  //         ing1.onPizza = 'none';
-  //         ing2.name = 'PizzaSauceCheese';
+        } else {
+        }
+      }
 
-  //       } else {
-  //       }
-  //     }
+      // Pizza Flavours
 
-  //     // Pizza Flavours
+      if ((ing1.name == 'PizzaSauceCheese' || ing2.name == 'PizzaSauceCheese') && (ing1.name == 'Mushroom' || ing2.name == 'Mushroom')) {
+        var checkifInside = this.checkifInside(ing1, ing2);
+        if (checkifInside) {
+          ing2.activeImg = '../../assets/mushroom_pizza.png';
+          ing1.onPizza = 'none';
+          ing2.progress = 0;
+          ing2.width = '100px';
+          ing2.height = '100px';
+          ing2.name = 'Mushroom Pizza'
+        } else {
+        }
+      }
 
-  //     if ((ing1.name == 'PizzaSauceCheese' || ing2.name == 'PizzaSauceCheese') && (ing1.name == 'Mushroom' || ing2.name == 'Mushroom')) {
-  //       var checkifInside = this.checkifInside(ing1, ing2);
-  //       if (checkifInside) {
-  //         ing2.activeImg = '../../assets/mushroom_pizza.png';
-  //         ing1.onPizza = 'none';
-  //         ing2.progress = 0;
-  //         ing2.width = '100px';
-  //         ing2.height = '100px';
-  //         ing2.name = 'Mushroom Pizza'
-  //       } else {
-  //       }
-  //     }
-
-  //     if ((ing1.name == 'PizzaSauceCheese' || ing2.name == 'PizzaSauceCheese') && (ing1.name == 'Pepperoni' || ing2.name == 'Pepperoni')) {
-  //       var checkifInside = this.checkifInside(ing1, ing2);
-  //       if (checkifInside) {
-  //         ing2.activeImg = '../../assets/pepperoni_pizza.png';
-  //         ing1.onPizza = 'none';
-  //         ing2.progress = 0;
-  //         ing2.width = '100px';
-  //         ing2.height = '100px';
-  //         ing2.name = 'Pepperoni Pizza'
-  //       } else {
-  //       }
-  //     }
-
-
-  //   }
-  // }
-  // /*  */
-  // checkifInside(pos1, pos2) {
-  //   var inside = false;
-  //   var position1 = pos1.position;
-  //   var position2 = pos2.position;
+      if ((ing1.name == 'PizzaSauceCheese' || ing2.name == 'PizzaSauceCheese') && (ing1.name == 'Pepperoni' || ing2.name == 'Pepperoni')) {
+        var checkifInside = this.checkifInside(ing1, ing2);
+        if (checkifInside) {
+          ing2.activeImg = '../../assets/pepperoni_pizza.png';
+          ing1.onPizza = 'none';
+          ing2.progress = 0;
+          ing2.width = '100px';
+          ing2.height = '100px';
+          ing2.name = 'Pepperoni Pizza'
+        } else {
+        }
+      }
 
 
-  //   if ((position1.right < position2.right) && (position2.left < position1.left)) {
-  //     if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
-  //       inside = true;
-  //     }
-  //   }
-  //   return inside;
-  // }
+    }
+  }
+  /*  */
+  checkifInside(pos1, pos2) {
+    var inside = false;
+    var position1 = pos1.position;
+    var position2 = pos2.position;
+
+
+    if ((position1.right < position2.right) && (position2.left < position1.left)) {
+      if ((position1.bottom < position2.bottom) && (position1.top > position2.top)) {
+        inside = true;
+      }
+    }
+    return inside;
+  }
   // /* throw it in the garbage if hovering the trash div  */
   // checkifInsideofTrash(pos1) {
 
