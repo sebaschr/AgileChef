@@ -14,6 +14,10 @@ import { key } from 'firebase-key';
   providedIn: 'root'
 })
 
+/**
+ * DataService manages all data on this app.
+ * @param db - Angular Firebase Database.
+ */
 export class DataService {
 
   public currentPlayer: Player;
@@ -35,9 +39,14 @@ export class DataService {
 
   }
 
+
+  /**
+   * Adds data to the firebase database.
+   * @param collection - Name of the dataset
+   * @param data  - Data to be store.
+   */
   post(collection: string, data: object) {
-    this.db.object(collection).set(data); //DB
-    //localStorage.setItem(collection, JSON.stringify(data)); //LocalStorage
+    this.db.object(collection).set(data);
   }
 
   get(src: string) {
@@ -92,7 +101,7 @@ export class DataService {
     this.post('session', session);
   }
 
-  hideInstruction(){
+  hideInstruction() {
     document.getElementById('instructions').style.visibility = 'hidden';
   }
 
@@ -170,27 +179,27 @@ export class DataService {
     }
   }
 
-  loadIngredients(){
+  loadIngredients() {
     var ingredients = null;
     this.get('ingredients').subscribe(action => {
       ingredients = action.payload.val();
-      this.ingredients= ingredients;
+      this.ingredients = ingredients;
     });
   }
 
-  loadPizzas(){
+  loadPizzas() {
     var ingredients = null;
     this.get('pizzas').subscribe(action => {
       ingredients = action.payload.val();
-      this.pizzas= ingredients;
+      this.pizzas = ingredients;
     });
   }
 
-  loadRecipes(){
+  loadRecipes() {
     var ingredients = null;
     this.get('recipes').subscribe(action => {
       ingredients = action.payload.val();
-      this.recipes= ingredients;
+      this.recipes = ingredients;
 
     });
   }
@@ -305,7 +314,7 @@ export class DataService {
   //       if (recipeList[y].nombre == pizzas[i].name) {
   //         pizzas[i].recipeID = recipeList[y].idRecipe
   //       }
-        
+
   //     }
 
   //   }
