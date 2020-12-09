@@ -7,7 +7,7 @@ export class ACSession {
     public playersMax = 0;
     public teams = [];
     public sprints: { name: string, planeamiento: number, ejecucion: number, revision: number, retrospectiva: number }[] = [];
-
+    public adminStarted = false;
     constructor() {
 
     }

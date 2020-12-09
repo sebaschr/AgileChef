@@ -13,7 +13,8 @@ export class PlanningComponent implements OnInit {
 
   constructor(private router: Router,public dataService: DataService) {  this.dataService.loadSession();
     this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].planeamiento;
-  }
+ 
+   }
 
   ngOnInit(): void {
   }
@@ -21,6 +22,9 @@ export class PlanningComponent implements OnInit {
   onTimerFinished(e:Event){
     if (e["action"] == "done"){
       this.router.navigate(['/game']);
+      this.dataService.session.adminStarted = false; 
+      this.dataService.saveSession(this.dataService.session)
+
      }
    }
 

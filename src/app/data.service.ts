@@ -28,6 +28,7 @@ export class DataService {
   public pizzas = [];
   public recipes = [];
   public results = [];
+  public adminStarted = {}
 
   constructor(public db: AngularFireDatabase) {
     // this.loadEv();
@@ -36,7 +37,7 @@ export class DataService {
     this.loadIngredients();
     this.loadPizzas();
     this.loadRecipes();
-
+    this.loadAdminStarted() 
   }
 
 
@@ -88,6 +89,14 @@ export class DataService {
     this.get('session').subscribe(action => {
       sessionData = action.payload.val()
       this.session = sessionData;
+    });
+  }
+
+  loadAdminStarted() {
+    var adminStarted = null;
+    this.get('adminStarted').subscribe(action => {
+      adminStarted = action.payload.val();
+      this.adminStarted = adminStarted;
     });
   }
 
