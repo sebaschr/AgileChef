@@ -84,6 +84,18 @@ export class DataService {
     this.post('session', session);
   }
 
+  saveResults() {
+    this.post('results', this.results);
+  }
+
+  loadResults() {
+    var resultData = null;
+    this.get('results').subscribe(action => {
+      resultData = action.payload.val()
+      this.results = resultData;
+    });
+  }
+
   loadSession() {
     var sessionData = null;
     this.get('session').subscribe(action => {
