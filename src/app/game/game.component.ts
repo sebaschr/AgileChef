@@ -5,6 +5,7 @@ import { element } from 'protractor';
 import { DataService } from '../data.service';
 import { key } from 'firebase-key';
 import { Ingredient } from '../models/ingredient';
+import { finished } from 'stream';
 
 @Component({
   selector: 'game',
@@ -44,7 +45,6 @@ export class GameComponent implements OnInit {
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadDBLists();
     this.loadQueue(3);
-
   }
 
   ngOnInit(): void {
@@ -550,7 +550,7 @@ export class GameComponent implements OnInit {
       this.finished.push(pos1);
     }
 
-    if(this.queue.length=4){
+    if (this.queue.length = 4) {
       this.loadQueue(2);
     }
 
@@ -600,79 +600,83 @@ export class GameComponent implements OnInit {
     return x;
   }
   getResults() {
-    let inTrash = 0, inTrashSum = 0,
-      inProduction = 0, inProdSum = 0,
-      succesful = 0, succesfulSum = 0
-
-    for (let i = 0; i < this.trash.length; i++) {
-      if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
-        let array = this.getElements(this.trash[i]);
-        inTrash = inTrash + array.length;
-        for (let t = 0; t < array.length; t++) {
-          inTrashSum = this.getIngredientPrice(array[t]) + inTrashSum;
-        }
-      } else {
-        inTrash++;
-        inTrashSum = this.getIngredientPrice(this.trash[i]) + inTrashSum;
-      }
-    }
 
     for (let i = 0; i < this.inProd.length; i++) {
+
+    }
+
+    console.log(this.finished)
+
+    let inProductionPieces = []
+    let inProductionPiecesNum = 0
+    let inProdcost = 0;
+
+    let finishedPieces = []
+    let finishedPiecesNum = 0
+    let finishedCost = 0
+
+    let inTrashPieces = []
+    let inTrashPiecesNum = 0
+    let inTrashCost = 0 
+
+        /* In Production */
+    for (let i = 0; i < this.trash.length; i++) {
+      if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
+        var arrayIngs = this.getElements(this.trash[i]);
+        inTrashPieces.push(arrayIngs)
+      } else {
+        inTrashPieces.push(this.trash[i]);
+      }
+    }
+
+    for (let i = 0; i < inTrashPieces.length; i++) {
+      inTrashPiecesNum = inTrashPiecesNum + inTrashPieces[i].length
+      for (let y = 0; y < inTrashPieces[i].length; y++) {
+        inTrashCost = inTrashCost + this.getIngredientPrice(inTrashPieces[i][y]);
+      }
+    }
+    /* In Production */
+    for (let i = 0; i < this.inProd.length; i++) {
       if (this.inProd[i].name == 'Mushroom Pizza' || this.inProd[i].name == 'Pepperoni Pizza' || this.inProd[i].name == 'PizzaSauce' || this.inProd[i].name == 'PizzaSauceCheese') {
-        let array = this.getElements(this.inProd[i].name);
-        inProduction = inProduction + array.length;
-        for (let t = 0; t < array.length; t++) {
-          inProdSum = this.getIngredientPrice(array[t]);
-        }
+        var arrayIngs = this.getElements(this.inProd[i].name);
+        inProductionPieces.push(arrayIngs)
       } else {
-        inProduction++;
-        inProdSum = this.getIngredientPrice(this.inProd[i].name) + inProdSum;
+        let x = []
+        x.push(this.inProd[i].name)
+        inProductionPieces.push(x);
       }
     }
 
-    for (let i = 0; i < this.finished.length; i++) {
-      if (this.finished[i].name == 'PizzaSauce' || this.finished[i].name == 'PizzaSauceCheese') {
-        let array = this.getElements(this.finished[i].name);
-        succesful = succesful + array.length;
-        for (let t = 0; t < array.length; t++) {
-          succesfulSum = this.getIngredientPrice(array[t]);
-        }
+    for (let i = 0; i < inProductionPieces.length; i++) {
+      inProductionPiecesNum = inProductionPiecesNum + inProductionPieces[i].length
+      for (let y = 0; y < inProductionPieces[i].length; y++) {
+        inProdcost = inProdcost + this.getIngredientPrice(inProductionPieces[i][y]);
+      }
+    }    
+
+
+     /* In Production */
+     for (let i = 0; i < this.finished.length; i++) {
+      if (this.finished[i].name == 'Mushroom Pizza' || this.finished[i].name == 'Pepperoni Pizza' || this.finished[i].name == 'PizzaSauce' || this.finished[i].name == 'PizzaSauceCheese') {
+        var arrayIngs = this.getElements(this.finished[i].name);
+        finishedPieces.push(arrayIngs)
       } else {
-        succesful++;
-        succesfulSum = this.getIngredientPrice(this.finished[i].name);
+        let x = []
+        x.push(this.finished[i].name)
+        finishedPieces.push(x);
       }
     }
-    let results = {
-      inTrash: 0,
-      inTrashSum: 0,
-      inProduction: 0,
-      inProdSum: 0,
-      succesful: 0,
-      succesfulSum: 0
-    }
-    results.inTrash = inTrash;
-    results.inTrashSum = inTrashSum
-    results.inProduction = inProduction
-    results.inProdSum = inProdSum
-    results.succesful = succesful
-    results.succesfulSum = succesfulSum
 
-    console.log(this.finished)
-    console.log(results)
-    this.dataService.results[this.dataService.sprintCounter] = results
+    for (let i = 0; i < finishedPieces.length; i++) {
+      finishedPiecesNum = finishedPiecesNum + finishedPieces[i].length
+      for (let y = 0; y < finishedPieces[i].length; y++) {
+        finishedCost = finishedCost + this.getIngredientPrice(finishedPieces[i][y]);
+      }
+    }  
 
-    console.log('Prod')
-    console.log(this.inProd)
-
-    console.log('Trash')
-    console.log(this.trash)
-
-    console.log('Finish')
-    console.log(this.finished)
-
-    console.log(this.dataService.results)
-
-
+    console.log(finishedPieces)
+    console.log(finishedPiecesNum)
+    console.log(finishedCost)
   }
 
   getElements(name) {
