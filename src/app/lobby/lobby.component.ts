@@ -17,6 +17,7 @@ import { templateSourceUrl } from '@angular/compiler';
 export class LobbyComponent implements OnInit {
   constructor(public dataService: DataService, private router: Router) {
     setInterval(()=> { this.loadPage() }, 1);
+    this.dataService.sprintCounter=0;
   }
 
   ngOnInit(): void {
