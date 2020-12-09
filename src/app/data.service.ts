@@ -38,6 +38,7 @@ export class DataService {
     this.loadPizzas();
     this.loadRecipes();
     this.loadAdminStarted() 
+    // this.loadResults();
   }
 
 
@@ -84,8 +85,8 @@ export class DataService {
     this.post('session', session);
   }
 
-  saveResults() {
-    this.post('results', this.results);
+  saveResults(results) {
+    this.post('results', results);
   }
 
   loadResults() {

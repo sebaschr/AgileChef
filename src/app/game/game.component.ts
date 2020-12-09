@@ -672,9 +672,10 @@ export class GameComponent implements OnInit {
       inTrashPiecesNum: inTrashPiecesNum,
       inTrashCost: inTrashCost,
     }
-
-    this.dataService.results.push(resultsArray)
-    this.dataService.saveResults();
+    
+    this.dataService.results[this.dataService.sprintCounter]=resultsArray
+    console.log(this.dataService.results)
+    this.dataService.saveResults(this.dataService.results);
 
   }
 
@@ -697,8 +698,8 @@ export class GameComponent implements OnInit {
   }
 
   onTimerFinished(e: Event) {
-    this.getResults();
     if (e["action"] == "done") {
+      this.getResults();
       this.router.navigate(['/results']);
     }
   }
