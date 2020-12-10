@@ -81,6 +81,7 @@ export class GameComponent implements OnInit {
 
     }
 
+    console.log(this.playerList)
     this.counterPlayer = this.playerList.length - 1;
 
   }
@@ -309,11 +310,11 @@ export class GameComponent implements OnInit {
   }
 
   showIngredients(p) {
-    this.activePlayer.name = p.name;
+    this.activePlayer.name = p.id;
     var fullArray = [];
     for (let index = 0; index < this.playerList.length; index++) {
       for (let i = 0; i < this.playerList[index].ingredientsAssigned.length; i++) {
-        if (p.name == this.playerList[index].name) {
+        if (p.id == this.playerList[index].id) {
           this.playerList[index].ingredientsAssigned[i].visibility = 'visible';
           fullArray.push(this.playerList[index].ingredientsAssigned[i]);
         } else {
