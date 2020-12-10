@@ -45,6 +45,8 @@ export class GameComponent implements OnInit {
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadDBLists();
     this.loadQueue(3);
+
+    console.log(this.ingredients)
   }
 
   ngOnInit(): void {
@@ -285,6 +287,7 @@ export class GameComponent implements OnInit {
         onPizza: 'block',
         visibility: 'visible',
         editing: false,
+        zindex:0,
         position: [{
 
         }],
@@ -306,6 +309,7 @@ export class GameComponent implements OnInit {
       }
 
       this.playerList[this.counterPlayer].ingredientsAssigned.push(ingredients[i])
+      this.showIngredients(this.counterPlayer)
     }
   }
 
@@ -328,6 +332,24 @@ export class GameComponent implements OnInit {
           }
         }
       }
+    }
+    for (let i = 0; i < this.activePlayer.ing.length; i++) {
+      console.log( this.activePlayer.ing[i].name)
+        if( this.activePlayer.ing[i].name == 'Dough'){
+          this.activePlayer.ing[i].zindex =1
+        }
+
+        if( this.activePlayer.ing[i].name == 'Tomato'){
+          this.activePlayer.ing[i].zindex =2
+        }
+
+        if( this.activePlayer.ing[i].name == 'Cheese'){
+          this.activePlayer.ing[i].zindex =3
+        }
+
+        if( this.activePlayer.ing[i].name == 'Pepperoni'||this.activePlayer.ing[i].name == 'Mushroom'){
+          this.activePlayer.ing[i].zindex =4
+        }
     }
 
     this.activePlayer.ing = fullArray;

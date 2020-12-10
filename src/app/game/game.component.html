@@ -37,7 +37,7 @@
                             <div class="ingredients-list ">
                                 <div cdkDrag class='ingredient' *ngFor="let ing of activePlayer.ing; let i = index;" (mouseup)="ingredientPlacement(ing,$event)"
                                 (click)='prepareIngredient(ing,$event)' 
-                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};'
+                            style='width:{{ing.width}};height:{{ing.height}};display:{{ing.onPizza}};visibility:{{ing.visibility}};z-index:{{ing.zindex}}'
                                 >
                                     <mat-progress-bar mode="determinate" value="{{ing.progress}}" [color]="color">
 

@@ -247,12 +247,6 @@ export class DataService {
   //       key: key()
   //     },
   //     {
-  //       name: 'Chilli Pepper',
-  //       images: ['../../assets/pepper_1.png', '../../assets/pepper_2.png', '../../assets/pepper_1.png'],
-  //       price: 200,
-  //       key: key()
-  //     },
-  //     {
   //       name: 'Pepperoni',
   //       images: ['../../assets/pepperoni_1.png', '../../assets/pepperoni_2.png', '../../assets/pepperoni_1.png'],
   //       price: 200,

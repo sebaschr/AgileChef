@@ -101,6 +101,7 @@
     float:left;
     height:auto;
     overflow:hidden;
+    position: relative
 }
 .ingredient img{
     width:90%;
