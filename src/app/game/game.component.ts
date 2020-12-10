@@ -137,6 +137,7 @@ export class GameComponent implements OnInit {
       if (p.pizzaKey == pizza.key) {
         p.editing = true;
         this.queueEditing.push(p)
+        console.log(this.queueEditing)
       }
     });
   }
@@ -439,14 +440,7 @@ export class GameComponent implements OnInit {
 
     if (inside) {
       pos1.onPizza = 'none';
-      var arrayIng = [];
-
-      if (pos1.name == 'Mushroom Pizza' || pos1.name == 'Pepperoni Pizza' || pos1.name == 'PizzaSauce' || pos1.name == 'PizzaSauceCheese') {
-        arrayIng = this.getElements(pos1.name);
-      } else {
-        arrayIng = [pos1.name]
-      }
-      this.trash.push(arrayIng);
+      this.trash.push(pos1.name);
       this.cleanTrashfromProd(pos1.name)
     }
 
@@ -459,6 +453,16 @@ export class GameComponent implements OnInit {
         break
       }
     }
+
+    for (let i = 0; i < this.queueEditing.length; i++) {
+      if (this.queueEditing[i].name == arrayIng) {
+        this.queueEditing.splice(i, 1);
+        break
+      }
+    }
+
+    console.log(this.trash)
+    console.log(this.queueEditing)
   }
 
 
@@ -592,21 +596,16 @@ export class GameComponent implements OnInit {
   }
   getResults() {
 
-    let inProductionPieces = []
-    let inProductionPiecesNum = 0
-    let inProdcost = 0;
-
-    let finishedPieces = []
-    let finishedPiecesNum = 0
-    let finishedCost = 0
-
-    let inTrashPieces = []
-    let inTrashPiecesNum = 0
-    let inTrashCost = 0
+    let inProductionPieces = [],inProductionPiecesNum = 0,inProdcost = 0,inProdPizzas = this.queueEditing.length;
+    let finishedPieces = [], finishedPiecesNum = 0, finishedCost = 0, finishedPizzas = 0
+    let inTrashPieces = [],inTrashPiecesNum = 0, inTrashCost = 0, inTrashPizzas = 0;
 
     /* In Production */
     for (let i = 0; i < this.trash.length; i++) {
       if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
+        if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' ){
+          inTrashPizzas++
+        }
         var arrayIngs = this.getElements(this.trash[i]);
         inTrashPieces.push(arrayIngs)
       } else {
@@ -640,11 +639,11 @@ export class GameComponent implements OnInit {
     }
 
 
-    /* In Production */
+    /* In Finished queue */
     for (let i = 0; i < this.finished.length; i++) {
       if (this.finished[i].name == 'Mushroom Pizza' || this.finished[i].name == 'Pepperoni Pizza' || this.finished[i].name == 'PizzaSauce' || this.finished[i].name == 'PizzaSauceCheese') {
         if (this.finished[i].name == 'Mushroom Pizza' || this.finished[i].name == 'Pepperoni Pizza') {
-
+          finishedPizzas++;
         }
         var arrayIngs = this.getElements(this.finished[i].name);
         finishedPieces.push(arrayIngs)
@@ -662,20 +661,25 @@ export class GameComponent implements OnInit {
       }
     }
 
+
+
     let resultsArray = {
       inProdPieces: inProductionPiecesNum,
       inProdSumPieces: inProdcost,
+      inProdPizzas: inProdPizzas,
 
       finishedPiecesNum: finishedPiecesNum,
       finishedCost: finishedCost,
+      finishedPizzas: finishedPizzas,
 
       inTrashPiecesNum: inTrashPiecesNum,
       inTrashCost: inTrashCost,
+      inTrashPizzas:inTrashPizzas
     }
     
     this.dataService.results[this.dataService.sprintCounter]=resultsArray
-    console.log(this.dataService.results)
     this.dataService.saveResults(this.dataService.results);
+    
 
   }
 
