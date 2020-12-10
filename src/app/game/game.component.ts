@@ -113,7 +113,6 @@ export class GameComponent implements OnInit {
         this.queue.push(newQueueEl)
       }
     }
-
   }
   /* Move the pizza out of the queue into production  */
   moveOutofQueue(p, event: MouseEvent) {
@@ -126,6 +125,10 @@ export class GameComponent implements OnInit {
         var neededIngredients = this.getIngredients(p);
         this.assignIngredientstoPlayers(neededIngredients);
         this.showIngredients(this.playerList[0]);
+
+        console.log('Q')
+        console.log(this.queue);
+        console.log(this.queueEditing)
       }
     }
 
@@ -441,7 +444,14 @@ export class GameComponent implements OnInit {
     if (inside) {
       pos1.onPizza = 'none';
       this.trash.push(pos1.name);
-      this.cleanTrashfromProd(pos1.name)
+      this.cleanTrashfromProd(pos1.name) 
+      if (this.queue.length == 2) {
+        this.loadQueue(2);
+      }
+
+      console.log(this.inProd);
+      console.log(this.queueEditing);
+      console.log(this.queue)
     }
 
   }
@@ -454,16 +464,25 @@ export class GameComponent implements OnInit {
       }
     }
 
+    var x= key();
     for (let i = 0; i < this.queueEditing.length; i++) {
       if (this.queueEditing[i].name == arrayIng) {
+        x = this.queueEditing[i].key
         this.queueEditing.splice(i, 1);
         break
       }
     }
+    console.log(x)
 
-    console.log(this.trash)
-    console.log(this.queueEditing)
+
+    for (let i = 0; i < this.queue.length; i++) {
+      if (this.queue[i].key == x) {
+        this.queue.splice(i, 1);
+        break
+      }
+    }
   }
+
 
 
   /* throw it in the oven if hovering the oven div  */
@@ -544,20 +563,6 @@ export class GameComponent implements OnInit {
       }
       this.finished.push(pos1);
     }
-
-    if (this.queue.length = 4) {
-      this.loadQueue(2);
-    }
-
-  }
-
-  findFirstAndDelete(name) {
-    for (let i = 0; i < this.queue.length; i++) {
-      if (this.queue[i].name == name) {
-        this.queue.splice(i, 1);
-        break;
-      }
-    }
   }
   /* fill the bar in a specific amount, time, */
   countUp(max, time, p) {
@@ -596,14 +601,14 @@ export class GameComponent implements OnInit {
   }
   getResults() {
 
-    let inProductionPieces = [],inProductionPiecesNum = 0,inProdcost = 0,inProdPizzas = this.queueEditing.length;
+    let inProductionPieces = [], inProductionPiecesNum = 0, inProdcost = 0, inProdPizzas = this.queueEditing.length;
     let finishedPieces = [], finishedPiecesNum = 0, finishedCost = 0, finishedPizzas = 0
-    let inTrashPieces = [],inTrashPiecesNum = 0, inTrashCost = 0, inTrashPizzas = 0;
+    let inTrashPieces = [], inTrashPiecesNum = 0, inTrashCost = 0, inTrashPizzas = 0;
 
     /* In Production */
     for (let i = 0; i < this.trash.length; i++) {
       if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' || this.trash[i] == 'PizzaSauce' || this.trash[i] == 'PizzaSauceCheese') {
-        if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza' ){
+        if (this.trash[i] == 'Mushroom Pizza' || this.trash[i] == 'Pepperoni Pizza') {
           inTrashPizzas++
         }
         var arrayIngs = this.getElements(this.trash[i]);
@@ -674,12 +679,12 @@ export class GameComponent implements OnInit {
 
       inTrashPiecesNum: inTrashPiecesNum,
       inTrashCost: inTrashCost,
-      inTrashPizzas:inTrashPizzas
+      inTrashPizzas: inTrashPizzas
     }
-    
-    this.dataService.results[this.dataService.sprintCounter]=resultsArray
+
+    this.dataService.results[this.dataService.sprintCounter] = resultsArray
     this.dataService.saveResults(this.dataService.results);
-    
+
 
   }
 
