@@ -47,7 +47,7 @@ export class SummaryComponent implements OnInit {
       for (let j = 0; j < this.results.length; j++) {
         this.succesfulPieces = this.results[j].finishedPiecesNum;
         this.failedPieces = this.results[j].inTrashPiecesNum;
-        this.inProgressPieces = this.results[j].inProductionPiecesNum;
+        this.inProgressPieces = this.results[j].inProdPieces;
 
         this.revenue = this.results[j].finishedPizzasCost;
         this.costs = this.results[j].finishedCost + this.results[j].inProdSumPieces + this.results[j].inTrashCost;
