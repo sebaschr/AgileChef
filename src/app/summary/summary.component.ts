@@ -22,7 +22,7 @@ export class SummaryComponent implements OnInit {
     this.dataService.loadSession();
     console.log(dataService.session);
     this.teamResults();
-    //this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
+    this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
   }
 
   ngOnInit(): void {

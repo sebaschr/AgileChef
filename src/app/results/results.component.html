@@ -32,26 +32,6 @@
                     </table>
                 </mat-card>
             </div>
-            <div fxLayout="column" style="margin-top: 3vh;">
-                <results-graph></results-graph>
-                <mat-card style="text-align: center;">
-                    <mat-card-title>Team 2</mat-card-title>
-                    <table>
-                        <tr>
-                            <td>Succesful</td>
-                            <td>{{this.succesful}}</td>
-                        </tr>
-                        <tr>
-                            <td>Failed</td>
-                            <td>{{this.failed}}</td>
-                        </tr>
-                        <tr>
-                            <td>In Progress</td>
-                            <td>{{this.inProgress}}</td>
-                        </tr>
-                    </table>
-                </mat-card>
-            </div>
         </div>
         <div class="timer" fxLayout="row" fxLayoutAlign="center center">
             <countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown>
