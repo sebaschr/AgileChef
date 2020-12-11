@@ -31,16 +31,13 @@ export class DataService {
   public adminStarted = {}
 
   constructor(public db: AngularFireDatabase) {
-    // this.loadEv();
     this.saveAdmin();
     this.loadAdmin();
     this.loadIngredients();
     this.loadPizzas();
     this.loadRecipes();
     this.loadAdminStarted()
-    // this.loadResults();
   }
-
 
   /**
    * Adds data to the firebase database.
@@ -83,18 +80,6 @@ export class DataService {
 
   saveSession(session: ACSession) {
     this.post('session', session);
-  }
-
-  saveResults(results) {
-    this.post('results', results);
-  }
-
-  loadResults() {
-    var resultData = null;
-    this.get('results').subscribe(action => {
-      resultData = action.payload.val()
-      this.results = resultData;
-    });
   }
 
   loadSession() {
@@ -158,6 +143,7 @@ export class DataService {
 
     this.saveSession(this.session);
   }
+
   removePlayerFromTeam(player: Player, team: Team) {
 
     for (let i = 0; i < this.session.teams.length; i++) {

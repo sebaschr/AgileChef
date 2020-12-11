@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 export class ResultsComponent implements OnInit {
 
   timer = 0;
+  teams = null;
   results = null;
   failed = null;
   inProgress = null;
@@ -17,8 +18,8 @@ export class ResultsComponent implements OnInit {
 
   constructor(public dataService: DataService, private router: Router) {
     this.dataService.loadSession();
+    console.log(this.dataService.session);
     this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].revision;
-    this.dataService.loadResults();
     this.teamResults();
   }
 
@@ -32,15 +33,15 @@ export class ResultsComponent implements OnInit {
   }
 
   teamResults(){
-    this.results = this.dataService.results;
-    for (let i = 0; i < this.results.length; i++) {
-      this.failed= this.results[i].inTrashPizzas;
-      this.inProgress = this.results[i].inProdPizzas;
-      this.succesful= this.results[i].finishedPizzas;
+    this.teams = this.dataService.session.teams;
+    for (let i = 0; i < this.teams.length; i++) {
+      this.results = this.teams[i].results;
+      for (let j = 0; j < this.results.length; j++) {
+        this.failed= this.results[j].inTrashPizzas;
+        this.inProgress = this.results[j].inProdPizzas;
+        this.succesful= this.results[j].finishedPizzas;
+      }
     }
-    console.log('F =' + this.failed);
-    console.log('I =' + this.inProgress);
-    console.log('S =' + this.succesful);
   }
   
 }

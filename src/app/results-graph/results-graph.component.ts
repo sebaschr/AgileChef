@@ -10,13 +10,15 @@ import { DataService } from '../data.service';
 })
 export class ResultsGraphComponent implements OnInit {
 
+  teams = null;
   results = null;
   failed = null;
   inProgress = null;
   succesful = null;
+  data = [];
 
   constructor(public dataService: DataService) { 
-    this.dataService.loadResults();
+    this.dataService.loadSession();
     this.teamResults();
   }
 
@@ -42,7 +44,7 @@ export class ResultsGraphComponent implements OnInit {
     {
       barPercentage: 0.5,
       categoryPercentage: 0.5,
-      data: [this.succesful, this.failed, this.inProgress], 
+      data: this.data, 
       backgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
       hoverBackgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
       stack: 'Team 1'
@@ -50,18 +52,22 @@ export class ResultsGraphComponent implements OnInit {
   ];
 
   ngOnInit() {
+
   }
 
   teamResults(){
-    this.results = this.dataService.results;
-    for (let i = 0; i < this.results.length; i++) {
-      this.failed= this.results[i].inTrashPizzas;
-      this.inProgress = this.results[i].inProdPizzas;
-      this.succesful= this.results[i].finishedPizzas;
+    console.log(this.dataService.session);
+    this.teams = this.dataService.session.teams;
+    for (let i = 0; i < this.teams.length; i++) {
+      this.results = this.teams[i].results;
+      for (let j = 0; j < this.results.length; j++) {
+        console.log(this.results[j]);
+        this.failed= this.results[j].inTrashPizzas;
+        this.inProgress = this.results[j].inProdPizzas;
+        this.succesful= this.results[j].finishedPizzas;
+        this.data.push(this.succesful, this.failed, this.inProgress);
+      }
     }
-    console.log('F =' + this.failed);
-    console.log('I =' + this.inProgress);
-    console.log('S =' + this.succesful);
   }
 
 }
