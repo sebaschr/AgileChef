@@ -24,6 +24,8 @@ export class LobbyComponent implements OnInit {
     this.dataService.loadSession();
     this.dataService.loadPlayer();
     this.dataService.loadAdminStarted();
+    console.log('yo')
+    console.log(this.dataService.session)
   }
 
   loadPage() {
