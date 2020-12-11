@@ -691,7 +691,6 @@ export class GameComponent implements OnInit {
       inProdPieces: inProductionPiecesNum,
       inProdSumPieces: inProdcost,
       inProdPizzas: inProdPizzas,
-      inProdPizzasCost: inProdPizzasCost,
 
       finishedPiecesNum: finishedPiecesNum,
       finishedCost: finishedCost,
@@ -701,7 +700,6 @@ export class GameComponent implements OnInit {
       inTrashPiecesNum: inTrashPiecesNum,
       inTrashCost: inTrashCost,
       inTrashPizzas: inTrashPizzas,
-      inTrashPizzasCost: inTrashPizzasCost
     }
     this.dataService.addResultstoTeam(resultsArray, this.team)
   }
