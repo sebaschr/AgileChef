@@ -67,7 +67,9 @@ export class AdminPanelComponent implements OnInit {
       for (let index = 0; index < this.form.value.teamQuantity; index++) {
         let team = new Team((index + 1))
         team.players = [{}]
+        team.results = [{}]
         this.dataService.session.teams.push(team);
+        console.log(this.dataService.session)
       }
       this.dataService.saveSession(this.dataService.session);
       this.router.navigate(['/lobby']);

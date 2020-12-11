@@ -17,6 +17,7 @@ export class GameComponent implements OnInit {
 
   // Lists of Data we are going to use
   playerList = [];
+  team = key();
   ingredients = []
   pizzaList = [];
 
@@ -45,8 +46,6 @@ export class GameComponent implements OnInit {
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadDBLists();
     this.loadQueue(3);
-
-    console.log(this.ingredients)
   }
 
   ngOnInit(): void {
@@ -62,6 +61,7 @@ export class GameComponent implements OnInit {
       } else {
         for (let y = 0; y < teamList[i].players.length; y++) {
           if (player.identifier == teamList[i].players[y].identifier) {
+            this.team = teamList[i].identifier
             players = teamList[i].players
           }
 
@@ -83,7 +83,6 @@ export class GameComponent implements OnInit {
 
     }
 
-    console.log(this.playerList)
     this.counterPlayer = this.playerList.length - 1;
 
   }
@@ -128,10 +127,6 @@ export class GameComponent implements OnInit {
         var neededIngredients = this.getIngredients(p);
         this.assignIngredientstoPlayers(neededIngredients);
         this.showIngredients(this.playerList[0]);
-
-        console.log('Q')
-        console.log(this.queue);
-        console.log(this.queueEditing)
       }
     }
 
@@ -143,7 +138,6 @@ export class GameComponent implements OnInit {
       if (p.pizzaKey == pizza.key) {
         p.editing = true;
         this.queueEditing.push(p)
-        console.log(this.queueEditing)
       }
     });
   }
@@ -269,12 +263,13 @@ export class GameComponent implements OnInit {
 
   /* assigns the ingredients of a pizza to the players in the playerlist */
   assignIngredientstoPlayers(ing) {
-
     let ingredients = [];
-
     for (let i = 0; i < ing.length; i++) {
       ingredients.push(this.getIngredientInfo(ing[i].idIngredient));
     }
+
+    console.log(ingredients)
+    // ingredients.push(this.getRandomIngredient());
 
     for (let i = 0; i < ingredients.length; i++) {
       let newQueueEl = {
@@ -297,7 +292,6 @@ export class GameComponent implements OnInit {
       newQueueEl.images = ingredients[i].images;
       newQueueEl.key = key();
       newQueueEl.activeImg = ingredients[i].images[0];
-
       ingredients[i] = newQueueEl;
     }
     for (let i = 0; i < ingredients.length; i++) {
@@ -334,7 +328,7 @@ export class GameComponent implements OnInit {
       }
     }
     for (let i = 0; i < this.activePlayer.ing.length; i++) {
-      console.log( this.activePlayer.ing[i].name)
+
         if( this.activePlayer.ing[i].name == 'Dough'){
           this.activePlayer.ing[i].zindex =1
         }
@@ -472,9 +466,6 @@ export class GameComponent implements OnInit {
         this.loadQueue(2);
       }
 
-      console.log(this.inProd);
-      console.log(this.queueEditing);
-      console.log(this.queue)
     }
 
   }
@@ -495,7 +486,6 @@ export class GameComponent implements OnInit {
         break
       }
     }
-    console.log(x)
 
 
     for (let i = 0; i < this.queue.length; i++) {
@@ -637,9 +627,11 @@ export class GameComponent implements OnInit {
         var arrayIngs = this.getElements(this.trash[i]);
         inTrashPieces.push(arrayIngs)
       } else {
-        inTrashPieces.push(this.trash[i]);
+        inTrashPieces.push([this.trash[i]]);
       }
     }
+
+    console.log(inTrashPieces)
 
     for (let i = 0; i < inTrashPieces.length; i++) {
       inTrashPiecesNum = inTrashPiecesNum + inTrashPieces[i].length
@@ -704,11 +696,7 @@ export class GameComponent implements OnInit {
       inTrashCost: inTrashCost,
       inTrashPizzas: inTrashPizzas
     }
-
-    this.dataService.results[this.dataService.sprintCounter] = resultsArray
-    this.dataService.saveResults(this.dataService.results);
-
-
+    this.dataService.addResultstoTeam(resultsArray,this.team)
   }
 
   getElements(name) {

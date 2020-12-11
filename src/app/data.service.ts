@@ -37,7 +37,7 @@ export class DataService {
     this.loadIngredients();
     this.loadPizzas();
     this.loadRecipes();
-    this.loadAdminStarted() 
+    this.loadAdminStarted()
     // this.loadResults();
   }
 
@@ -146,6 +146,18 @@ export class DataService {
     }
   }
 
+  addResultstoTeam(results, team) {
+    for (let i = 0; i < this.session.teams.length; i++) {
+      if (team == this.session.teams[i].identifier) {
+        if ((this.session.teams[i].results === undefined)||(this.sprintCounter ==0)) {
+          this.session.teams[i].results = [];
+        }
+        this.session.teams[i].results.push(results)
+      }
+    }
+
+    this.saveSession(this.session);
+  }
   removePlayerFromTeam(player: Player, team: Team) {
 
     for (let i = 0; i < this.session.teams.length; i++) {
