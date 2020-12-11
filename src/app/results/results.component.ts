@@ -31,16 +31,19 @@ export class ResultsComponent implements OnInit {
     }
   }
 
-  teamResults(){
+  teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {
-      this.results = this.teams[i].results;
-      for (let j = 0; j < this.results.length; j++) {
-        this.failed= this.results[j].inTrashPizzas;
-        this.inProgress = this.results[j].inProdPizzas;
-        this.succesful= this.results[j].finishedPizzas;
+      if (this.teams[i].players == null) { } else {
+        for (let y = 0; y < this.teams[i].players.length; y++) {
+          if (this.dataService.currentPlayer.identifier == this.teams[i].players[y].identifier) {
+            this.results = this.teams[i].results
+          }
+        }
       }
     }
+    this.failed = this.results[this.dataService.sprintCounter].inTrashPizzas;
+    this.inProgress = this.results[this.dataService.sprintCounter].inProdPizzas;
+    this.succesful = this.results[this.dataService.sprintCounter].finishedPizzas;
   }
-  
 }

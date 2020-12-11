@@ -17,7 +17,7 @@ export class ResultsGraphComponent implements OnInit {
   succesful = null;
   data = [];
 
-  constructor(public dataService: DataService) { 
+  constructor(public dataService: DataService) {
     this.dataService.loadSession();
     this.teamResults();
   }
@@ -27,10 +27,10 @@ export class ResultsGraphComponent implements OnInit {
     maintainAspectRatio: true,
     scales: {
       yAxes: [{
-          ticks: {
-              beginAtZero: true,
-              stepSize: 1
-          }
+        ticks: {
+          beginAtZero: true,
+          stepSize: 1
+        }
       }]
     }
   }
@@ -44,7 +44,7 @@ export class ResultsGraphComponent implements OnInit {
     {
       barPercentage: 0.5,
       categoryPercentage: 0.5,
-      data: this.data, 
+      data: this.data,
       backgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
       hoverBackgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
       stack: 'Team 1'
@@ -55,17 +55,21 @@ export class ResultsGraphComponent implements OnInit {
 
   }
 
-  teamResults(){
+  teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {
-      this.results = this.teams[i].results;
-      for (let j = 0; j < this.results.length; j++) {
-        this.failed= this.results[j].inTrashPizzas;
-        this.inProgress = this.results[j].inProdPizzas;
-        this.succesful= this.results[j].finishedPizzas;
-        this.data.push(this.succesful, this.failed, this.inProgress);
+      if (this.teams[i].players == null) { } else {
+        for (let y = 0; y < this.teams[i].players.length; y++) {
+          if (this.dataService.currentPlayer.identifier == this.teams[i].players[y].identifier) {
+            this.results = this.teams[i].results
+          }
+        }
       }
     }
+    this.failed = this.results[this.dataService.sprintCounter].inTrashPizzas;
+    this.inProgress = this.results[this.dataService.sprintCounter].inProdPizzas;
+    this.succesful = this.results[this.dataService.sprintCounter].finishedPizzas;
+    this.data.push(this.succesful, this.failed, this.inProgress);
   }
 
 }

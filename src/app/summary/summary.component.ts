@@ -17,43 +17,49 @@ export class SummaryComponent implements OnInit {
   revenue = null;
   costs = null;
   profit = null;
-  
-  constructor(public dataService: DataService,private router: Router) { 
+
+  constructor(public dataService: DataService, private router: Router) {
     this.dataService.loadSession();
     console.log(dataService.session);
     this.teamResults();
-    this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
+    this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
   }
 
   ngOnInit(): void {
   }
 
-  onTimerFinished(e:Event){
-    if (e["action"] == "done"){
+  onTimerFinished(e: Event) {
+    if (e["action"] == "done") {
       if (this.dataService.sprintCounter == (this.dataService.session.sprints.length - 1)) {
         this.router.navigate(['/lobby']);
       } else {
         this.router.navigate(['/planning']);
         this.dataService.sprintCounter++;
       }
-      
-     }
-   }
 
-   teamResults(){
+    }
+  }
+
+  teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {
-      this.results = this.teams[i].results;
-      for (let j = 0; j < this.results.length; j++) {
-        this.succesfulPieces = this.results[j].finishedPiecesNum;
-        this.failedPieces = this.results[j].inTrashPiecesNum;
-        this.inProgressPieces = this.results[j].inProdPieces;
-
-        this.revenue = this.results[j].finishedPizzasCost;
-        this.costs = this.results[j].finishedCost + this.results[j].inProdSumPieces + this.results[j].inTrashCost;
-        this.profit = this.revenue-this.costs;
+      if (this.teams[i].players == null) { } else {
+        for (let y = 0; y < this.teams[i].players.length; y++) {
+          if (this.dataService.currentPlayer.identifier == this.teams[i].players[y].identifier) {
+            this.results = this.teams[i].results
+          }
+        }
       }
     }
+
+    this.succesfulPieces = this.results[this.dataService.sprintCounter].finishedPiecesNum;
+    this.failedPieces = this.results[this.dataService.sprintCounter].inTrashPiecesNum;
+    this.inProgressPieces = this.results[this.dataService.sprintCounter].inProdPieces;
+
+    this.revenue = this.results[this.dataService.sprintCounter].finishedPizzasCost;
+    this.costs = this.results[this.dataService.sprintCounter].finishedCost + this.results[this.dataService.sprintCounter].inProdSumPieces + this.results[this.dataService.sprintCounter].inTrashCost;
+    this.profit = this.revenue - this.costs;
+
   }
 
 }

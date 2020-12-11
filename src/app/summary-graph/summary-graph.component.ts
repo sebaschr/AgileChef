@@ -16,7 +16,7 @@ export class SummaryGraphComponent implements OnInit {
   profit = null;
   data = [];
 
-  constructor(public dataService: DataService) { 
+  constructor(public dataService: DataService) {
     this.dataService.loadSession();
     this.teamResults();
   }
@@ -26,10 +26,10 @@ export class SummaryGraphComponent implements OnInit {
     maintainAspectRatio: true,
     scales: {
       yAxes: [{
-          ticks: {
-              beginAtZero: true,
-              stepSize: 1
-          }
+        ticks: {
+          beginAtZero: true,
+          stepSize: 1
+        }
       }]
     }
   };
@@ -41,30 +41,36 @@ export class SummaryGraphComponent implements OnInit {
   public barChartLabels: string[] = ['Revenue', 'Costs', 'Profit'];
 
   public barChartData: ChartDataSets[] = [
-    { 
+    {
       barPercentage: 1,
       categoryPercentage: 0.5,
-      data: this.data, 
+      data: this.data,
       backgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
       hoverBackgroundColor: ['rgba(124,146,1)', 'rgba(220,22,22,1)', 'rgba(242,196,12,1)'],
-      stack: 'Sprint 1' 
+      stack: 'Sprint 1'
     }
   ];
 
   ngOnInit(): void {
   }
 
-  teamResults(){
+  teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {
-      this.results = this.teams[i].results;
-      for (let j = 0; j < this.results.length; j++) {
-        this.revenue = this.results[j].finishedPizzasCost;
-        this.costs = this.results[j].finishedCost + this.results[j].inProdSumPieces + this.results[j].inTrashCost;
-        this.profit = this.revenue-this.costs;
-        this.data.push(this.revenue, this.costs, this.profit);
+      if (this.teams[i].players == null) { } else {
+        for (let y = 0; y < this.teams[i].players.length; y++) {
+          if (this.dataService.currentPlayer.identifier == this.teams[i].players[y].identifier) {
+            this.results = this.teams[i].results
+          }
+        }
       }
     }
+    let  j =this.dataService.sprintCounter;
+    this.revenue = this.results[j].finishedPizzasCost;
+    this.costs = this.results[j].finishedCost + this.results[j].inProdSumPieces + this.results[j].inTrashCost;
+    this.profit = this.revenue - this.costs;
+    this.data.push(this.revenue, this.costs, this.profit);
+
   }
 
 }
