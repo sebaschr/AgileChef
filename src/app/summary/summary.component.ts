@@ -9,9 +9,20 @@ import { Router } from '@angular/router';
 })
 export class SummaryComponent implements OnInit {
   timer = 0;
+  teams = null;
+  results = null;
+  failedPieces = null;
+  inProgressPieces = null;
+  succesfulPieces = null;
+  revenue = null;
+  costs = null;
+  profit = null;
+  
   constructor(public dataService: DataService,private router: Router) { 
     this.dataService.loadSession();
-    this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
+    console.log(dataService.session);
+    this.teamResults();
+    //this.timer =  this.dataService.session.sprints[this.dataService.sprintCounter].retrospectiva;
   }
 
   ngOnInit(): void {
@@ -28,6 +39,21 @@ export class SummaryComponent implements OnInit {
       
      }
    }
+
+   teamResults(){
+    this.teams = this.dataService.session.teams;
+    for (let i = 0; i < this.teams.length; i++) {
+      this.results = this.teams[i].results;
+      for (let j = 0; j < this.results.length; j++) {
+        this.failedPieces = this.results[j].inTrashPiecesNum;
+        this.inProgressPieces = this.results[j].inProductionPiecesNum;
+        this.succesfulPieces = this.results[j].finishedPiecesNum;
+        this.revenue = this.results[j].finishedCost;
+        this.costs = this.results[j].inProdPizzasCost + this.results[j].inTrashCost;
+        this.profit = this.revenue-this.costs;
+      }
+    }
+  }
 
 }
 

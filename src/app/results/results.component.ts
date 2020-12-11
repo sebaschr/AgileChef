@@ -18,7 +18,6 @@ export class ResultsComponent implements OnInit {
 
   constructor(public dataService: DataService, private router: Router) {
     this.dataService.loadSession();
-    console.log(this.dataService.session);
     this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].revision;
     this.teamResults();
   }

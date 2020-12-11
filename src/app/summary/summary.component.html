@@ -19,9 +19,9 @@
               </div>
               <mat-card-content>
                   <mat-list role="list">
-                      <mat-list-item role="listitem">Completed: 19 </mat-list-item>
-                      <mat-list-item role="listitem">Failed: 8 </mat-list-item>
-                      <mat-list-item role="listitem">In Progress: 12 </mat-list-item>
+                      <mat-list-item role="listitem">Completed: {{this.succesfulPieces}} </mat-list-item>
+                      <mat-list-item role="listitem">Failed: {{this.failedPieces}} </mat-list-item>
+                      <mat-list-item role="listitem">In Progress: {{this.inProgressPieces}} </mat-list-item>
                   </mat-list>
               </mat-card-content>
             </mat-card>
@@ -34,9 +34,9 @@
               </div>
               <mat-card-content>
                   <mat-list role="list">
-                      <mat-list-item role="listitem"> Revenue: $26 </mat-list-item>
-                      <mat-list-item role="listitem"> Costs: $17.38 </mat-list-item>
-                      <mat-list-item role="listitem"> Profit: $8.17 </mat-list-item>
+                      <mat-list-item role="listitem"> Revenue: ${{this.revenue}}</mat-list-item>
+                      <mat-list-item role="listitem"> Costs: ${{this.costs}}</mat-list-item>
+                      <mat-list-item role="listitem"> Profit: ${{this.profit}}</mat-list-item>
                   </mat-list>  
               </mat-card-content>
             </mat-card>
@@ -76,9 +76,9 @@
           </div>
         </div>
         
-        <div class="timer" fxLayout="row" fxLayoutAlign="center center">
+        <!-- <div class="timer" fxLayout="row" fxLayoutAlign="center center">
           <countdown [config]="{leftTime: timer}" (event)="onTimerFinished($event)"></countdown>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>

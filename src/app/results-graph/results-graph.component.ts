@@ -56,12 +56,10 @@ export class ResultsGraphComponent implements OnInit {
   }
 
   teamResults(){
-    console.log(this.dataService.session);
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {
       this.results = this.teams[i].results;
       for (let j = 0; j < this.results.length; j++) {
-        console.log(this.results[j]);
         this.failed= this.results[j].inTrashPizzas;
         this.inProgress = this.results[j].inProdPizzas;
         this.succesful= this.results[j].finishedPizzas;
