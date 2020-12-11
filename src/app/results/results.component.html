@@ -19,15 +19,15 @@
                     <table>
                         <tr>
                             <td>Succesful</td>
-                            <td>3</td>
+                            <td>{{this.succesful}}</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>6</td>
+                            <td>{{this.failed}}</td>
                         </tr>
                         <tr>
                             <td>In Progress</td>
-                            <td>4</td>
+                            <td>{{this.inProgress}}</td>
                         </tr>
                     </table>
                 </mat-card>
@@ -39,58 +39,15 @@
                     <table>
                         <tr>
                             <td>Succesful</td>
-                            <td>3</td>
+                            <td>{{this.succesful}}</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>6</td>
+                            <td>{{this.failed}}</td>
                         </tr>
                         <tr>
                             <td>In Progress</td>
-                            <td>4</td>
-                        </tr>
-                    </table>
-                </mat-card>
-            </div>
-        </div>
-
-        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly stretch" style="margin-top: 3%;">
-            <div fxLayout="column" style="margin-top: 3vh;">
-                <results-graph></results-graph>
-                <mat-card style="text-align: center;">
-                    <mat-card-title>Team 3</mat-card-title>
-                    <table>
-                        <tr>
-                            <td>Succesful</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Failed</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>In Progress</td>
-                            <td>4</td>
-                        </tr>
-                    </table>
-                </mat-card>
-            </div>
-            <div fxLayout="column" style="margin-top: 3vh;">
-                <results-graph></results-graph>
-                <mat-card style="text-align: center;">
-                    <mat-card-title>Team 4</mat-card-title>
-                    <table>
-                        <tr>
-                            <td>Succesful</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Failed</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>In Progress</td>
-                            <td>4</td>
+                            <td>{{this.inProgress}}</td>
                         </tr>
                     </table>
                 </mat-card>

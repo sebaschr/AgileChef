@@ -10,9 +10,16 @@ import { DataService } from '../data.service';
 export class ResultsComponent implements OnInit {
 
   timer = 0;
+  results = null;
+  failed = null;
+  inProgress = null;
+  succesful = null;
+
   constructor(public dataService: DataService, private router: Router) {
     this.dataService.loadSession();
     this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].revision;
+    this.dataService.loadResults();
+    this.teamResults();
   }
 
   ngOnInit(): void {
@@ -22,6 +29,18 @@ export class ResultsComponent implements OnInit {
     if (e["action"] == "done") {
       this.router.navigate(['/summary']);
     }
+  }
+
+  teamResults(){
+    this.results = this.dataService.results;
+    for (let i = 0; i < this.results.length; i++) {
+      this.failed= this.results[i].inTrashPizzas;
+      this.inProgress = this.results[i].inProdPizzas;
+      this.succesful= this.results[i].finishedPizzas;
+    }
+    console.log('F =' + this.failed);
+    console.log('I =' + this.inProgress);
+    console.log('S =' + this.succesful);
   }
   
 }
