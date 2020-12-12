@@ -23,6 +23,7 @@ export class TeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.session;
+    this.loadButtons();
   }
 
   addPlayerToTeam(e) {
@@ -31,6 +32,17 @@ export class TeamComponent implements OnInit {
 
   removePlayerFromTeam(e) {
     this.dataService.removePlayerFromTeam(this.dataService.currentPlayer, e);
+  }
+
+  loadButtons() {
+    if (this.dataService.admin) {
+      document.getElementById('addBtn').style.display = 'none';
+      document.getElementById('removeBtn').style.display = 'none';
+      
+    } else if (this.dataService.currentPlayer) {
+      document.getElementById('addBtn').style.visibility = 'visible';
+      document.getElementById('removeBtn').style.visibility = 'visible';
+    }
   }
 
 }

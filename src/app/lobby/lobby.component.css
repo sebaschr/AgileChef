@@ -23,12 +23,12 @@ body{
     background: #000000;
 }
 
-/*.left-section {
+.left-section {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-}*/
+}
 
 .right-section {
     display: flex;

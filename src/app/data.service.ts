@@ -108,10 +108,6 @@ export class DataService {
     this.post('session', session);
   }
 
-  hideInstruction() {
-    document.getElementById('instructions').style.visibility = 'hidden';
-  }
-
   addPlayerToTeam(player: Player, newTeam: Team) {
     //this.hideInstruction();
     if (this.currentPlayer.identifier == player.identifier) {
@@ -223,6 +219,16 @@ export class DataService {
 
     });
   }
+
+  /*loadButtons() {
+    if (this.admin) {
+      //document.getElementById('addBtn').style.visibility = 'hidden';
+      //document.getElementById('removeBtn').style.visibility = 'hidden';
+    } else if (this.currentPlayer) {
+      document.getElementById('addBtn').style.visibility = 'hidden';
+      document.getElementById('removeBtn').style.visibility = 'hidden';
+    }
+  }*/
 
   // loadEv() {
   //   let ingredientList = [
