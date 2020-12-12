@@ -37,7 +37,7 @@ export class LobbyComponent implements OnInit {
   startGame() {
     if (this.dataService.admin) {
       this.dataService.loadAdmin();
-      // this.dataService.session.adminStarted = true;
+      //this.dataService.session.adminStarted = true;
       this.dataService.saveSession(this.dataService.session)
       this.router.navigate(['/planning']);
     } else if (this.dataService.currentPlayer) {
