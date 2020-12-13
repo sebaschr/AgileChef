@@ -123,6 +123,7 @@ export class DataService {
       this.currentPlayer.teamNumber = newTeam.teamNumber;
       this.post('currentUser', this.currentPlayer);
       this.saveSession(this.session);
+
     }
   }
 

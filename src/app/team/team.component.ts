@@ -22,6 +22,7 @@ export class TeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.session;
+    this.dataService.loadAdmin;
     this.loadButtons();
   }
 
@@ -34,9 +35,10 @@ export class TeamComponent implements OnInit {
   }
 
   loadButtons() {
+
     if (this.dataService.admin) {
-      document.getElementById('addBtn').style.display = 'none';
-      document.getElementById('removeBtn').style.display = 'none';
+      document.getElementById('addBtn').style.visibility = 'hidden';
+      document.getElementById('removeBtn').style.visibility = 'hidden';
       
     } else if (this.dataService.currentPlayer) {
       document.getElementById('addBtn').style.visibility = 'visible';
