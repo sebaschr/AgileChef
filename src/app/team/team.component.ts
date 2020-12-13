@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Team } from '../models/team';
 import { Sprint } from '../models/sprint';
 import { DataService } from '../data.service';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 @Component({
   selector: 'team-component',
@@ -23,6 +22,8 @@ export class TeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.session;
+    this.dataService.loadAdmin;
+    this.loadButtons();
   }
 
   addPlayerToTeam(e) {
@@ -31,6 +32,18 @@ export class TeamComponent implements OnInit {
 
   removePlayerFromTeam(e) {
     this.dataService.removePlayerFromTeam(this.dataService.currentPlayer, e);
+  }
+
+  loadButtons() {
+
+    if (this.dataService.admin) {
+      document.getElementById('addBtn').style.visibility = 'hidden';
+      document.getElementById('removeBtn').style.visibility = 'hidden';
+      
+    } else if (this.dataService.currentPlayer) {
+      document.getElementById('addBtn').style.visibility = 'visible';
+      document.getElementById('removeBtn').style.visibility = 'visible';
+    }
   }
 
 }
