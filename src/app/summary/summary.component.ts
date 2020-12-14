@@ -28,6 +28,10 @@ export class SummaryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * This function checks if the timer is done, if so, it goes to the planning navigation page if a sprint is left. Otherwise, it returns to the lobby. 
+   * @param e The timer event
+   */
   onTimerFinished(e: Event) {
     if (e["action"] == "done") {
       if (this.dataService.sprintCounter == (this.dataService.session.sprints.length - 1)) {
@@ -40,6 +44,9 @@ export class SummaryComponent implements OnInit {
     }
   }
 
+  /**
+   * This function loads all of the results from the game navigation page so they can be displayed on the summary page. 
+  */
   teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {

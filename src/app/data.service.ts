@@ -17,7 +17,7 @@ import { key } from 'firebase-key';
 /**
  * DataService manages all data on this app.
  * @param db - Angular Firebase Database.
- */
+*/
 export class DataService {
 
   public currentPlayer: Player;
@@ -43,20 +43,30 @@ export class DataService {
    * Adds data to the firebase database.
    * @param collection - Name of the dataset
    * @param data  - Data to be store.
-   */
+  */
   post(collection: string, data: object) {
     this.db.object(collection).set(data);
   }
 
+  /**
+   * Returns data from the firebase database.
+   * @param src - Name of the collection.
+  */
   get(src: string) {
     return this.db.object(src).snapshotChanges();
   }
 
+  /**
+   * Adds admin data to the firebase database.
+  */
   saveAdmin() {
     let admin = new Admin('admin', '1234');
     this.post('adminInfo', admin);
   }
 
+  /**
+   * Loads admin information so it can be verified when the use logs in.
+  */
   loadAdmin() {
     var adminData = null;
     this.get('adminInfo').subscribe(action => {
@@ -65,11 +75,20 @@ export class DataService {
     });
   }
 
-  savePlayerToLocalStorage(playerName: string, isProductOwner: boolean, teamNumber) {
+  /**
+   * Adds player as the current player in the firebase database.
+   * @param playerName - Name registered by the user.
+   * @param isProductOwner  - Determines whether the user is a product owner or not.
+   * @param teamNumber - Registers the user's team number.
+  */
+  savePlayer(playerName: string, isProductOwner: boolean, teamNumber) {
     this.currentPlayer = new Player(playerName, isProductOwner, teamNumber);
     this.post('currentUser', this.currentPlayer);
   }
 
+  /**
+   * Loads current player from the firebase database so the information can be used.
+  */
   loadPlayer() {
     var currentUserData = null;
     this.get('currentUser').subscribe(action => {
@@ -78,10 +97,17 @@ export class DataService {
     });
   }
 
+  /**
+   * Adds all of the session information into the firebase database.
+   * @param session - Session information.
+  */
   saveSession(session: ACSession) {
     this.post('session', session);
   }
 
+  /**
+   * Loads all of the session information so it can be accessed.
+  */
   loadSession() {
     var sessionData = null;
     this.get('session').subscribe(action => {

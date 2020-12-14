@@ -54,6 +54,9 @@ export class ResultsGraphComponent implements OnInit {
 
   }
 
+  /**
+   * This function loads all of the results from the game navigation page so the graph bars are filled up properly. 
+  */
   teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {
