@@ -54,7 +54,9 @@ export class AdminPanelComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+/**
+ * This function checks if there are no errors, if so, it sends the information over to the dataService for it to be saved to the sesssion in the DB>
+ */
   submitInfo() {
     this.dataService.session.playersMin = this.form.value.playerQuantityMin;
     this.dataService.session.playersMax = this.form.value.playerQuantityMax;
@@ -76,7 +78,9 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-
+/**
+ * The function saves the the currentSprint and adds it to the arrayList
+ */
   saveSprint() {
     this.sprintName = 'Sprint ' + this.sprintCounter;
     let sprint = new Sprint();
@@ -105,7 +109,9 @@ export class AdminPanelComponent implements OnInit {
     }
 
   }
-
+/**
+ * Removes the current sprint from the sprintList and then reorders the array and removes the errors
+ */
   removeSprint() {
 
     if (this.sprintCounter == 1) {
@@ -123,7 +129,9 @@ export class AdminPanelComponent implements OnInit {
     
 
   }
-
+/**
+ * Fills the data that the page uses when it loads with default values.
+ */
   fillData() {
     this.sprintName = 'Sprint ' + this.sprintCounter;
     let sprint = new Sprint();
@@ -134,7 +142,9 @@ export class AdminPanelComponent implements OnInit {
     sprint.retrospectiva = 45;
     this.sprintList.push(sprint);
   }
-
+/**
+ * Adds a new sprint with default values to the arrayList
+ */
   addSprint() {
 
     this.savedLastSprint = false;
@@ -149,7 +159,10 @@ export class AdminPanelComponent implements OnInit {
     this.sprintList.push(sprint);
     this.saveSprint();
   }
-
+/**
+ * Finds a sprint in the array sprintList and updates it with the value received if the name is the same. Then checks if it was saved before.
+ * @param sprint 
+ */
   findUpdateSprint(sprint) {
     //find and update Sprint in SprintList first
     for (var i = 0; i < this.sprintList.length; i++) {
@@ -168,7 +181,10 @@ export class AdminPanelComponent implements OnInit {
 
 
   }
-
+/**
+ * This function checks if the last sprint added was saved (before adding a new one)
+ * @param sprintName it requires String for its execution
+ */
   checkLastOneSaved(sprintName) {
     var x = this.sprintList.length;
     if (sprintName == this.sprintList[x - 1].name) {
@@ -177,7 +193,10 @@ export class AdminPanelComponent implements OnInit {
       }
     }
   }
-
+/**
+ * This function runs through the dataService.session and check if the sprint is already in dataService.
+ * @param sprint it requires array/object for its execution
+ */
   updateDataService(sprint) {
     for (var i = 0; i < this.dataService.session.sprints.length; i++) {
       if (this.dataService.session.sprints[i].name == sprint.name) {
@@ -185,7 +204,10 @@ export class AdminPanelComponent implements OnInit {
       }
     }
   }
-
+/**
+ * This function checks if the sprint sprintNameis already saved in Dataservice.
+ * @param sprintName it requires array/object for its execution
+ */
   sprintinDataService(sprintName) {
     var exists = false;
 
@@ -197,7 +219,10 @@ export class AdminPanelComponent implements OnInit {
     }
     return exists;
   }
-
+/**
+ * This function populates the fields with the information of the sprint selected {{target}}
+ * @param param0 it requires array/object for its execution
+ */
   onForm2NameChange({ target }) {
 
     var selectedSprint = this.sprintList.find(x => x.name == this.form.value.selectSprint);
@@ -210,7 +235,9 @@ export class AdminPanelComponent implements OnInit {
     this.firstSprint = false;
 
   }
-
+/**
+ * This function checks if there's any error in the inputs of the array
+ */
   validateFields() {
     var foundErrors = false;
     var amountTeams = this.form.value.teamQuantity;
@@ -289,7 +316,9 @@ export class AdminPanelComponent implements OnInit {
     }
     return foundErrors;
   }
-
+/**
+ * This function re-orders the array to avoid issues with the names and number of the sprint
+ */
   reorderArrays() {
     var oldDataService = this.dataService.session.sprints;
     var oldSprintList = this.sprintList;
@@ -313,7 +342,9 @@ export class AdminPanelComponent implements OnInit {
     }
 
   }
-
+/**
+ * This function removes all the sprint errors from the website.
+ */
   removeSprintErrors(){
     document.getElementById('sprintError').style.display='none';
     document.getElementById('edit-sprint').style.height='350px';

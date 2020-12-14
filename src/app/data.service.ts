@@ -195,6 +195,9 @@ export class DataService {
     }
   }
 
+  /**
+   * This function gets the 'ingredients' collection from the DB by using the method get and assigns it to the array ingredients.
+   */
   loadIngredients() {
     var ingredients = null;
     this.get('ingredients').subscribe(action => {
@@ -203,6 +206,11 @@ export class DataService {
     });
   }
 
+  
+  /**
+   * This function gets the 'pizzas' collection from the DB by using the method get and assigns it to the array pizzas.
+   */
+
   loadPizzas() {
     var ingredients = null;
     this.get('pizzas').subscribe(action => {
@@ -210,7 +218,9 @@ export class DataService {
       this.pizzas = ingredients;
     });
   }
-
+  /**
+   * This function gets the 'recipes' collection from the DB by using the method get and assigns it to the array recipes.
+   */
   loadRecipes() {
     var ingredients = null;
     this.get('recipes').subscribe(action => {
