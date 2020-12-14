@@ -19,6 +19,10 @@ export class PlanningComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * This function checks if the timer is done, if so, it goes to the game navigation page. 
+   * @param e The timer event
+  */
   onTimerFinished(e:Event){
     if (e["action"] == "done"){
       this.router.navigate(['/game']);

@@ -25,12 +25,19 @@ export class ResultsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * This function checks if the timer is done, if so, it goes to the summary navigation page. 
+   * @param e The timer event
+  */
   onTimerFinished(e: Event) {
     if (e["action"] == "done") {
       this.router.navigate(['/summary']);
     }
   }
 
+  /**
+   * This function loads all of the results from the game navigation page so they can be displayed on the results page. 
+  */
   teamResults() {
     this.teams = this.dataService.session.teams;
     for (let i = 0; i < this.teams.length; i++) {

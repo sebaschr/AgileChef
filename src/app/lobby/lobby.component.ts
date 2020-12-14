@@ -27,13 +27,16 @@ export class LobbyComponent implements OnInit {
     console.log(this.dataService.session);
   }
 
+
   loadPage() {
     if (this.dataService.session.adminStarted) {
       this.router.navigate(['/planning']);
     }
   }
 
-
+  /**
+   * 
+   */
   startGame() {
     if (this.dataService.admin) {
       this.dataService.loadAdmin();
@@ -45,6 +48,9 @@ export class LobbyComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   returnToPlayerLogIn() {
 
     if (this.dataService.admin) {
