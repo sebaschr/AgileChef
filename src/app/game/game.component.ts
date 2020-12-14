@@ -7,6 +7,9 @@ import { key } from 'firebase-key';
 import { Ingredient } from '../models/ingredient';
 import { finished } from 'stream';
 
+/**
+ * This class is where the logic of the game is created, along with pieces, queue and combination of the pieces.
+ */
 @Component({
   selector: 'game',
   templateUrl: './game.component.html',
@@ -39,7 +42,15 @@ export class GameComponent implements OnInit {
     inCanvas: []
   };
   counterPlayer = 0;
-
+  /**
+   * The constructor tells the data service to load the session. 
+   * The time (in seconds) comes from the dataService, depending on the sprint that is currently on execution
+   * It calls several functions to make the program work.
+   * @param router 
+   * It calls the Router so it can guide the user to the next page
+   * @param dataService 
+   * It calls the dataService to connect with the DataBase
+   */
   constructor(private router: Router, public dataService: DataService) {
     this.dataService.loadSession();
     this.timer = this.dataService.session.sprints[this.dataService.sprintCounter].ejecucion;
@@ -51,7 +62,10 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  /* get players from the currentPlayerTeam*/
+  /**
+   * This function loads the players to display them in the page. It runs through all of the teams in the dataService session, and gets the one where the current user is. Then creates a list of these players
+   * @param player It requires the current User as a parameter to find its team. 
+   */
   loadPlayers(player) {
     let teamList = this.dataService.session.teams;
     let players = [];
@@ -86,13 +100,18 @@ export class GameComponent implements OnInit {
     this.counterPlayer = this.playerList.length - 1;
 
   }
-
-  /* get players from the currentPlayerTeam*/
+  /**
+   * This function calls the ingredients and Pizzas from the dataService and assigns them to local arrays
+   */
   loadDBLists() {
     this.ingredients = this.dataService.ingredients;
     this.pizzaList = this.dataService.pizzas;
   }
 
+  /**
+   * This function creates the queue in the game by using the pizza list. 
+   * @param counter  This function requires a counter so it can fill the queue, it will run the pizzaList array the amount of the counter. 
+   */
   loadQueue(counter) {
     for (let i = 0; i < counter; i++) {
       for (let y = 0; y < this.pizzaList.length; y++) {
@@ -116,7 +135,11 @@ export class GameComponent implements OnInit {
       }
     }
   }
-  /* Move the pizza out of the queue into production  */
+  /**
+   * This function will check if the element p of the queue is inside of the canvas. It if isn't, it will not do anything. If it is (and was not previously), it will change its status to editing, and call other functions to assign the ingredients of this element and another one to show them.
+   * @param p It needs the element p of the queue to check if it's inside or not, and for its properties. 
+   * @param event It needs the event of the mouse to check which element in the HTML is being called and get its position.
+   */
   moveOutofQueue(p, event: MouseEvent) {
     var element = event.currentTarget;
     if (this.checkifinsideofCanvas(element)) {
@@ -131,8 +154,9 @@ export class GameComponent implements OnInit {
     }
 
   }
-
-  /* Find a pizza in the queue and change the status to editing */
+  /**
+   * This function goes over the pizzaList, if the key from the parameter received matches the one from pizzaList, it changes to editing and push the p element to a new queueEditing array
+   * @param p This function requires a p pizza for its execution */
   findPizza(p) {
     this.pizzaList.forEach(pizza => {
       if (p.pizzaKey == pizza.key) {
@@ -141,7 +165,10 @@ export class GameComponent implements OnInit {
       }
     });
   }
-  /* Get the ingredients that makes a pizza */
+  /**
+   * This function goes over the recipes and if the recipeID of the p pizza received matches the idRecipe from the receipes array. It returns an array filled with the ingredients needed. 
+   * @param p This function requires a p pizza for its execution
+   */
   getIngredients(p) {
 
     var pizzaIngredients = [];
@@ -155,6 +182,10 @@ export class GameComponent implements OnInit {
     return pizzaIngredients;
   }
 
+  /**
+   * This function receives a key, and goes over the ingredients array. If the ingredient key matches the key received. It will send back the ingredient information. 
+   * @param key This function a key() for its execution.
+   */
   getIngredientInfo(key) {
     for (let index = 0; index < this.ingredients.length; index++) {
       if (key == this.ingredients[index].key) {
@@ -164,7 +195,15 @@ export class GameComponent implements OnInit {
 
     return ing;
   }
-  // /* Place the ingredients and mix depending on the result */
+
+  /**
+   * This function receives an array ing and a MouseEvent. First it gets the position (from the currentTarget selected) and it updates the ing position. 
+   * It calls the function checkifInsideofCanvasPos to check if it's inside of the canvas, if true, the editing is true and it's pushed to the inProd array (if it was not already there). 
+   * Then it calls the mixingredients function for each element and the ing to check if they can be mixed. 
+   * Then it calls different functions to check if it's inside of Trash, Oven or the Finished Queue. 
+   * @param ing 
+   * @param event 
+   */
   ingredientPlacement(ing, event: MouseEvent) {
 
     ing.position = this.getPosition(event.currentTarget)
@@ -182,7 +221,10 @@ export class GameComponent implements OnInit {
     this.checkifInsideofOven(ing);
     this.checkifInsideofFinishedQueue(ing);
   }
-  /*  */
+  /**
+   * This function checks if an element is inside of the inProd array. It goes over the inProd array, if the key from the ing element received matches the inProd element key the varibale becomes true, if not it stays false. And returns the inProduction variable. 
+   * @param ing This function requires an array (ingredient) ing for its execution.
+   */
   checkifInprod(ing) {
     let inProduction = false;
 
@@ -194,12 +236,19 @@ export class GameComponent implements OnInit {
 
     return inProduction
   }
-  /* get the position of an element, returns the position */
+  /**
+   * This function receives an element el and calls the HTML DOM function getBoundingClientRect to get the position in the HTML and assigns it to a variable p to return it
+   * @param el This function requires an element el for its execution. 
+   */
   getPosition(el) {
     var p = el.getBoundingClientRect()
     return p;
   }
 
+  /**
+   * This function received a key() cod and it runs through the activePlayer.ing array. It cod matches the ing.key then it assigns it to a variable found and returns it
+   * @param cod It requires a key() for its execution
+   */
   findActiveIng(cod) {
     var found;
     this.activePlayer.ing.forEach(element => {
@@ -210,8 +259,19 @@ export class GameComponent implements OnInit {
 
     return found
   }
-
-  /* on 3 clicks prepares the ingredient and changes img and progress */
+  /**
+   * This function receives an array/object ing, and a MouseEvent e. 
+   * It creates a variable count and assigns it the default function from Mouseevent to get the number of clicks. 
+   * It creates a variable ingredientDiv that gets the MouseEvent currentTarget (which gets the HTML element currently selected)
+   * It creates a variable found which value depends on another function findActiveIng which returns the ingredient information. 
+   * It creates a variable checkInside which value depends on another function checkifInsideofCanvas (true or false)
+   * If checkInside is true, then it checks if the user clicked thrice. 
+   *  If the progress is 0 at the moment of the 3 clicks, the new progress is 50 and if the found.name is Dough the it changes the width and height. And changes the activeImage.
+   *  If the progress is 50 at the moment of the 3 clicks, the new progress is 100 and changes the activeImage.
+   *  If the progress is 100 at the moment of the 3 clicks, it won't affect.
+   * @param ing This function requires an array/object Ing for its execution (ingredient)
+   * @param e This function requires the MouseEvent from when it is called. 
+   */
   prepareIngredient(ing, e: MouseEvent) {
     var count = e.detail;
     var ingredientDiv = e.currentTarget;
@@ -244,15 +304,19 @@ export class GameComponent implements OnInit {
     }
   }
 
-  /* check if an element is inside of canvas*/
+  /**
+    * This function receives an el element and check if it's inside of the canvas.
+    * It creates a variable inside, false by default. Another one called canvasDiv which gets the HTML DOM by calling a document.querySelector function with the value '.gameCanvas'. Then two variables which get the position of these two elements by calling the function getPosition. Then compares different parameters, if all of them are true, then the variable inside becomes true. If not, it stays false, and returns 
+    * @param el  This function requires the MouseEvent from when it is called. 
+    */
   checkifinsideofCanvas(el) {
 
     var inside = false;
 
     var canvasDiv = document.querySelector('.gameCanvas');
 
-    var p = el.getBoundingClientRect();
-    var canvasPosition = canvasDiv.getBoundingClientRect();
+    var p = this.getPosition(el)
+    var canvasPosition = this.getPosition(canvasDiv);
 
     if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
       inside = true;
@@ -261,16 +325,19 @@ export class GameComponent implements OnInit {
     return inside;
   }
 
-  /* assigns the ingredients of a pizza to the players in the playerlist */
+  /**
+   * This function assigns the ingredients of a queue element ing to all of the players evenly. 
+   * It creates an empty array ingredients, and runs through the ing array received. For each element it calls another function getIngredientInfo to get the ingredient and assigns it to the ingredients array. 
+   * Then it runs through the ingredients array and creates a new piece for each element with all the properties, and assigns it to newQueueEl then it replaces the Ingredient element. 
+   * Then it runs through the ingredients array again (with the new information) and assigns the element to the players one by one. 
+   * Then it pushes it to the ingredientsAssigned of that player in the playerlist. And calls the function showIngredients for that player.
+   * @param ing This requires an array ing for its execution 
+   */
   assignIngredientstoPlayers(ing) {
     let ingredients = [];
     for (let i = 0; i < ing.length; i++) {
       ingredients.push(this.getIngredientInfo(ing[i].idIngredient));
     }
-
-    console.log(ingredients)
-    // ingredients.push(this.getRandomIngredient());
-
     for (let i = 0; i < ingredients.length; i++) {
       let newQueueEl = {
         name: String,
@@ -306,6 +373,15 @@ export class GameComponent implements OnInit {
       this.showIngredients(this.counterPlayer)
     }
   }
+
+  /**
+   * This function shows the ingredients assigned in the page of the player p
+   * It receives a player p. It changes the activePlayer name to the p.id and create a new empty array. 
+   * Then it runs through the playerList and the ingredientsAssigned of each element. If the p.id matches the id of the playerList element, the propoerty visibility of its ingredientsAssigned becomes 'visible', otherwise it becomes hidden (only if they are not inside of the canvas, we can check this by running the function checkifInsideofCanvasPos)
+   * Then it runs through the activePlayer.ing and changes the zindex property so they don't overlap. Dough must be behind, then tomato, then cheese, then the rest.
+   * Finally it assigns the fullArray to the activePLayer.ing property
+   * @param p It requires a player p for its execution. 
+   */
 
   showIngredients(p) {
     this.activePlayer.name = p.id;
@@ -350,12 +426,17 @@ export class GameComponent implements OnInit {
 
   }
 
+  /**
+     * This function receives an el element and check if it's inside of the canvas.
+     * It creates a variable inside, false by default. Another one called canvasDiv which gets the HTML DOM by calling a document.querySelector function with the value '.gameCanvas'. Then two variables which get the position of these two elements by calling the function getPosition. Then compares different parameters, if all of them are true, then the variable inside becomes true. If not, it stays false, and returns 
+     * @param el  This function requires the MouseEvent from when it is called. 
+     */
   checkifInsideofCanvasPos(p) {
     var inside = false;
 
     var canvasDiv = document.querySelector('.gameCanvas');
 
-    var canvasPosition = canvasDiv.getBoundingClientRect();
+    var canvasPosition = this.getPosition(canvasDiv)
 
     if (p.bottom < canvasPosition.bottom && p.right < canvasPosition.right && p.top > canvasPosition.top && p.left > canvasPosition.left) {
       inside = true;
@@ -364,9 +445,16 @@ export class GameComponent implements OnInit {
     return inside;
   }
 
-  /* mix Ingredients  */
+  /**
+   * This function checks if two ingredients ing1 and ing1 can be mixed, and changes depending on the values. 
+   * It receives two objects ingredients ing1 and ing2. First it checks if the progress is less than 100 (which means it's incomplete), if so, it continues. 
+   * If they are complete, it checks if one ingredient is Dough and another one is tomato, if so, check if one is inside of another by calling another function checkifInside. If ing1 is inside of ing2 then it becomes PizzaSauce and one ingredient gets removed from Inprod array and it won't display on page (disappears from screen), and changes the activeImg of the element in screen.
+   * If their names are PizzaSauce and Cheese, it does the same. and the new name will be PizzaSauceCheese
+   * If their names are PizzaSauceCheese and Mushroom or Pepperoni, it does the same, and the new name becomes Mushroom Pizza or Pepperoni Pizza respectively. The progress goes back to 0 so it can be cooked.
+   * @param ing1 It requires an object (piece/ingredients) ing1 for its execution
+   * @param ing2 It requires an object (piece/ingredients) ing2 for its execution
+   */
   mixIngredient(ing1, ing2) {
-
 
     if (ing1.progress < 100 || ing2.progress < 100) {
     } else {
@@ -426,7 +514,12 @@ export class GameComponent implements OnInit {
 
     }
   }
-  /* check if one el is inside of another */
+  /**
+   * This function checks if pos1 is inside of pos2
+   * First it creates a variable inside that it's false by default. Gets the position of each element and compares them. And if everything is true, the varibale inside become true. Then it returns inside.
+   * @param pos1 It requires an object (piece/ingredients) pos1 for its execution
+   * @param pos2 It requires an object (piece/ingredients) pos2 for its execution
+   */
   checkifInside(pos1, pos2) {
     var inside = false;
     var position1 = pos1.position;
@@ -440,14 +533,19 @@ export class GameComponent implements OnInit {
     }
     return inside;
   }
-  /* throw it in the garbage if hovering the trash div  */
+
+  /**
+   * This function checks if an element is inside of the trash and adds it to the trash array. 
+   * First it creates a varibale inside and it's false by default. Another one which value is the DOM HTML element with the class trash and another one that gets the position of the last variable. Then two variable that get the position of the two elements to compare. 
+   * Then if pos1 is inside of pos2 (trash), the variable inside becomes true. 
+   * If inside is true. The element disappears from screen (its property onPizza becomes 'none'), its name gets added to the trash array, and gets removed from the inProd array by calling the function cleanTrashFromProd with the name. If the queue length - the queueEditing length is 2 then it runs loadQueue with the parameter 2 (so it doesn't stay empty)
+   * @param pos1  It requires an object (piece/ingredients) pos1 for its execution
+   */
   checkifInsideofTrash(pos1) {
 
     var inside = false;
     var trashDiv = document.querySelector('.trash');
-    var trashPosition = trashDiv.getBoundingClientRect();
-
-    var inside = false;
+    var trashPosition = this.getPosition(trashDiv)
     var position1 = pos1.position;
     var position2 = trashPosition;
 
@@ -462,7 +560,7 @@ export class GameComponent implements OnInit {
       pos1.onPizza = 'none';
       this.trash.push(pos1.name);
       this.cleanTrashfromProd(pos1.name)
-      if (this.queue.length == 2) {
+      if (this.queue.length - this.queueEditing.length == 2) {
         this.loadQueue(2);
       }
 
@@ -470,6 +568,13 @@ export class GameComponent implements OnInit {
 
   }
 
+  /**
+   * This functions removes the arrayIng from Prod 
+   * First it runs through the inProd array, and if the inProd.name matches the arrayIng received, it removes it by using the method splice with the current index and leaves that for with the break. 
+    * Then creates a variable x and it runs through the queueEditing array, and if the queueEditing.name matches the arrayIng received, it assigns the key to the variable x and removes it with the splice method. ANd leaves that for with the break
+    * Then runs through the queue, if the variable x is the same as the queue element key, it gets removed from the queue. And leaves with the break method
+   * @param arrayIng It requires the arrayIng String for its execution
+   */
   cleanTrashfromProd(arrayIng) {
     for (let i = 0; i < this.inProd.length; i++) {
       if (this.inProd[i].name == arrayIng) {
@@ -496,14 +601,17 @@ export class GameComponent implements OnInit {
     }
   }
 
-
-
-  /* throw it in the oven if hovering the oven div  */
+  /**
+   * This function check if the pos1 is inside of oven and cooks it (if possible)
+   * First it creates a variable inside (false by default), gets the HTML DOC  with the class.oven then assigns its position to the variable ovenPosition. And then to two variable position1 and position2. 
+   * If it's inside of the oven by comparing the values, the variable inside becomes true. Then it fills the oven in a specific amount of seconds by calling the function countup
+   * @param pos1  It requires an object (piece/ingredients) pos1 for its execution
+   */
   checkifInsideofOven(pos1) {
     var inside = false;
     var ovenDiv = document.querySelector('.oven');
     var ovenPosition = ovenDiv.getBoundingClientRect();
-    var inside = false;
+
     var position1 = pos1.position;
     var position2 = ovenPosition;
 
@@ -515,13 +623,14 @@ export class GameComponent implements OnInit {
     }
     if (inside && (pos1.name == 'Mushroom Pizza' || pos1.name == 'Pepperoni Pizza')) {
       this.countUp(100, 5000, pos1);
-
-      // this.removeFromProd(pos1.name);
-
     }
-
   }
 
+  /**
+   * This functions deletes a pizza from the queue.
+   * First it runs through the queue, if the pKey received matches the queue element key it removes it from the queue.
+   * @param pKey It requires a key() pKey for its execution
+   */
   deletePizzafromQueue(pKey) {
     for (let i = 0; i < this.queue.length; i++) {
       if (pKey == this.queue[i].key) {
@@ -530,7 +639,11 @@ export class GameComponent implements OnInit {
 
     }
   }
-
+  /**
+   * This functions deletes an element from the production.
+   * First it runs through the inProd array, if the name received matches the queue element name  it removes it from the inProd array and breaks the for method.
+   * @param pKey It requires a key() pKey for its execution
+   */
   removefromProd(name) {
     for (let i = 0; i < this.inProd.length; i++) {
       if (this.inProd[i].name == name) {
@@ -539,15 +652,17 @@ export class GameComponent implements OnInit {
       }
     }
   }
-  /* check if an element is inside of the finished panel*/
+  /**
+   * This function check if a completed element is inside of the finished Queue, removes it from production, and finishes it. 
+   * First it creates a variable inside (false by default), gets the HTML DOC  with the class readyQueue then assigns its position to the variable readyQueuePosition. And then to two variables position1 and position2. 
+   * If it's inside of the readyQueue (table) by comparing the values, the variable inside becomes true. If the pos1.name is Pepperoni Pizza and Mushroom Pizza and the progress over 100, the property onPizza becomes 'none' and it won't display on screen. Then runs through the queueEditing array and if the name matches, then it gets removed from the queueEditing. And the queue by calling a function (then it breaks)
+   * Then it runs through the inProd array and if the name matches, it finds the first and removes it from the inProd array and it gets pushed to the finishedArray.
+   * @param pos1 It requires an object (piece/ingredients) pos1 for its execution
+   */
   checkifInsideofFinishedQueue(pos1) {
     var inside = false;
-
     var readyQueueDiv = document.querySelector('.readyQueue');
-
     var readyQueuePosition = readyQueueDiv.getBoundingClientRect();
-
-    var inside = false;
     var position1 = pos1.position;
     var position2 = readyQueuePosition;
 
@@ -577,7 +692,12 @@ export class GameComponent implements OnInit {
       this.finished.push(pos1);
     }
   }
-  /* fill the bar in a specific amount, time, */
+  /**
+   * The function completes the p.progress of an element p in 'time' milliseconds. 
+   * @param max This variable is a number, max it can go to.
+   * @param time The time in miliseconds
+   * @param p the ingredient/piece 
+   */
   countUp(max, time, p) {
     var num = 0;
     var step = time / max; // calculate the time between two steps of counting
@@ -594,6 +714,10 @@ export class GameComponent implements OnInit {
     fn();
   }
 
+  /**
+   * This function creates a variable x (0 by default) , then it runs through the pizzaList and if the pName received matches the pizzaList name, it assigns the price to the x. If it does not match. it runs through the ingredientList and gets the price and assigns it to the x variable. Then it returns x. 
+   * @param pName This function requires a pname String for its exectuioon
+   */
   getIngredientPrice(pName) {
     var x = 0;
     if (pName == 'Mushroom Pizza' || pName == 'Pepperoni Pizza') {
@@ -612,11 +736,14 @@ export class GameComponent implements OnInit {
 
     return x;
   }
+  /**
+   * This function gets the results by grabbing the arrays inProd, inTrash, finished lengths and elements. It calculates the pizzas and pieces numbers, creates an object and pushes it to the dataService session of the currentTeam results
+   */
   getResults() {
 
-    let inProductionPieces = [], inProductionPiecesNum = 0, inProdcost = 0, inProdPizzas = this.queueEditing.length,inProdPizzasCost=0;
-    let finishedPieces = [], finishedPiecesNum = 0, finishedCost = 0, finishedPizzas = 0,finishedPizzasCost =0 ;
-    let inTrashPieces = [], inTrashPiecesNum = 0, inTrashCost = 0, inTrashPizzas = 0,inTrashPizzasCost= 0 ;
+    let inProductionPieces = [], inProductionPiecesNum = 0, inProdcost = 0, inProdPizzas = this.queueEditing.length, inProdPizzasCost = 0;
+    let finishedPieces = [], finishedPiecesNum = 0, finishedCost = 0, finishedPizzas = 0, finishedPizzasCost = 0;
+    let inTrashPieces = [], inTrashPiecesNum = 0, inTrashCost = 0, inTrashPizzas = 0, inTrashPizzasCost = 0;
 
     /* In Trash */
     for (let i = 0; i < this.trash.length; i++) {
@@ -661,7 +788,7 @@ export class GameComponent implements OnInit {
     for (let i = 0; i < this.queueEditing.length; i++) {
       var price = this.getIngredientPrice(this.queueEditing[i].name);
       inProdPizzasCost = inProdPizzasCost + price;
-      
+
     }
 
     /* In Finished queue */
@@ -695,7 +822,7 @@ export class GameComponent implements OnInit {
       finishedPiecesNum: finishedPiecesNum,
       finishedCost: finishedCost,
       finishedPizzas: finishedPizzas,
-      finishedPizzasCost:finishedPizzasCost,
+      finishedPizzasCost: finishedPizzasCost,
 
       inTrashPiecesNum: inTrashPiecesNum,
       inTrashCost: inTrashCost,
@@ -704,6 +831,10 @@ export class GameComponent implements OnInit {
     this.dataService.addResultstoTeam(resultsArray, this.team)
   }
 
+  /**
+   * This function returns an array of the ingredients that make up an ingredient/pizza/piece depending on the name
+   * @param name This function requires a name for its execution
+   */
   getElements(name) {
     let array = [];
     if (name == 'Mushroom Pizza') {
@@ -722,6 +853,10 @@ export class GameComponent implements OnInit {
     return array
   }
 
+  /**
+   * This function checks if the timer is done, if so, it goes to the results navigation. 
+   * @param e The timer event
+   */
   onTimerFinished(e: Event) {
     if (e["action"] == "done") {
       this.getResults();
