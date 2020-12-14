@@ -25,10 +25,13 @@ export class PlayerLoginComponent implements OnInit {
 
   }
 
+  /**
+   * Registers user information as the current player in the database and directs the user to the Lobby.
+  */
   submit() {
     let playerInfo = this.PlayerForm.value;
     this.dataService.admin = null;
-    this.dataService.savePlayerToLocalStorage(playerInfo.name, playerInfo.isProductOwner, 0);
+    this.dataService.savePlayer(playerInfo.name, playerInfo.isProductOwner, 0);
     this.router.navigate(['/lobby']);
   }
 }

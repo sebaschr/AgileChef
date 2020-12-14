@@ -24,6 +24,10 @@ export class AdminLoginComponent implements OnInit {
 
   }
 
+  /**
+   * Verifies information submitted by user and determines if the login information matches the information on the database so the administrator can gain access.
+   * @returns Alert if the information submitted is incorrect.
+   */
   submit() {
     let userInfo = this.AdminForm.value;
     let data = this.dataService.admin;
