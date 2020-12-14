@@ -117,7 +117,7 @@ export class DataService {
   }
 
   /**
-   * This function gets the collection 'adminStarted' from the DataBase and assigns it to the variable adminStarted
+   * This function gets the collection 'adminStarted' from the DataBase and assigns it to the variable adminStarted.
    */
   loadAdminStarted() {
     var adminStarted = null;
@@ -139,7 +139,7 @@ export class DataService {
 
 
   /**
-   * Checks if the player is already in the database.
+   * Checks if the player is already in the database through the identifier.
    * If not, then adds the player to the selected team with the respective number of the team.
    * @param player - Player to be added.
    * @param newTeam - Team the player is added to.
@@ -164,7 +164,11 @@ export class DataService {
   }
 
   /**
-   * This function receives an array results and a key() team. It runs through the session teams, if the team received.identifier is the same as the team.identifier. Checks if it's undefined, if so creates an empty array to avoid issues. Then pushes the results to this team and calls the function saveSession to save it to the DB.
+   * This function receives an array results and a key() team. 
+   * It runs through the session teams, if the team received. 
+   * Identifier is the same as the team.identifier. 
+   * Checks if it's undefined, if so creates an empty array to avoid issues. 
+   * Then pushes the results to this team and calls the function saveSession to save it to the DB.
    * @param results 
    * @param team 
    */
@@ -182,9 +186,12 @@ export class DataService {
   }
 
   /**
-   * 
-   * @param player 
-   * @param team 
+   * Removes the player from the selected team through the identifier.
+   * Removes the team number assigned to the player so that they can join the correct one.
+   * At the end, it saves the new information of the team in the session.
+   * @param player - Player getting removed from the team.
+   * @param team - Team the player initially joined and now is getting removed from.
+
    */
   removePlayerFromTeam(player: Player, team: Team) {
 
@@ -205,6 +212,11 @@ export class DataService {
     this.saveSession(this.session);
   }
 
+  /**
+   * Looks and validates if the identifier from the players exists or not in team.
+   * If it exists, it deletes it from the team.
+   * @param pidentifier - the identifier of the player.
+   */
   findanddelete(pidentifier) {
     for (let i = 0; i < this.session.teams.length; i++) {
       if (this.session.teams[i].players === undefined) {
@@ -221,7 +233,8 @@ export class DataService {
   }
 
   /**
-   * This function gets the 'ingredients' collection from the DB by using the method get and assigns it to the array ingredients.
+   * This function gets the 'ingredients' collection from the DB by using the method get.
+   * Then assigns it to the array ingredients.
    */
   loadIngredients() {
     var ingredients = null;
@@ -233,7 +246,8 @@ export class DataService {
 
   
   /**
-   * This function gets the 'pizzas' collection from the DB by using the method get and assigns it to the array pizzas.
+   * This function gets the 'pizzas' collection from the DB by using the method get.
+   * Then assigns it to the array pizzas.
    */
 
   loadPizzas() {
@@ -244,7 +258,8 @@ export class DataService {
     });
   }
   /**
-   * This function gets the 'recipes' collection from the DB by using the method get and assigns it to the array recipes.
+   * This function gets the 'recipes' collection from the DB by using the method get.
+   * Then assigns it to the array recipes.
    */
   loadRecipes() {
     var ingredients = null;

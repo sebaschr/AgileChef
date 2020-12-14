@@ -27,7 +27,10 @@ export class LobbyComponent implements OnInit {
     console.log(this.dataService.session);
   }
 
-
+  /**
+   * Gets the information from data service regarding the admin status.
+   * If the admin is active, the admin can start the game.
+   */
   loadPage() {
     if (this.dataService.session.adminStarted) {
       this.router.navigate(['/planning']);
@@ -35,7 +38,9 @@ export class LobbyComponent implements OnInit {
   }
 
   /**
-   * 
+   * Checks if the user clicking the start button is the admin or a player.
+   * If it's the admin, they are allowed to start the game.
+   * If it's a player, an alert pops letting them know that only the admin can start the game.
    */
   startGame() {
     if (this.dataService.admin) {
@@ -44,12 +49,14 @@ export class LobbyComponent implements OnInit {
       this.router.navigate(['/planning']);
     } else if (this.dataService.currentPlayer) {
       this.dataService.loadPlayer();
-      alert("Debes esperar a que el administrador inicie el juego.");
+      alert("You have to wait for the admin to start the game.");
     }
   }
 
   /**
-   * 
+   * Checks if the user clicking the return buttong is the admin or a player.
+   * If it's the admin, it leads them back to the admin panel window.
+   * If it's a player, it leads them back to the player log in window.
    */
   returnToPlayerLogIn() {
 
