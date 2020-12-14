@@ -116,6 +116,9 @@ export class DataService {
     });
   }
 
+  /**
+   * 
+   */
   loadAdminStarted() {
     var adminStarted = null;
     this.get('adminStarted').subscribe(action => {
@@ -134,6 +137,13 @@ export class DataService {
     this.post('session', session);
   }
 
+
+  /**
+   * Checks if the player is already in the database.
+   * If not, then adds the player to the selected team with the respective number of the team.
+   * @param player - Player to be added.
+   * @param newTeam - Team the player is added to.
+   */
   addPlayerToTeam(player: Player, newTeam: Team) {
     if (this.currentPlayer.identifier == player.identifier) {
       this.findanddelete(player.identifier);
@@ -153,6 +163,11 @@ export class DataService {
     }
   }
 
+  /**
+   * 
+   * @param results 
+   * @param team 
+   */
   addResultstoTeam(results, team) {
     for (let i = 0; i < this.session.teams.length; i++) {
       if (team == this.session.teams[i].identifier) {
@@ -166,6 +181,11 @@ export class DataService {
     this.saveSession(this.session);
   }
 
+  /**
+   * 
+   * @param player 
+   * @param team 
+   */
   removePlayerFromTeam(player: Player, team: Team) {
 
     for (let i = 0; i < this.session.teams.length; i++) {
@@ -183,27 +203,6 @@ export class DataService {
     }
     this.currentPlayer.teamNumber = null;
     this.saveSession(this.session);
-  }
-
-  maxPlayersReached() {
-    var minPlayers = this.session.playersMin;
-    var maxPlayers = this.session.playersMax;
-
-    var maxReached = false
-    var teams = this.session.teams;
-
-    for (let i = 0; i < this.session.teams.length; i++) {
-      for (let j = 0; j < teams[i].players.length; j++) {
-        var teamTotal = teams[i].players.length;
-        console.log('team total:' + teamTotal);
-        if (teamTotal === maxPlayers) {
-          maxReached = true;
-        } else {
-          maxReached = false;
-        }
-        return maxReached;
-      }
-    }
   }
 
   findanddelete(pidentifier) {
