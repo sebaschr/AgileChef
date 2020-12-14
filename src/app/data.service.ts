@@ -117,7 +117,7 @@ export class DataService {
   }
 
   /**
-   * 
+   * This function gets the collection 'adminStarted' from the DataBase and assigns it to the variable adminStarted
    */
   loadAdminStarted() {
     var adminStarted = null;
@@ -164,7 +164,7 @@ export class DataService {
   }
 
   /**
-   * 
+   * This function receives an array results and a key() team. It runs through the session teams, if the team received.identifier is the same as the team.identifier. Checks if it's undefined, if so creates an empty array to avoid issues. Then pushes the results to this team and calls the function saveSession to save it to the DB.
    * @param results 
    * @param team 
    */
