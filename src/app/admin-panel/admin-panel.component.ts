@@ -52,7 +52,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    
   }
 /**
  * This function checks if there are no errors, if so, it sends the information over to the dataService for it to be saved to the sesssion in the DB>

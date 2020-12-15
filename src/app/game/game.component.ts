@@ -560,7 +560,7 @@ export class GameComponent implements OnInit {
       pos1.onPizza = 'none';
       this.trash.push(pos1.name);
       this.cleanTrashfromProd(pos1.name)
-      if (this.queue.length - this.queueEditing.length == 2) {
+      if (this.queue.length == 2) {
         this.loadQueue(2);
       }
 
