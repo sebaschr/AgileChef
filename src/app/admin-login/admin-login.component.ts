@@ -33,6 +33,7 @@ export class AdminLoginComponent implements OnInit {
     let data = this.dataService.admin;
     if (userInfo.userID == data.username && userInfo.password == data.password) {
       console.log('Match');
+      sessionStorage.setItem('admin','true');
       this.router.navigate(['/adminPanel']);
     } else {
       if (userInfo.userID == data.username && userInfo.password != data.password) {

@@ -22,6 +22,10 @@
     border: #E76803 solid 1px;
 }
 
+.isAdmin{
+    display:none;
+}
+
 .team-card h2 {
     color: #FFFFFF;
 }

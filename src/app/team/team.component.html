@@ -7,11 +7,11 @@
     </div>
 
     <div class="buttons-container">
-        <button mat-fab id="addBtn" color="primary" class="team-btn" (click)="addPlayerToTeam(team)" >
+        <button mat-fab id="addBtn" color="primary" class="team-btn" (click)="addPlayerToTeam(team)" [class.isAdmin]="admin">
             <mat-icon>add</mat-icon>
         </button>
     
-        <button mat-fab id="removeBtn" color="primary" class="team-btn" (click)="removePlayerFromTeam(team)" >
+        <button mat-fab id="removeBtn" color="primary" class="team-btn" (click)="removePlayerFromTeam(team)" [class.isAdmin]="admin">
             <mat-icon>remove</mat-icon>
         </button>
     </div>

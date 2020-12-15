@@ -21,6 +21,7 @@ body{
     text-transform: uppercase;
     letter-spacing: 2px;
     background: #000000;
+    display:none;
 }
 
 .left-section {
@@ -66,4 +67,8 @@ body{
 .buttons-container {
     display: flex;
     margin: 30px 0px 80px 0px;
+}
+
+.isAdmin,.isPlayer{
+    display:block;
 }

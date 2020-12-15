@@ -14,17 +14,22 @@ import { templateSourceUrl } from '@angular/compiler';
 })
 
 
+
 export class LobbyComponent implements OnInit {
   constructor(public dataService: DataService, private router: Router) {
-    setInterval(()=> { this.loadPage() }, 1);
-    this.dataService.sprintCounter=0;
+    setInterval(() => { this.loadPage() }, 1);
+    this.dataService.sprintCounter = 0;
   }
+  admin: Boolean;
+  player: Boolean;
 
   ngOnInit(): void {
     this.dataService.loadSession();
     this.dataService.loadPlayer();
     this.dataService.loadAdminStarted();
     console.log(this.dataService.session);
+    this.admin = (/true/i).test(sessionStorage.getItem('admin'))
+    this.player = !this.admin;
   }
 
   /**
@@ -43,11 +48,26 @@ export class LobbyComponent implements OnInit {
    * If it's a player, an alert pops letting them know that only the admin can start the game.
    */
   startGame() {
-    if (this.dataService.admin) {
-      this.dataService.loadAdmin();
-      this.dataService.session.adminStarted=true;
-      this.dataService.saveSession(this.dataService.session);
-    } else if (this.dataService.currentPlayer) {
+    if (this.admin) {
+      var sumPlayers = 0;
+      var teams = this.dataService.session.teams;
+      for (let index = 0; index < teams.length; index++) {
+        if (teams[index].players == null) {
+
+        } else {
+          sumPlayers = sumPlayers + teams[index].players.length
+        }
+      }
+      if (sumPlayers == 0) {
+
+        alert("Not enough players");
+      } else {
+
+        this.dataService.loadAdmin();
+        this.dataService.session.adminStarted = true;
+        this.dataService.saveSession(this.dataService.session);
+      }
+    } else if (this.player) {
       this.dataService.loadPlayer();
       alert("You have to wait for the admin to start the game.");
     }

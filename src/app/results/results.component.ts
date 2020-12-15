@@ -39,7 +39,10 @@ export class ResultsComponent implements OnInit {
    * This function loads all of the results from the game navigation page so they can be displayed on the results page. 
   */
   teamResults() {
+    this.dataService.loadSession();
+    this.dataService.loadPlayer();
     this.teams = this.dataService.session.teams;
+    console.log(this.dataService.session);
     for (let i = 0; i < this.teams.length; i++) {
       if (this.teams[i].players == null) { } else {
         for (let y = 0; y < this.teams[i].players.length; y++) {
@@ -49,6 +52,7 @@ export class ResultsComponent implements OnInit {
         }
       }
     }
+    console.log(this.results)
     this.failed = this.results[this.dataService.sprintCounter].inTrashPizzas;
     this.inProgress = this.results[this.dataService.sprintCounter].inProdPizzas;
     this.succesful = this.results[this.dataService.sprintCounter].finishedPizzas;

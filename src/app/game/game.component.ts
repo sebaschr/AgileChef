@@ -42,6 +42,8 @@ export class GameComponent implements OnInit {
     inCanvas: []
   };
   counterPlayer = 0;
+  admin: Boolean;
+  player: Boolean;
   /**
    * The constructor tells the data service to load the session. 
    * The time (in seconds) comes from the dataService, depending on the sprint that is currently on execution
@@ -57,6 +59,10 @@ export class GameComponent implements OnInit {
     this.loadPlayers(this.dataService.currentPlayer);
     this.loadDBLists();
     this.loadQueue(3);
+    this.admin = (/true/i).test(sessionStorage.getItem('admin'))
+    this.player = !this.admin;
+    console.log(this.admin)
+    console.log(this.player)
   }
 
   ngOnInit(): void {
@@ -828,7 +834,10 @@ export class GameComponent implements OnInit {
       inTrashCost: inTrashCost,
       inTrashPizzas: inTrashPizzas,
     }
-    this.dataService.addResultstoTeam(resultsArray, this.team)
+    if (this.player) {
+      this.dataService.addResultstoTeam(resultsArray, this.team)
+    }
+
   }
 
   /**
@@ -860,9 +869,22 @@ export class GameComponent implements OnInit {
   onTimerFinished(e: Event) {
     if (e["action"] == "done") {
       this.getResults();
-      this.router.navigate(['/results']);
+      (async () => {
+        if (this.admin) {
+          document.getElementById('Waiting').style.display='block';
+          await this.delay(1500);
+          console.log('yo')
+          this.router.navigate(['/results']);
+        } else {
+          this.router.navigate(['/results']);
+
+        }
+      })();
+
     }
   }
-
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 }

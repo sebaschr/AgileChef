@@ -33,5 +33,7 @@ export class PlayerLoginComponent implements OnInit {
     this.dataService.admin = null;
     this.dataService.savePlayer(playerInfo.name, playerInfo.isProductOwner, 0);
     this.router.navigate(['/lobby']);
+    sessionStorage.setItem('admin','false');
+
   }
 }

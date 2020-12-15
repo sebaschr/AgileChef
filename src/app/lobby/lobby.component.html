@@ -38,8 +38,8 @@
         </div>
         <div class="buttons-container">
             <button class="start-button" (click)="returnToPlayerLogIn()" mat-raised-button
-                color="primary" id="returnBtn">Return</button>
-            <button class="start-button" (click)="startGame()" mat-raised-button color="primary" id="startBtn">Start</button>
+                color="primary" id="returnBtn" [class.isPlayer]="!admin">Return</button>
+            <button class="start-button" (click)="startGame()" mat-raised-button color="primary" id="startBtn" [class.isAdmin]="admin">Start</button>
         </div>
     </section>
     <section class="section-container" fxLayout.sm="column" fxLayoutAlign.sm="space-evenly center">

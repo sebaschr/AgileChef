@@ -128,3 +128,26 @@
 .isPO{
     display:block;
 }
+
+.isAdmin,.isPLayer{
+    display:none
+}
+
+.timer{
+    align-self: center;
+    background-color: #FD7422;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 2vh;
+    color: white;
+    margin: 1vh;
+}
+
+#Waiting,#waitingGif{
+    align-self: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1vh;
+    color: #000;
+    margin-top: 1vh;
+}

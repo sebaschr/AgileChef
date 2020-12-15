@@ -15,7 +15,7 @@ export class TeamComponent implements OnInit {
   public sprint: Sprint;
 
   teams = [];
-
+  admin:Boolean;
   constructor(public dataService: DataService) {
     this.dataService.currentPlayer;
   }
@@ -24,6 +24,7 @@ export class TeamComponent implements OnInit {
     this.dataService.session;
     this.dataService.loadAdmin;
     this.loadButtons();
+    this.admin = (/true/i).test(sessionStorage.getItem('admin'))
   }
 
   /**
@@ -49,11 +50,11 @@ export class TeamComponent implements OnInit {
    */
   loadButtons() {
 
-    if (this.dataService.admin) {
+    if (this.admin) {
       document.getElementById('addBtn').style.visibility = 'hidden';
       document.getElementById('removeBtn').style.visibility = 'hidden';
       
-    } else if (this.dataService.currentPlayer) {
+    } else  {
       document.getElementById('addBtn').style.visibility = 'visible';
       document.getElementById('removeBtn').style.visibility = 'visible';
     }
